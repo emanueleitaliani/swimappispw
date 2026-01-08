@@ -13,10 +13,6 @@ import Bean.Prenotazionebean;
 import java.util.concurrent.ThreadLocalRandom;
 import java.sql.SQLException;
 public class RichiediPrenotazioneCLI extends AbstractState {
-    private float prezzo;
-    private String giorno;
-    private String info;
-    private float ora;
     Utenteloggatobean utente;
     private LezioneBean lezioneSelezionata;
 

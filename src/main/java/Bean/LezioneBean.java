@@ -3,7 +3,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 public class LezioneBean {
-    private Utenteloggatobean istruttore;
     private String giorni;
     private Float tariffa;
     private String emailIstruttore;

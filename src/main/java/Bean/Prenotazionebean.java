@@ -13,18 +13,7 @@ public class Prenotazionebean {
     private StatoPrenotazione status;
 
     public Prenotazionebean() {}
-    public Prenotazionebean(Utenteloggatobean istruttore,Integer idPrenotazione,String cognome,String Nome,String emailIstruttore,String emailUser,String giorno,String info,float prezzo,float hour,StatoPrenotazione status) {
-        this.idPrenotazione = idPrenotazione;
-        this.nome= istruttore.getNome();
-        this.cognome=istruttore.getCognome();
-        this.emailIstruttore=istruttore.getCredenziali().getEmail();
-        this.emailUser=emailUser;
-        this.giorno=giorno;
-        this.info=info;
-        this.prezzo=prezzo;
-        this.hour=hour;
-        this.status = status;
-    }
+
 
     public void setIdPrenotazione(int idPrenotazione) {
         this.idPrenotazione = idPrenotazione;
