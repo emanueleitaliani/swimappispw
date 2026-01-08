@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<Pane fx:id="visualizzaPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="694.0" prefWidth="926.0" style="-fx-background-color: #7FDBFF;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Gui.VisualizzaPrenotazioneGui">
+    <children>
+        <TableView fx:id="tablePrenotazioni" layoutX="204.0" layoutY="271.0" prefHeight="200.0" prefWidth="598.0">
+            <columns>
+                <TableColumn prefWidth="75.0" fx:id="ID" text="ID" />
+                <TableColumn prefWidth="75.0" fx:id="NOME" text="NOME" />
+                <TableColumn prefWidth="75.0" fx:id="COGNOME" text="COGNOME" />
+                <TableColumn prefWidth="75.0" fx:id="EMAIL" text="EMAIL" />
+                <TableColumn prefWidth="75.0" fx:id="PREZZO" text="PREZZO" />
+                <TableColumn prefWidth="75.0" fx:id="GIORNO" text="GIORNO" />
+                <TableColumn prefWidth="75.0" fx:id="ORA" text="ORA" />
+                <TableColumn prefWidth="75.0" fx:id="STATO" text="STATO" />
+            </columns>
+        </TableView>
+        <Label layoutX="277.0" layoutY="42.0" prefHeight="60.0" prefWidth="372.0" text="Visualizza Prenotazioni" textFill="#fff7f7">
+            <font>
+                <Font name="Cambria Math" size="37.0" />
+            </font>
+        </Label>
+        <Button onAction="#tornaIndietro" layoutX="14.0" layoutY="596.0" mnemonicParsing="false" text="TORNA INDIETRO">
+            <font>
+                <Font name="Cambria" size="14.0" />
+            </font>
+        </Button>
+        <ImageView fitHeight="150.0" fitWidth="150.0" layoutX="411.0" layoutY="97.0">
+            <image>
+                <Image url="@../images/swimmerman.png" />
+            </image>
+        </ImageView>
+        <Text layoutX="14.0" layoutY="585.0" strokeType="OUTSIDE" strokeWidth="0.0" text="vuoi cancellare una prenotazione?" underline="true" wrappingWidth="189.31680297851562">
+            <font>
+                <Font name="Cambria" size="12.0" />
+            </font>
+        </Text>
+        <Text layoutX="213.0" layoutY="259.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ciao, qui sotto vedrai le prenotazioni che hai effettuato associate al tuo account " wrappingWidth="445.3168029785156">
+            <font>
+                <Font name="Cambria" size="12.0" />
+            </font>
+        </Text>
+    </children>
+</Pane>
+

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<?import javafx.scene.text.Text?>
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="685.0" prefWidth="952.0" style="-fx-background-color: #7FDBFF;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Gui.PrenotaLezioneGui" >
+    <children>
+        <Label layoutX="308.0" layoutY="21.0" prefHeight="64.0" prefWidth="257.0" text="Risultati Lezioni" textFill="#fff7f7">
+            <font>
+                <Font name="Cambria Math" size="37.0" />
+            </font>
+        </Label>
+        <TableView fx:id="tabellaLezioni" layoutX="233.0" layoutY="212.0" prefHeight="200" prefWidth="449" style="-fx-background-color: #A7E9FF;">
+            <columns>
+                <TableColumn fx:id="colTipo" text="LEZIONE" prefWidth="75"/>
+                <TableColumn fx:id="colLivello" text="LIVELLO" prefWidth="75"/>
+                <TableColumn fx:id="colFascia" text="ORA" prefWidth="75"/>
+                <TableColumn fx:id="colPrezzo" text="PREZZO" prefWidth="75"/>
+                <TableColumn fx:id="colGiorno" text="GIORNO" prefWidth="75"/>
+                <TableColumn fx:id="colNote" text="NOTE" prefWidth="80"/>
+            </columns>
+        </TableView>
+
+        <Button fx:id="btnIndietro" onAction="#tornaIndietro" layoutX="32.0" layoutY="601.0" mnemonicParsing="false" text="TORNA INDIETRO">
+            <font>
+                <Font name="Cambria" size="14.0" />
+            </font></Button>
+        <Button fx:id="btnPrenota" onAction="#prenotaLezione" layoutX="730.0" layoutY="601.0" mnemonicParsing="false" text="CONFERMA LEZIONE">
+            <font>
+                <Font name="Cambria" size="14.0" />
+            </font>
+        </Button>
+        <Button layoutX="523.0" layoutY="398.0" mnemonicParsing="false" style="-fx-background-color: transparent;">
+            <font>
+                <Font name="Cambria" size="14.0" />
+            </font>
+        </Button>
+        <ImageView fitHeight="150.0" fitWidth="150.0" layoutX="362.0" layoutY="85.0">
+            <image>
+                <Image url="@../images/swimmerman.png"/>
+            </image>
+        </ImageView>
+        <Text layoutX="32.0" layoutY="589.0" strokeType="OUTSIDE" strokeWidth="0.0" text="hai sbagliato a selezionare qualcosa?" underline="true">
+            <font>
+                <Font name="Cambria Math" size="12.0" />
+            </font>
+        </Text>
+
+    </children>
+</Pane>

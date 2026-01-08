@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="748.0" prefWidth="1015.0" style="-fx-background-color: #7FDBFF;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Gui.CercaLezioneGui">
+    <children>
+        <TitledPane animated="false" layoutX="259.0" layoutY="233.0" prefHeight="81.0" prefWidth="166.0" style="-fx-background-color: #A7E9FF;" text="Tipo di Lezione">
+            <font>
+                <Font name="Cambria Math" size="12.0" />
+            </font>
+            <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="94.0" prefWidth="76.0" style="-fx-background-color: #A7E9FF;">
+                    <children>
+                        <VBox layoutY="-1.0" prefHeight="54.0" prefWidth="166.0" style="-fx-background-color: #A7E9FF;">
+                            <children>
+                                <CheckBox mnemonicParsing="false" fx:id="lezionePrivata" text="PRIVATA">
+                                    <font>
+                                        <Font name="Cambria Math" size="19.0" />
+                                    </font>
+                                </CheckBox>
+                                <CheckBox mnemonicParsing="false" prefHeight="26.0"  prefWidth="116.0" fx:id="lezioneGruppo" text="GRUPPO">
+                                    <font>
+                                        <Font name="Cambria Math" size="19.0" />
+                                    </font>
+                                </CheckBox>
+                            </children>
+                        </VBox>
+                    </children>
+                </AnchorPane>
+            </content>
+        </TitledPane>
+        <Label layoutX="388.0" layoutY="34.0" text="Cerca Lezione" textFill="WHITE">
+            <font>
+                <Font name="Cambria Math" size="37.0" />
+            </font>
+        </Label>
+        <TitledPane animated="false" layoutX="259.0" layoutY="314.0" prefHeight="217.0" prefWidth="166.0" text="Livello della Lezione">
+            <font>
+                <Font name="Cambria Math" size="12.0" />
+            </font>
+            <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="107.0" prefWidth="165.0" style="-fx-background-color: #A7E9FF;">
+                    <children>
+                        <VBox layoutX="-1.0" prefHeight="81.0" prefWidth="166.0" style="-fx-background-color: #A7E9FF;">
+                            <children>
+                                <CheckBox mnemonicParsing="false" prefHeight="25.0" prefWidth="157.0"  fx:id="livelloPrincipiante" text="PRINCIPIANTE">
+                                    <font>
+                                        <Font name="Cambria Math" size="19.0" />
+                                    </font>
+                                </CheckBox>
+                                <CheckBox mnemonicParsing="false" prefHeight="25.0" prefWidth="157.0"  fx:id="livelloIntermedio" text="INTERMEDIO">
+                                    <font>
+                                        <Font name="Cambria Math" size="19.0" />
+                                    </font>
+                                </CheckBox>
+                                <CheckBox mnemonicParsing="false" fx:id="livelloAgonistica" text="AGONISTICO">
+                                    <font>
+                                        <Font name="Cambria Math" size="19.0" />
+                                    </font>
+                                </CheckBox>
+                            </children>
+                        </VBox>
+                        <ImageView fitHeight="109.0" fitWidth="129.0" layoutX="18.0" layoutY="82.0">
+                            <image>
+                                <Image url="@../images/istruttore.png" />
+                            </image>
+                        </ImageView>
+                    </children>
+                </AnchorPane>
+            </content>
+        </TitledPane>
+        <TitledPane animated="false" layoutX="425.0" layoutY="233.0" prefHeight="299.0" prefWidth="166.0" text="Giorni Disponibili">
+            <font>
+                <Font name="Cambria Math" size="12.0" />
+            </font>
+            <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="178.0" prefWidth="170.0" style="-fx-background-color: #A7E9FF;">
+                    <children>
+                        <CheckBox layoutX="3.0" layoutY="14.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="157.0" fx:id="lunedi"  text="LUNEDI'">
+                            <font>
+                                <Font name="Cambria Math" size="19.0" />
+                            </font>
+                        </CheckBox>
+                        <CheckBox layoutX="3.0" layoutY="48.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="157.0" fx:id="martedi" text="MARTEDI'">
+                            <font>
+                                <Font name="Cambria Math" size="19.0" />
+                            </font>
+                        </CheckBox>
+                        <CheckBox layoutX="3.0" layoutY="87.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="157.0" fx:id="mercoledi" text="MERCOLEDI'">
+                            <font>
+                                <Font name="Cambria Math" size="19.0" />
+                            </font>
+                        </CheckBox>
+                        <CheckBox layoutX="3.0" layoutY="122.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="157.0" fx:id="giovedi" text="GIOVEDI'">
+                            <font>
+                                <Font name="Cambria Math" size="19.0" />
+                            </font>
+                        </CheckBox>
+                        <CheckBox layoutX="3.0" layoutY="162.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="157.0" fx:id="venerdi" text="VENERDI'">
+                            <font>
+                                <Font name="Cambria Math" size="19.0" />
+                            </font>
+                        </CheckBox>
+                        <CheckBox layoutX="3.0" layoutY="203.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="157.0"  fx:id="sabato" text="SABATO">
+                            <font>
+                                <Font name="Cambria Math" size="19.0" />
+                            </font>
+                        </CheckBox>
+                        <CheckBox layoutX="3.0" layoutY="243.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="157.0"  fx:id="domenica" text="DOMENICA">
+                            <font>
+                                <Font name="Cambria Math" size="19.0" />
+                            </font>
+                        </CheckBox>
+                    </children>
+                </AnchorPane>
+            </content>
+        </TitledPane>
+        <AnchorPane layoutX="674.0" layoutY="115.0" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+            <children>
+                <AnchorPane layoutX="1.0" layoutY="51.0" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+            </children>
+        </AnchorPane>
+        <Button fx:id="btnConferma"
+                onAction="#cercaLezione"
+                layoutX="791.0" layoutY="648.0" mnemonicParsing="false" prefHeight="21.0" prefWidth="107.0" text="CONFERMA">
+            <font>
+                <Font name="Cambria Math" size="14.0" />
+            </font>
+        </Button>
+        <Button fx:id="btnIndietro"
+                onAction="#tornaIndietro" layoutX="12.0" layoutY="648.0" mnemonicParsing="false" text="TORNA INDIETRO">
+            <font>
+                <Font name="Cambria" size="14.0" />
+            </font>
+        </Button>
+        <ImageView fitHeight="150.0" fitWidth="150.0" layoutX="417.0" layoutY="101.0">
+            <image>
+                <Image url="@../images/swimmerman.png" />
+            </image>
+        </ImageView>
+        <TitledPane animated="false" layoutX="591.0" layoutY="232.0" prefHeight="163.0" prefWidth="206.0" text="Dettagli aggiuntivi">
+            <font>
+                <Font name="Cambria Math" size="13.0" />
+            </font>
+            <content>
+                <VBox prefHeight="138.0" prefWidth="205.0" style="-fx-background-color: #A7E9FF;">
+                    <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="FASCIA ORARIA" wrappingWidth="82.21875">
+                            <font>
+                                <Font name="Cambria Math" size="12.0" />
+                            </font>
+                        </Text>
+                        <TextField fx:id="fasciaOraria"/>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="PREZZO MASSIMO" wrappingWidth="111.018798828125">
+                            <font>
+                                <Font name="Cambria Math" size="12.0" />
+                            </font>
+                        </Text>
+                        <TextField fx:id="prezzoMassimo"/>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="NOTE AGGIUNTIVE" wrappingWidth="111.018798828125">
+                            <font>
+                                <Font name="Cambria Math" size="12.0" />
+                            </font>
+                        </Text>
+                        <TextField fx:id="noteAggiuntive" />
+                    </children>
+                </VBox>
+            </content>
+        </TitledPane>
+    </children>
+</Pane>
+
+
