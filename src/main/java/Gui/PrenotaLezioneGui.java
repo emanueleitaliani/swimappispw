@@ -25,7 +25,7 @@ public class PrenotaLezioneGui extends HomeUtenteGui{
         // costruttore vuoto necessario per JavaFX
     }
     private List<LezioneBean> risultatiBean;
-    private Utenteloggatobean utente;
+
 
     public void setUtente(Utenteloggatobean utente) {
         this.utente = utente;

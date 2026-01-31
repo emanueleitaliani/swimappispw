@@ -1,7 +1,7 @@
 package Query;
-import Model.CredenzialiModel;
+
 import Model.UtenteloggatoModel;
-import Other.Connect;
+
 import Other.Stampa;
 import Exceptions.CredenzialisbagliateException;
 import Exceptions.UtentenonpresenteException;

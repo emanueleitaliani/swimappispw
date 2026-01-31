@@ -11,12 +11,13 @@ public class Config {
     private static String persistenceType;// default
 
     public static void loadFromFile() {
-        Properties properties = new Properties();
-        try (FileInputStream fis = new FileInputStream("src/main/resources/resources/config.properties")) {
+        try (FileInputStream fis = new FileInputStream(CONFIG_FILE)) { // 2. Usa la costante qui!
             properties.load(fis);
             persistenceType = properties.getProperty("persistence.type", "mysql");
         } catch (IOException e) {
-            System.err.println("Errore lettura config.properties, uso default mysql");
+
+            Stampa.println("Errore lettura " + CONFIG_FILE + ", uso default mysql");
+            persistenceType = "mysql";
         }
     }
 

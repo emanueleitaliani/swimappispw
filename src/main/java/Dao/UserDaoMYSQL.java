@@ -15,7 +15,7 @@ import java.sql.*;
 public class UserDaoMYSQL implements UserDao {
 
     private static final Logger logger = Logger.getLogger(UserDaoMYSQL.class.getName());
-
+    private static final String ERR_DAO_MSG = "Errore in userDAO: ";
     @Override
     public UtenteloggatoModel loginMethod(CredenzialiModel credenzialiModel) throws UtentenonpresenteException, CredenzialisbagliateException {
         UtenteloggatoModel utenteloggatoModel = new UtenteloggatoModel();
@@ -55,7 +55,7 @@ public class UserDaoMYSQL implements UserDao {
                 }
             }
         } catch (SQLException e) {
-            logger.severe("Errore in userDAO: " + e.getMessage());
+            logger.severe( ERR_DAO_MSG+ e.getMessage());
         } catch (UtentenonpresenteException e) {
             throw new UtentenonpresenteException();
         }
@@ -71,7 +71,7 @@ public class UserDaoMYSQL implements UserDao {
             QueryLogin.registerUser(stmt, registrazioneModel);
 
         } catch (SQLException e) {
-            logger.severe("Errore in userDAO: " + e.getMessage());
+            logger.severe( ERR_DAO_MSG+ e.getMessage());
         }
     }
 
@@ -88,7 +88,7 @@ public class UserDaoMYSQL implements UserDao {
             }
 
         } catch (SQLException e) {
-            logger.severe("Errore in userDAO: " + e.getMessage());
+            logger.severe(ERR_DAO_MSG + e.getMessage());
         } finally {
             closeResources(stmt, null);
         }

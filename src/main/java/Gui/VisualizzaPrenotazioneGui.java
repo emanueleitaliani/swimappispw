@@ -21,9 +21,11 @@ import java.util.List;
 
 public class VisualizzaPrenotazioneGui extends HomeUtenteGui{
 
-    private Utenteloggatobean utente;
 
-    public VisualizzaPrenotazioneGui(){}
+
+    public VisualizzaPrenotazioneGui(){
+        //costruttore di default per javafxml
+    }
     public void setUtente(Utenteloggatobean utente) {
         this.utente = utente;
         caricaPrenotazioni();

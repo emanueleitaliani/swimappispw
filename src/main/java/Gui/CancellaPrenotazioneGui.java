@@ -17,7 +17,6 @@ import java.io.IOException;
 
 public class CancellaPrenotazioneGui extends HomeUtenteGui{
 
-    private  Utenteloggatobean utente;
 
     @FXML
     private Pane cancellaPane;
@@ -34,8 +33,10 @@ public class CancellaPrenotazioneGui extends HomeUtenteGui{
 
 
 
-    public CancellaPrenotazioneGui() {}
-    //costruttore di default
+    public CancellaPrenotazioneGui() {
+        // Costruttore vuoto richiesto da JavaFX per l'inizializzazione FXML
+    }
+
 
     public void setUtente(Utenteloggatobean utente) {
         this.utente = utente;

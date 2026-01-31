@@ -7,10 +7,9 @@ import Other.Stampa;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.ResultSet;
-import java.util.ArrayList;
-import java.util.List;
+
 import java.util.Locale;
-import Bean.Prenotazionebean;
+
 import Other.StatoPrenotazione;
 
 public class QueryLezioni {
