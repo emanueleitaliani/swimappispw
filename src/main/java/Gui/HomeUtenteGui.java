@@ -24,7 +24,7 @@ public class HomeUtenteGui {
     protected Utenteloggatobean utente;
 
     // Costruttore personalizzato per ricevere il bean
-    protected HomeUtenteGui(){};
+    protected HomeUtenteGui(){}
     public HomeUtenteGui(Utenteloggatobean utente) {
         this.utente = utente;
     }

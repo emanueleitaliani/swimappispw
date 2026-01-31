@@ -9,7 +9,7 @@ import Pattern.StateMachineImpl;
 import java.util.Scanner;
 
 public class cancellaPrenotazioneCLI extends AbstractState {
-    private Utenteloggatobean utente;
+    private final Utenteloggatobean utente;
 
     public cancellaPrenotazioneCLI(Utenteloggatobean utente) {
         this.utente = utente;

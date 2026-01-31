@@ -1,13 +1,13 @@
 package Model;
 
-import Model.CredenzialiModel;
+
 public class UtenteloggatoModel {
     private CredenzialiModel credenziali;
     private String Nome;
     private String Cognome;
     protected boolean isIstructor;
 
-    public UtenteloggatoModel() {};
+    public UtenteloggatoModel() {}
     public UtenteloggatoModel(CredenzialiModel credenziali, String Nome, String Cognome, boolean isIstructor){
         this.credenziali = credenziali;
         this.Nome = Nome;

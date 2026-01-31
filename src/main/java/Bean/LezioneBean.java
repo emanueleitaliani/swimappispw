@@ -1,7 +1,7 @@
 package Bean;
-import java.util.HashMap;
+
 import java.util.List;
-import java.util.Map;
+
 public class LezioneBean {
     private String giorni;
     private Float tariffa;
@@ -41,25 +41,9 @@ public class LezioneBean {
         return result.toString();
     }
 
-    // Abbreviazione opzionale (L, Ma, Me, ...)
-    public void abbreviaGiorni() {
-        if (this.giorni != null) {
-            Map<String, String> abbreviazioni = new HashMap<>();
-            abbreviazioni.put("Lunedì", "L");
-            abbreviazioni.put("Martedì", "Ma");
-            abbreviazioni.put("Mercoledì", "Me");
-            abbreviazioni.put("Giovedì", "G");
-            abbreviazioni.put("Venerdì", "V");
-            abbreviazioni.put("Sabato", "S");
-            abbreviazioni.put("Domenica", "D");
 
-            for (Map.Entry<String, String> entry : abbreviazioni.entrySet()) {
-                this.giorni = this.giorni.replace(entry.getKey(), entry.getValue());
-            }
-        }
-    }
 
-    // Getters e Setters
+
 
 
     public void setGiorni(List<Boolean> giorniBool) {
@@ -75,10 +59,10 @@ public class LezioneBean {
 
 
     public String getNomeIstruttore() { return nomeIstruttore; }
-    public void setNomeIstruttore(String nomeIstruttore) { this.nomeIstruttore = nomeIstruttore; }
+
 
     public String getCognomeIstruttore() { return cognomeIstruttore; }
-    public void setCognomeIstruttore(String cognomeIstruttore) { this.cognomeIstruttore = cognomeIstruttore; }
+
 
     public String getTipoLezione() { return tipoLezione; }
     public void setTipoLezione(String tipoLezione) { this.tipoLezione = tipoLezione; }

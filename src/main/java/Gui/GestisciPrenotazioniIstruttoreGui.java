@@ -64,7 +64,7 @@ public class GestisciPrenotazioniIstruttoreGui {
     }
 
     @FXML
-    private void accettaPrenotazione(ActionEvent event) {
+    private void accettaPrenotazione() {
         // 1. Recupero la riga selezionata
         Prenotazionebean selezionata = tblPrenotazioni.getSelectionModel().getSelectedItem();
 
@@ -90,7 +90,7 @@ public class GestisciPrenotazioniIstruttoreGui {
     }
 
     @FXML
-    private void rifiutaPrenotazione(ActionEvent event) {
+    private void rifiutaPrenotazione() {
         Prenotazionebean selezionata = tblPrenotazioni.getSelectionModel().getSelectedItem();
 
         if (selezionata != null) {

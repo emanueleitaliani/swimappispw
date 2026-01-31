@@ -26,7 +26,7 @@ public class HomeIstruttoreGui {
     @FXML
     private Button btnLogout;
 
-    // Costruttore senza parametri per il loader FXML
+
     public HomeIstruttoreGui() {
     }
 

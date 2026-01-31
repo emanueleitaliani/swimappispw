@@ -15,7 +15,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.Scanner;
 
-import static javafx.application.Application.launch;
+
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
@@ -27,7 +27,7 @@ public class Main extends Application {
     }
 
     @Override
-    public void start(Stage stage) throws IOException{
+    public void start(Stage stage) {
         // Inizializza i mapper
         Config.loadFromFile();
 

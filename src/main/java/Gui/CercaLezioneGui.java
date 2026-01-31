@@ -14,7 +14,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
+
 
 public class CercaLezioneGui extends HomeUtenteGui {
 
@@ -66,7 +66,7 @@ public class CercaLezioneGui extends HomeUtenteGui {
     private String tipoLezione;
     private String livello;
 
-    private static final Logger logger = Logger.getLogger(CercaLezioneGui.class.getName());
+
 
     List<LezioneBean> risultatiBean = new ArrayList<>();
 

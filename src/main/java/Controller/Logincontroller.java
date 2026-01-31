@@ -11,12 +11,10 @@ import Other.FactoryDao;
 import Other.Stampa;
 
 public class Logincontroller {
-    private String nome;
-    private String cognome;
-    private String email;
-    private String password;
-    private boolean ruolo;
 
+    String nome;
+    String cognome;
+    Boolean ruolo;
     public Utenteloggatobean login(CredenzialiBean credenzialiBean)throws CredenzialisbagliateException,UtentenonpresenteException{
         CredenzialiModel credenzialiModel = new CredenzialiModel(
                 credenzialiBean.getEmail(),

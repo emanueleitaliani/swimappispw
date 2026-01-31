@@ -67,8 +67,6 @@ public class LezioneDaoInMemory implements LezioneDao {
     }
 
     // Metodo per aggiungere nuove lezioni
-    public void aggiungiLezione(LezioneModel lezione) {
-        lezioni.add(lezione);
-    }
+
 }
 

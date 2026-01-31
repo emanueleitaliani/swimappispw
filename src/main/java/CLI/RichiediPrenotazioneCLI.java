@@ -14,7 +14,7 @@ import java.util.concurrent.ThreadLocalRandom;
 import java.sql.SQLException;
 public class RichiediPrenotazioneCLI extends AbstractState {
     Utenteloggatobean utente;
-    private LezioneBean lezioneSelezionata;
+    private final LezioneBean lezioneSelezionata;
 
     public RichiediPrenotazioneCLI(Utenteloggatobean utente,LezioneBean lezioneSelezionata){
         this.utente = utente;
@@ -43,7 +43,7 @@ public class RichiediPrenotazioneCLI extends AbstractState {
                         Stampa.println("Hai scelto di prenotare la Lezione");
 
                         // Rimosso il try-catch qui perché Inseriscivalori gestisce già tutto
-                        Inseriscivalori(context, scanner);
+                        Inseriscivalori(scanner);
                         break;
 
                         case 0:
@@ -68,7 +68,7 @@ public class RichiediPrenotazioneCLI extends AbstractState {
 
 
 
-    public void Inseriscivalori(StateMachineImpl context, Scanner scanner) {
+    public void Inseriscivalori( Scanner scanner) {
         Prenotazionebean prenotazionebean = new Prenotazionebean();
         int idRandom = ThreadLocalRandom.current().nextInt(0, 100);
         prenotazionebean.setIdPrenotazione(idRandom);

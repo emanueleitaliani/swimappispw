@@ -10,9 +10,9 @@ import java.util.Scanner;
 import Other.Stampa;
 public class RisultatiLezioniCLI extends AbstractState {
     Utenteloggatobean user;
-    private LezioneBean lezioneInfoBean;
+    private final LezioneBean lezioneInfoBean;
 
-    private List<LezioneBean> risultatiBean;
+    private final List<LezioneBean> risultatiBean;
 
     Scanner scanner = new Scanner(System.in);
 

@@ -1,9 +1,9 @@
 package Controller;
 import Bean.*;
 import Dao.LezioneDao;
-import Dao.LezioneDaoMYSQL;
+
 import Dao.PrenotazioneDao;
-import Dao.PrenotazioneDaoMYSQL;
+
 import Exceptions.LezioneGiaPrenotataException;
 import Exceptions.LezioniNonTrovateException;
 import Exceptions.UtentenonpresenteException;

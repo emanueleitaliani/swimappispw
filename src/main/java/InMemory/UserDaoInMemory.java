@@ -89,8 +89,5 @@ public class UserDaoInMemory implements UserDao {
         logger.info("Utente promosso a istruttore: " + email);
     }
 
-    // Metodo utile per test/debug
-    public Map<String, UtenteloggatoModel> getAllUsers() {
-        return databaseUtenti;
-    }
+
 }
