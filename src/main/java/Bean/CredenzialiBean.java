@@ -1,7 +1,6 @@
 package Bean;
 
 public class CredenzialiBean {
-    //classe che gestisce le credenziali per il login
     private String Email;
     private String Password;
 

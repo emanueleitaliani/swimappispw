@@ -18,6 +18,7 @@ import java.util.List;
 
 public class CercaLezioneGui extends HomeUtenteGui {
 
+    private static final String SELEZIONE_MANCANTE = "Selezione mancante";
     // Tipo lezione
     @FXML
     private CheckBox lezionePrivata;
@@ -81,13 +82,13 @@ public class CercaLezioneGui extends HomeUtenteGui {
 
         // CONTROLLO TIPO LEZIONE
         if (!lezionePrivata.isSelected() && !lezioneGruppo.isSelected()) {
-            showAlert(Alert.AlertType.WARNING, "Selezione mancante", "Seleziona almeno un tipo di lezione.");
+            showAlert(Alert.AlertType.WARNING, SELEZIONE_MANCANTE, "Seleziona almeno un tipo di lezione.");
             return;
         }
 
         // CONTROLLO LIVELLO
         if (!livelloPrincipiante.isSelected() && !livelloIntermedio.isSelected() && !livelloAgonistica.isSelected()) {
-            showAlert(Alert.AlertType.WARNING, "Selezione mancante", "Seleziona almeno un livello.");
+            showAlert(Alert.AlertType.WARNING, SELEZIONE_MANCANTE, "Seleziona almeno un livello.");
             return;
         }
 
@@ -95,7 +96,7 @@ public class CercaLezioneGui extends HomeUtenteGui {
         if (!lunedi.isSelected() && !martedi.isSelected() && !mercoledi.isSelected() &&
                 !giovedi.isSelected() && !venerdi.isSelected() &&
                 !sabato.isSelected() && !domenica.isSelected()) {
-            showAlert(Alert.AlertType.WARNING, "Selezione mancante", "Seleziona almeno un giorno.");
+            showAlert(Alert.AlertType.WARNING, SELEZIONE_MANCANTE, "Seleziona almeno un giorno.");
             return;
         }
 

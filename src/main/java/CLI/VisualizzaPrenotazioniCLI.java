@@ -10,6 +10,7 @@ import Bean.Utenteloggatobean;
 public class VisualizzaPrenotazioniCLI extends AbstractState {
 
     private final Utenteloggatobean user;
+    private static final String LABEL_STATO = " STATO: ";
 
     public VisualizzaPrenotazioniCLI(Utenteloggatobean user) {
         this.user = user;
@@ -35,14 +36,15 @@ public class VisualizzaPrenotazioniCLI extends AbstractState {
                     Stampa.println("-----------------------------");
                     Stampa.println("📌 ID Prenotazione: " + p.getIdPrenotazione());
 
-                    // --- AGGIUNTA VISUALIZZAZIONE STATO ---
                     String statoTesto = p.getStatus().toString();
+
+                    // 2. Usa la costante al posto della stringa fissa
                     if (p.getStatus().toString().equals("ACCETTATA")) {
-                        Stampa.println(" STATO: " + statoTesto);
+                        Stampa.println(LABEL_STATO + statoTesto);
                     } else if (p.getStatus().toString().equals("RIFIUTATA")) {
-                        Stampa.println(" STATO: " + statoTesto);
+                        Stampa.println(LABEL_STATO + statoTesto);
                     } else {
-                        Stampa.println(" STATO: " + statoTesto + " (In attesa)");
+                        Stampa.println(LABEL_STATO + statoTesto + " (In attesa)");
                     }
                     // ---------------------------------------
 

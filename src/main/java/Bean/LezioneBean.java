@@ -14,6 +14,7 @@ public class LezioneBean {
     private String noteAggiuntive;
 
     public LezioneBean() {}
+    // Costruttore vuoto richiesto per la serializzazione o dai framework
 
     public LezioneBean(String tipoLezione,
                        String giorni, Float tariffa,Utenteloggatobean istruttore, String livello, String fasciaOraria, String noteAggiuntive) {

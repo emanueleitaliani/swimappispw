@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
 import javafx.scene.layout.Pane;
@@ -17,6 +18,8 @@ public class HomeUtenteGui {
 
     @FXML
     private Pane Homeutente;
+    protected static final String TITOLO_ERRORE = "Errore";
+    protected static final String SELEZIONE_MANCANTE = "Selezione mancante";
 
     @FXML
     private Button logoutButton;
@@ -89,5 +92,12 @@ public class HomeUtenteGui {
         } catch (IOException e) {
             Stampa.println("Errore nel logout: " + e.getMessage());
         }
+    }
+    protected void mostraAlert(Alert.AlertType tipo, String titolo, String messaggio) {
+        Alert alert = new Alert(tipo);
+        alert.setTitle(titolo);
+        alert.setHeaderText(null);
+        alert.setContentText(messaggio);
+        alert.showAndWait();
     }
 }

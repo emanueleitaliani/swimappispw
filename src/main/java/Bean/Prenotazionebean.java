@@ -13,6 +13,7 @@ public class Prenotazionebean {
     private StatoPrenotazione status;
 
     public Prenotazionebean() {}
+    // Costruttore vuoto richiesto per la serializzazione o dai framework
 
 
     public void setIdPrenotazione(int idPrenotazione) {

@@ -21,7 +21,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class ConfermaPrenotazioneGui extends HomeUtenteGui {
 
-    private Utenteloggatobean utente;
+
     private LezioneBean lezione;
 
     // UNICI CAMPI PRESENTI NELL’FXML
@@ -37,8 +37,6 @@ public class ConfermaPrenotazioneGui extends HomeUtenteGui {
 
     public void setLezione(LezioneBean l) {
         this.lezione = l;
-        // ❗QUI NON COMPILO NULLA perché i dati non arrivano da TextField
-        // L'FXML serve SOLO per ora e emailUtente
     }
 
     private boolean validaEmail(String email) {
@@ -53,10 +51,7 @@ public class ConfermaPrenotazioneGui extends HomeUtenteGui {
         try {
             ora = Float.parseFloat(txtOra.getText().trim());
         } catch (NumberFormatException e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setHeaderText("Ora non valida!");
-            alert.setContentText("Inserisci un valore numerico per l'ora, esempio: 14.30");
-            alert.showAndWait();
+            mostraAlert(Alert.AlertType.ERROR, "Ora non valida!", "Inserisci un valore numerico (es: 14.30)");
             return;
         }
 
@@ -64,10 +59,7 @@ public class ConfermaPrenotazioneGui extends HomeUtenteGui {
         String emailUtente = txtEmailUtente.getText().trim();
 
         if (!validaEmail(emailUtente)) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setHeaderText("Email non valida!");
-            alert.setContentText("Inserisci una email corretta, esempio: nome@gmail.com");
-            alert.showAndWait();
+            mostraAlert(Alert.AlertType.ERROR, "Email non valida!", "Inserisci una email corretta.");
             return;
         }
 
@@ -100,22 +92,13 @@ public class ConfermaPrenotazioneGui extends HomeUtenteGui {
 
             controller.richiediprenotazione(pren);
 
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setHeaderText("Prenotazione inviata!");
-            alert.setContentText("La tua prenotazione è stata registrata con successo.");
-            alert.showAndWait();
+            mostraAlert(Alert.AlertType.INFORMATION, "Prenotazione inviata!", "Registrata con successo.");
         } catch (LezioneGiaPrenotataException e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setHeaderText("Errore");
-            alert.setContentText(e.getMessage());
-            alert.showAndWait();    // GESTIONE DUPLICATO
+            mostraAlert(Alert.AlertType.ERROR, TITOLO_ERRORE, e.getMessage());
 
 
         } catch (UtentenonpresenteException | SQLException ex) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setHeaderText("Errore");
-            alert.setContentText(ex.getMessage());
-            alert.showAndWait();
+            mostraAlert(Alert.AlertType.ERROR, TITOLO_ERRORE, ex.getMessage());
         }
     }
     @FXML
@@ -133,10 +116,7 @@ public class ConfermaPrenotazioneGui extends HomeUtenteGui {
             stage.show();
 
         } catch (IOException e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setHeaderText("Errore");
-            alert.setContentText("Impossibile tornare alla ricerca lezioni");
-            alert.showAndWait();
+            mostraAlert(Alert.AlertType.ERROR, TITOLO_ERRORE, "Impossibile tornare alla ricerca lezioni");
         }
     }
 }

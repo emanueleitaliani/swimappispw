@@ -1,5 +1,5 @@
 package Dao;
-import Bean.Prenotazionebean;
+
 import Exceptions.UtentenonpresenteException;
 import Model.PrenotazioneModel;
 import Other.Connect;
@@ -12,7 +12,7 @@ import java.sql.*;
 
 
 public class PrenotazioneDaoMYSQL implements PrenotazioneDao {
-    public void prenota(PrenotazioneModel prenotazioneModel) throws SQLException {
+    public void prenota(PrenotazioneModel prenotazioneModel) {
         /*
         fa la query per inserire la richiesta di ripetizione nel database
          */
@@ -82,7 +82,7 @@ public class PrenotazioneDaoMYSQL implements PrenotazioneDao {
 
 
 
-    public boolean deletePrenotazioneById(int IdPrenotazione,String mailUtente) throws SQLException,UtentenonpresenteException {
+    public boolean deletePrenotazioneById(int IdPrenotazione,String mailUtente) throws UtentenonpresenteException {
         Connection connection;
         Statement stmt;
         boolean cancellata=false;

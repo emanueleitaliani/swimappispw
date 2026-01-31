@@ -4,7 +4,6 @@ import Bean.CredenzialiBean;
 import Bean.Utenteloggatobean;
 import Controller.Registrazionecontroller;
 import Exceptions.EmailgiainusoException;
-import Exceptions.EmailnonvalidaException;
 import Pattern.AbstractState;
 import Pattern.StateMachineImpl;
 import Other.Stampa;
@@ -27,9 +26,7 @@ public class RegistrazioneCLI extends AbstractState {
 
         Stampa.println("Inserisci la tua email: ");
         String email = scanner.nextLine();
-        try{
-            isValidEmail(email);
-        } catch(EmailnonvalidaException e){
+        if (!isValidEmail(email)) {
             Stampa.errorPrint("Email non valida");
             return;
         }
@@ -74,7 +71,7 @@ public class RegistrazioneCLI extends AbstractState {
             goNext(context,new UserCLI(utente)); // esempio nome stato HomeUtente
         }
     }
-    private boolean isValidEmail(String email) throws EmailnonvalidaException{
+    private boolean isValidEmail(String email){
         return email != null && EMAIL_PATTERN.matcher(email).matches();
     }
 

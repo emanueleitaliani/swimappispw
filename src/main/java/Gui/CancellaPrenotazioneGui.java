@@ -35,6 +35,7 @@ public class CancellaPrenotazioneGui extends HomeUtenteGui{
 
 
     public CancellaPrenotazioneGui() {}
+    //costruttore di default
 
     public void setUtente(Utenteloggatobean utente) {
         this.utente = utente;
