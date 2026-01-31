@@ -69,11 +69,11 @@ public class PrenotazioneDaoInMemory implements PrenotazioneDao {
     @Override
     public boolean isGiaPrenotata(String emailUtente, String emailIstruttore, String giorno, float ora) {
         for (PrenotazioneModel p : prenotazioni) {
-            // Verifichiamo la corrispondenza di tutti i parametri chiave
+
             boolean stessaEmailUtente = p.getEmailUtente().equalsIgnoreCase(emailUtente);
             boolean stessaEmailIstruttore = p.getEmailIstruttore().equalsIgnoreCase(emailIstruttore);
             boolean stessoGiorno = p.getGiorno().equalsIgnoreCase(giorno);
-            // Per i float è bene considerare una piccola tolleranza o uguaglianza diretta
+
             boolean stessaOra = Float.compare(p.getOra(), ora) == 0;
 
             if (stessaEmailUtente && stessaEmailIstruttore && stessoGiorno && stessaOra) {

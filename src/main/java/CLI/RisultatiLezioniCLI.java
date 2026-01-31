@@ -32,7 +32,7 @@ public class RisultatiLezioniCLI extends AbstractState {
     public void action(StateMachineImpl context) {
         if (risultatiBean == null || risultatiBean.isEmpty()) {
             Stampa.println("Nessuna lezione trovata con i filtri inseriti.");
-            Stampa.println("Tornando al menu principale...");
+            Stampa.println("Tornando al menu principale..");
             goNext(context, new CercaLezioneCLI(user));
             return;
         }

@@ -22,7 +22,7 @@ public class IstructorCLI extends AbstractState {
         Scanner scan = new Scanner(System.in);
         int choice;
 
-        // Ciclo finché l'utente non preme 0 per il logout
+
         while (true) {
             try {
                 choice = scan.nextInt();

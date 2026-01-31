@@ -49,7 +49,7 @@ public class HomeUtenteGui {
             stage.show();
 
         } catch (IOException e) {
-            System.out.println("Errore nel caricamento di CercaLezione.fxml: " + e.getMessage());
+            Stampa.errorPrint("Errore nel caricamento di CercaLezione.fxml: " + e.getMessage());
             e.printStackTrace();
         }
     }

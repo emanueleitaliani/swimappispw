@@ -25,8 +25,8 @@ public class RichiediPrenotazioneCLI extends AbstractState {
         Scanner scanner = new Scanner(System.in);
         int scelta=-1;
 
-        System.out.println("DEBUG: action() avviato");
-        // Stampa le opzioni una volta all’inizio
+
+
 
         while (scelta!=0) {
             mostraSchermata();
@@ -35,7 +35,7 @@ public class RichiediPrenotazioneCLI extends AbstractState {
                 String input = scanner.nextLine();
                 scelta = Integer.parseInt(input);
 
-                System.out.println("DEBUG: input letto -> " + input);
+                Stampa.println("DEBUG: input letto -> " + input);
 
                 switch (scelta){
 
@@ -47,7 +47,7 @@ public class RichiediPrenotazioneCLI extends AbstractState {
                         break;
 
                         case 0:
-                        System.out.println("DEBUG: caso 0 scelto, ritorno");
+                        Stampa.println("DEBUG: caso 0 scelto, ritorno");
                         goBack(context);
                         return;
                     default:

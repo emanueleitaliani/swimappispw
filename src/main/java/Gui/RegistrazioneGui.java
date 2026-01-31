@@ -78,7 +78,7 @@ public class RegistrazioneGui {
         CredenzialiBean credenziali = new CredenzialiBean(userEmail,userPassword);
         credenziali.setEmail(userEmail);
         credenziali.setPassword(userPassword);
-        Utenteloggatobean utente = new Utenteloggatobean(credenziali, userNome, userCognome, isIstruttore);
+        this.utente = new Utenteloggatobean(credenziali, userNome, userCognome, isIstruttore);
 
         Registrazionecontroller controller = new Registrazionecontroller();
         try {

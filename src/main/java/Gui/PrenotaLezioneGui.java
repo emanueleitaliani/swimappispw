@@ -92,17 +92,7 @@ public class PrenotaLezioneGui extends HomeUtenteGui{
         aggiornaTabella();
     }
 
-    private String convertiGiorni(List<Boolean> giorni) {
-        String[] nomiGiorni = {"Lun", "Mar", "Mer", "Gio", "Ven", "Sab", "Dom"};
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < giorni.size(); i++) {
-            if (giorni.get(i)) {
-                if (sb.length() > 0) sb.append(", ");
-                sb.append(nomiGiorni[i]);
-            }
-        }
-        return sb.toString();
-    }
+
 
 
     @FXML

@@ -17,7 +17,6 @@ public class UserCLI extends AbstractState {
     @Override
     public void action(StateMachineImpl context){
 
-        /* l'azione della Home sta nel presentare le opzioni disponibili, quindi appare molto semplice*/
 
         Scanner scan = new Scanner(System.in);
         int choice;
@@ -28,8 +27,6 @@ public class UserCLI extends AbstractState {
                 switch(choice){
                     case (1):
                         goNext(context, new GestisciPrenotazioneCLI(user));
-                        // Modificato per gestire le creazioni di schede
-                        // opzioni per prenotare scheda
                         break;
                     case (2):
                         goNext(context,new CercaLezioneCLI(user));

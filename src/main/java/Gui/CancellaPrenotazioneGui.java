@@ -2,6 +2,7 @@ package Gui;
 
 import Bean.Utenteloggatobean;
 import Controller.Prenotazionecontroller;
+import Other.Stampa;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -98,7 +99,7 @@ public class CancellaPrenotazioneGui extends HomeUtenteGui{
             stage.show();
 
         } catch (IOException e) {
-            System.out.println("Errore ritorno a gestione: " + e.getMessage());
+            Stampa.errorPrint("Errore ritorno a gestione: " + e.getMessage());
             e.printStackTrace();
         }
     }

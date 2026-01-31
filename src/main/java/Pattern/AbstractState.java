@@ -18,7 +18,7 @@ public abstract class AbstractState {
     // Cambio stato
     protected void goNext(StateMachineImpl context, AbstractState nextState) {
         context.transition(nextState);
-        // esegue l’azione del nuovo stato
+
     }
 
     public abstract void action(StateMachineImpl context);

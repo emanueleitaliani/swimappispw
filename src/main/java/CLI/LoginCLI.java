@@ -42,7 +42,6 @@ public class LoginCLI extends AbstractState {
                 Stampa.println("Ruolo: " + (utente.isIstructor() ? "Istruttore" : "Utente"));
 
                 AbstractState homeCLI;
-                // Cambio stato in base al ruolo
                 if (utente.isIstructor()) {
                     homeCLI = new IstructorCLI(utente);
                 } else {

@@ -45,7 +45,7 @@ public class Initialstate extends AbstractState {
 
     @Override
     public void stampaBenvenuto() {
-        System.out.println("Ciao! Benvenuto nella schermata iniziale!");
+        Stampa.println("Ciao! Benvenuto nella schermata iniziale!");
     }
 
     @Override
@@ -55,7 +55,7 @@ public class Initialstate extends AbstractState {
 
     @Override
     public void exit(StateMachineImpl context) {
-        System.out.println("Uscita dalla schermata iniziale...");
+        Stampa.println("Uscita dalla schermata iniziale...");
     }
 }
 

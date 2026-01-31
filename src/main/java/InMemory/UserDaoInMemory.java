@@ -5,6 +5,7 @@ import Exceptions.EmailgiainusoException;
 import Exceptions.UtentenonpresenteException;
 import Model.CredenzialiModel;
 import Model.UtenteloggatoModel;
+import Other.Stampa;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -41,8 +42,8 @@ public class UserDaoInMemory implements UserDao {
 
         String email = credenzialiModel.getEmail();
         String password = credenzialiModel.getPassword();
-        System.out.println("EMAIL CERCATA: [" + credenzialiModel.getEmail() + "]");
-        System.out.println("UTENTI DISPONIBILI: " + databaseUtenti.keySet());
+        Stampa.print("EMAIL CERCATA: [" + credenzialiModel.getEmail() + "]");
+        Stampa.print("UTENTI DISPONIBILI: " + databaseUtenti.keySet());
         // 1. Controlla se l'utente esiste
         if (!databaseUtenti.containsKey(email)) {
             throw new UtentenonpresenteException();

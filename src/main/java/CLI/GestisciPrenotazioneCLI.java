@@ -29,7 +29,7 @@ public class GestisciPrenotazioneCLI extends AbstractState {
 
                 switch (choice) {
                     case 0:
-                        Stampa.println("🔙 Uscita dal menu gestione prenotazioni.");
+                        Stampa.println(" Uscita dal menu gestione prenotazioni.");
                         break;
 
                     case 1:
@@ -43,12 +43,12 @@ public class GestisciPrenotazioneCLI extends AbstractState {
                         break;
 
                     default:
-                        Stampa.errorPrint("❌ Scelta non valida. Seleziona un'opzione tra quelle elencate.");
+                        Stampa.errorPrint(" Scelta non valida. Seleziona un'opzione tra quelle elencate.");
                         break;
                 }
 
             } catch (InputMismatchException e) {
-                Stampa.errorPrint("❌ Input non valido. Inserisci un numero.");
+                Stampa.errorPrint(" Input non valido. Inserisci un numero.");
                 scanner.nextLine(); // Pulizia del buffer
             }
         }
@@ -60,7 +60,7 @@ public class GestisciPrenotazioneCLI extends AbstractState {
 
     @Override
     public void mostraSchermata() {
-        Stampa.println("\n📋 Gestione Prenotazioni:");
+        Stampa.println("\n Gestione Prenotazioni:");
         Stampa.println("   1. Visualizza Prenotazioni");
         Stampa.println("   2. Cancella Prenotazione");
         Stampa.println("   0. Torna Indietro");
@@ -70,7 +70,7 @@ public class GestisciPrenotazioneCLI extends AbstractState {
     @Override
     public void stampaBenvenuto() {
         Stampa.println(" ");
-        Stampa.printlnBlu("🏠 Home Studente -> Gestione Prenotazioni:");
+        Stampa.printlnBlu(" Home Studente -> Gestione Prenotazioni:");
     }
 
     @Override

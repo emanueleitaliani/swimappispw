@@ -3,7 +3,7 @@ import Bean.Utenteloggatobean;
 import java.util.ArrayDeque;
 import java.util.Deque;
 public class StateMachineImpl implements StateMachine {
-    private Deque<AbstractState> cronologiaStati;
+    private final Deque<AbstractState> cronologiaStati;
     private AbstractState currentState;
     private Utenteloggatobean utenteloggatobean;
 

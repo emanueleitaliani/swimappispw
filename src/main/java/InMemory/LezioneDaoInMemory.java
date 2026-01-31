@@ -9,7 +9,7 @@ public class LezioneDaoInMemory implements LezioneDao {
     private static final List<LezioneModel> lezioni = new ArrayList<>();
 
     public LezioneDaoInMemory()  {
-        // Esempio di lezioni pre-caricate
+
         LezioneModel l1 = new LezioneModel();
         l1.setEmailIstruttore("coach1@test.com");
         l1.setNomeIstruttore("Luigi");

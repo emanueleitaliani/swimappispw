@@ -95,7 +95,7 @@ public class RegistrazioneCLI extends AbstractState {
     }
 
 
-
+    @Override
     public void mostraSchermata() {
         Stampa.println("1. Conferma registrazione"); //in questo caso facciamo il login in automatico
         Stampa.println("2. Torna indietro");
