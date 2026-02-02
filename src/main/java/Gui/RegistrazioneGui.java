@@ -5,6 +5,7 @@ import Bean.CredenzialiBean;
 import Bean.Utenteloggatobean;
 import Exceptions.EmailgiainusoException;
 import Exceptions.EmailnonvalidaException;
+import Other.Stampa;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -36,7 +37,7 @@ public class RegistrazioneGui {
     private Button confermaRegistrazione;
 
     @FXML
-    private Button Indietro;
+    private Button indietro;
 
     @FXML
     private Label campiError;
@@ -109,7 +110,7 @@ public class RegistrazioneGui {
             stage.setScene(scene);
             stage.show();
         } catch (IOException e) {
-            System.err.println("Errore nel caricamento della conferma: " + e.getMessage());
+            Stampa.println("Errore nel caricamento della conferma: " + e.getMessage());
         }
     }
     @FXML
@@ -122,7 +123,7 @@ public class RegistrazioneGui {
             stage.setScene(scene);
             stage.show();
         } catch (IOException e) {
-            System.err.println("Errore nel caricamento del login: " + e.getMessage());
+            Stampa.println("Errore nel caricamento del login: " + e.getMessage());
         }
     }
 }

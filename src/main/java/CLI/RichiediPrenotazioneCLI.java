@@ -43,7 +43,7 @@ public class RichiediPrenotazioneCLI extends AbstractState {
                         Stampa.println("Hai scelto di prenotare la Lezione");
 
                         // Rimosso il try-catch qui perché Inseriscivalori gestisce già tutto
-                        Inseriscivalori(scanner);
+                        inseriscivalori(scanner);
                         break;
 
                         case 0:
@@ -55,7 +55,7 @@ public class RichiediPrenotazioneCLI extends AbstractState {
                         break;
                 }
             } catch (NumberFormatException e) {
-                Stampa.println("❌ Input non valido. Inserisci un numero intero.");
+                Stampa.println("Input non valido. Inserisci un numero intero.");
             }
         }
 
@@ -68,7 +68,7 @@ public class RichiediPrenotazioneCLI extends AbstractState {
 
 
 
-    public void Inseriscivalori( Scanner scanner) {
+    public void inseriscivalori( Scanner scanner) {
         Prenotazionebean prenotazionebean = new Prenotazionebean();
         int idRandom = ThreadLocalRandom.current().nextInt(0, 100);
         prenotazionebean.setIdPrenotazione(idRandom);
@@ -90,7 +90,7 @@ public class RichiediPrenotazioneCLI extends AbstractState {
         prenotazionebean.setEmailUser(utente.getCredenziali().getEmail());
 
         try {
-            Stampa.print("🕒 Inserisci l'orario (es: 14.30): ");
+            Stampa.print(" Inserisci l'orario (es: 14.30): ");
             float oraInput = Float.parseFloat(scanner.nextLine());
             prenotazionebean.setHour(oraInput);
 
@@ -103,9 +103,9 @@ public class RichiediPrenotazioneCLI extends AbstractState {
             prenotazionecontroller.richiediprenotazione(prenotazionebean);
 
             // Se arriviamo qui, la prenotazione è andata a buon fine
-            Stampa.println("\n✅ Richiesta di prenotazione inviata con successo!");
-            Stampa.println("📅 Giorno: " + giorno + " alle ore " + oraInput);
-            Stampa.println("👤 Istruttore: " + nomeIstruttore + " " + cognomeIstruttore);
+            Stampa.println("\n Richiesta di prenotazione inviata con successo!");
+            Stampa.println("Giorno: " + giorno + " alle ore " + oraInput);
+            Stampa.println(" Istruttore: " + nomeIstruttore + " " + cognomeIstruttore);
 
         } catch (NumberFormatException e) {
             Stampa.errorPrint("❌ Errore: Inserisci un orario valido (es. 15.00).");
@@ -134,7 +134,7 @@ public class RichiediPrenotazioneCLI extends AbstractState {
 
     @Override
     public void stampaBenvenuto() {
-        Stampa.println("📚 --- Benvenuto in prenota lezione di nuoto ---");
+        Stampa.println(" --- Benvenuto in prenota lezione di nuoto ---");
         Stampa.println("Ciao " + this.utente.getNome() + ", scegli un'opzione:");
     }
 

@@ -13,7 +13,7 @@ public interface PrenotazioneDao {
 
     List<PrenotazioneModel> getPrenotazioniByEmail(String emailUtente) throws SQLException, UtentenonpresenteException;
 
-    boolean deletePrenotazioneById(int IdPrenotazione, String mailUtente) throws SQLException, UtentenonpresenteException;
+    boolean deletePrenotazioneById(int idPrenotazione, String mailUtente) throws SQLException, UtentenonpresenteException;
 
     List<PrenotazioneModel> getPrenotazioniPerIstruttore(String emailIstruttore) throws SQLException;
 

@@ -17,7 +17,7 @@ public class HomeUtenteGui {
 
 
     @FXML
-    private Pane Homeutente;
+    private Pane homeUtente;
     protected static final String TITOLO_ERRORE = "Errore";
     protected static final String SELEZIONE_MANCANTE = "Selezione mancante";
 
@@ -45,14 +45,14 @@ public class HomeUtenteGui {
             Parent root = loader.load();
 
             // Recupero lo stage dalla scena corrente
-            Stage stage = (Stage) Homeutente.getScene().getWindow();
+            Stage stage = (Stage) homeUtente.getScene().getWindow();
 
             // Imposto la nuova scena
             stage.setScene(new Scene(root));
             stage.show();
 
         } catch (IOException e) {
-            Stampa.errorPrint("Errore nel caricamento di CercaLezione.fxml: " + e.getMessage());
+            Stampa.println("Errore nel caricamento di CercaLezione.fxml: " + e.getMessage());
             e.printStackTrace();
         }
     }
@@ -68,7 +68,7 @@ public class HomeUtenteGui {
 
             Parent root = loader.load();
 
-            Stage stage = (Stage) Homeutente.getScene().getWindow();
+            Stage stage = (Stage) homeUtente.getScene().getWindow();
             stage.setScene(new Scene(root));
             stage.show();
 
@@ -85,7 +85,7 @@ public class HomeUtenteGui {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/Fxml/login.fxml"));
             Parent root = loader.load();
-            Stage stage = (Stage) Homeutente.getScene().getWindow();
+            Stage stage = (Stage) homeUtente.getScene().getWindow();
             stage.setScene(new Scene(root));
             stage.show();
         } catch (IOException e) {

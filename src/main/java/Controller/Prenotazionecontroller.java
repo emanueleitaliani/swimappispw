@@ -4,7 +4,7 @@ import Dao.LezioneDao;
 
 import Dao.PrenotazioneDao;
 
-import Exceptions.EmailnonvalidaException;
+
 import Exceptions.LezioneGiaPrenotataException;
 import Exceptions.LezioniNonTrovateException;
 import Exceptions.UtentenonpresenteException;
@@ -123,10 +123,10 @@ public class Prenotazionecontroller {
         return beans;
     }
 
-    public boolean cancellaPrenotazioneById(int IdPrenotazione, String Mailutente) throws SQLException, UtentenonpresenteException {
+    public boolean cancellaPrenotazioneById(int idPrenotazione, String mailUtente) throws SQLException, UtentenonpresenteException {
         // Conversione da Bean a Model
 
-        return prenotazioneDao.deletePrenotazioneById(IdPrenotazione, Mailutente);
+        return prenotazioneDao.deletePrenotazioneById(idPrenotazione, mailUtente);
     }
 
     public List<Prenotazionebean> getPrenotazioniIstruttore(String emailIstruttore) {

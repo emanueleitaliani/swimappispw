@@ -1,33 +1,33 @@
 package Bean;
 
 public class CredenzialiBean {
-    private String Email;
-    private String Password;
+    private String email;
+    private String password;
 
-    public CredenzialiBean(String mail, String password){
-        this.Email = mail;
-        this.Password = password;
+    public CredenzialiBean(String email, String password){
+        this.email = email;
+        this.password = password;
     }
 
-    public CredenzialiBean(String mail){
-        this.Email = mail;
-        this.Password = null;
+    public CredenzialiBean(String email){
+        this.email = email;
+        this.password = null;
     }
 
 
     public void setEmail(String Email) {
 
-        this.Email = Email;
+        this.email = Email;
     }
     public void setPassword(String Password){
-        this.Password = Password;
+        this.password = Password;
     }
 
     public String getEmail(){
-        return  Email;
+        return  email;
     }
     public String getPassword(){
-        return Password;
+        return password;
     }
 }
 

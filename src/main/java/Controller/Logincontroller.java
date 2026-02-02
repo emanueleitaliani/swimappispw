@@ -37,7 +37,6 @@ public class Logincontroller {
 
                 return utenteloggatobean;
             } else {
-                Stampa.errorPrint("❌ Credenziali mancanti o errate");
                 return null;
             }
 

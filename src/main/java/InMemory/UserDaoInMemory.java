@@ -1,4 +1,5 @@
 package InMemory;
+
 import Dao.UserDao;
 import Exceptions.CredenzialisbagliateException;
 import Exceptions.EmailgiainusoException;
@@ -9,31 +10,28 @@ import Other.Stampa;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class UserDaoInMemory implements UserDao {
 
     private static final Logger logger = Logger.getLogger(UserDaoInMemory.class.getName());
-
-    // "Database" in memoria
     private static final Map<String, UtenteloggatoModel> databaseUtenti = new HashMap<>();
 
     static {
-        // Utente normale
-        CredenzialiModel cred1 = new CredenzialiModel("user1@example.com", "password1");
-        UtenteloggatoModel utente1 = new UtenteloggatoModel(cred1, "Mario", "Rossi", false);
-        databaseUtenti.put(cred1.getEmail(), utente1);
+        popolaDatabaseEsempi();
+        logger.info("Database utenti prepopolato con utenti di test");
+    }
 
-        // Istruttore
+    private static void popolaDatabaseEsempi() {
+        CredenzialiModel cred1 = new CredenzialiModel("user1@example.com", "password1");
+        databaseUtenti.put(cred1.getEmail(), new UtenteloggatoModel(cred1, "Mario", "Rossi", false));
+
         CredenzialiModel cred2 = new CredenzialiModel("istruttore@example.com", "password2");
-        UtenteloggatoModel utente2 = new UtenteloggatoModel(cred2, "Luigi", "Verdi", true);
-        databaseUtenti.put(cred2.getEmail(), utente2);
+        databaseUtenti.put(cred2.getEmail(), new UtenteloggatoModel(cred2, "Luigi", "Verdi", true));
 
         CredenzialiModel cred3 = new CredenzialiModel("coach1@test.com", "password3");
-        UtenteloggatoModel utente3 = new UtenteloggatoModel(cred3, "Luigi", "Verdi", true);
-        databaseUtenti.put(cred3.getEmail(), utente3);
-
-        logger.info("Database utenti prepopolato con 2 utenti di test");
+        databaseUtenti.put(cred3.getEmail(), new UtenteloggatoModel(cred3, "Luigi", "Verdi", true));
     }
 
     @Override
@@ -42,16 +40,16 @@ public class UserDaoInMemory implements UserDao {
 
         String email = credenzialiModel.getEmail();
         String password = credenzialiModel.getPassword();
-        Stampa.print("EMAIL CERCATA: [" + credenzialiModel.getEmail() + "]");
+
+        Stampa.print("EMAIL CERCATA: [" + email + "]");
         Stampa.print("UTENTI DISPONIBILI: " + databaseUtenti.keySet());
-        // 1. Controlla se l'utente esiste
+
         if (!databaseUtenti.containsKey(email)) {
             throw new UtentenonpresenteException();
         }
 
         UtenteloggatoModel utente = databaseUtenti.get(email);
 
-        // 2. Controlla password
         if (!utente.getCredenziali().getPassword().equals(password)) {
             throw new CredenzialisbagliateException();
         }
@@ -62,23 +60,24 @@ public class UserDaoInMemory implements UserDao {
     @Override
     public void registrazioneMethod(UtenteloggatoModel registrazioneModel) {
         String email = registrazioneModel.getCredenziali().getEmail();
-
         databaseUtenti.put(email, registrazioneModel);
 
-        logger.info("Utente registrato correttamente in memoria: " + email);
+        // CORREZIONE: Logging con parametri (built-in formatting)
+        logger.log(Level.INFO, "Utente registrato correttamente in memoria: {0}", email);
     }
 
+    @Override
     public void controllaEmailMethod(UtenteloggatoModel registrazioneModel) throws EmailgiainusoException {
-        String email = registrazioneModel.getCredenziali().getEmail();
-
-        if (databaseUtenti.containsKey(email)) {
+        if (databaseUtenti.containsKey(registrazioneModel.getCredenziali().getEmail())) {
             throw new EmailgiainusoException();
         }
     }
 
+    @Override
     public void registraIstruttoreMethod(String email, String nome, String cognome) {
         if (!databaseUtenti.containsKey(email)) {
-            logger.severe("Utente non trovato per diventare istruttore: " + email);
+            // CORREZIONE: Uso della formattazione integrata per evitare concatenazione
+            logger.log(Level.SEVERE, "Utente non trovato per diventare istruttore: {0}", email);
             return;
         }
 
@@ -87,8 +86,6 @@ public class UserDaoInMemory implements UserDao {
         utente.setCognome(cognome);
         utente.setIstructor(true);
 
-        logger.info("Utente promosso a istruttore: " + email);
+        logger.log(Level.INFO, "Utente promosso a istruttore: {0}", email);
     }
-
-
 }

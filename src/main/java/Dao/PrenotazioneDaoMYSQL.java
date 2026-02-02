@@ -82,7 +82,7 @@ public class PrenotazioneDaoMYSQL implements PrenotazioneDao {
 
 
 
-    public boolean deletePrenotazioneById(int IdPrenotazione,String mailUtente) throws UtentenonpresenteException {
+    public boolean deletePrenotazioneById(int idPrenotazione,String mailUtente) throws UtentenonpresenteException {
         Connection connection;
         Statement stmt;
         boolean cancellata=false;
@@ -91,7 +91,7 @@ public class PrenotazioneDaoMYSQL implements PrenotazioneDao {
         try {
             connection = Connect.getInstance().getDBConnection();
             stmt = connection.createStatement();
-            QueryLezioni.Cancellaprenotazione(stmt, IdPrenotazione, mailUtente);
+            QueryLezioni.Cancellaprenotazione(stmt, idPrenotazione, mailUtente);
             cancellata = true;
         } catch(UtentenonpresenteException f){
             Stampa.println("❌ Utente non presente: ");

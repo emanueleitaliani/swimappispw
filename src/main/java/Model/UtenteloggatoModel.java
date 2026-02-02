@@ -3,15 +3,15 @@ package Model;
 
 public class UtenteloggatoModel {
     private CredenzialiModel credenziali;
-    private String Nome;
-    private String Cognome;
+    private String nome;
+    private String cognome;
     protected boolean isIstructor;
 
     public UtenteloggatoModel() {}
-    public UtenteloggatoModel(CredenzialiModel credenziali, String Nome, String Cognome, boolean isIstructor){
+    public UtenteloggatoModel(CredenzialiModel credenziali, String nome, String cognome, boolean isIstructor){
         this.credenziali = credenziali;
-        this.Nome = Nome;
-        this.Cognome = Cognome;
+        this.nome = nome;
+        this.cognome = cognome;
         this.isIstructor = isIstructor;
     }
     public CredenzialiModel getCredenziali(){
@@ -21,16 +21,16 @@ public class UtenteloggatoModel {
         this.credenziali = credenziali;
     }
     public String getNome(){
-        return Nome;
+        return nome;
     }
     public void setNome(String Nome) {
-        this.Nome = Nome;
+        this.nome = nome;
     }
     public String getCognome(){
-        return Cognome;
+        return cognome;
     }
     public void setCognome(String Cognome) {
-        this.Cognome = Cognome;
+        this.cognome = cognome;
     }
     public boolean isIstructor(){
         return isIstructor;

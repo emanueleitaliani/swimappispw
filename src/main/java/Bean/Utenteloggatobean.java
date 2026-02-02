@@ -2,21 +2,21 @@ package Bean;
 
 public class Utenteloggatobean{
     private CredenzialiBean credenzialiBean;
-    private String Nome;
-    private String Cognome;
+    private String nome;
+    private String cognome;
     protected boolean isIstructor;
 
-    public Utenteloggatobean(CredenzialiBean credenzialiBean, String Nome, String Cognome, boolean ruolo){
+    public Utenteloggatobean(CredenzialiBean credenzialiBean, String nome, String cognome, boolean ruolo){
         this.credenzialiBean=credenzialiBean;
-        this.Nome = Nome;
-        this.Cognome = Cognome;
+        this.nome = nome;
+        this.cognome = cognome;
         this.isIstructor = ruolo;
     }
 
     public Utenteloggatobean(CredenzialiBean credenzialiBean, String Nome, String Cognome){
         this.credenzialiBean=credenzialiBean;
-        this.Nome = Nome;
-        this.Cognome = Cognome;
+        this.nome = nome;
+        this.cognome = cognome;
     }
     public CredenzialiBean getCredenziali(){
         return credenzialiBean;
@@ -26,19 +26,19 @@ public class Utenteloggatobean{
     }
 
     public String getNome() {
-        return Nome;
+        return nome;
     }
 
     public void setNome(String Nome) {
-        this.Nome = Nome;
+        this.nome = nome;
     }
 
     public String getCognome() {
-        return Cognome;
+        return cognome;
     }
 
     public void setCognome(String Cognome) {
-        this.Cognome = Cognome;
+        this.cognome = Cognome;
     }
 
 
