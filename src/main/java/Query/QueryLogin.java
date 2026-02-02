@@ -95,10 +95,6 @@ public class QueryLogin {
         }
     }
 
-
-    private static void handleException(Exception e) {
-        Stampa.errorPrint(String.format("QueryLogin: %s", e.getMessage()));
-    }
 }
 
 

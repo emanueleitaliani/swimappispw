@@ -10,6 +10,10 @@ public class Config {
 
     private static String persistenceType;// default
 
+    private Config() {
+        throw new IllegalStateException("Utility class");
+    }
+
     public static void loadFromFile() {
         try (FileInputStream fis = new FileInputStream(CONFIG_FILE)) { // 2. Usa la costante qui!
             properties.load(fis);

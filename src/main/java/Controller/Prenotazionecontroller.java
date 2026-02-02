@@ -4,6 +4,7 @@ import Dao.LezioneDao;
 
 import Dao.PrenotazioneDao;
 
+import Exceptions.EmailnonvalidaException;
 import Exceptions.LezioneGiaPrenotataException;
 import Exceptions.LezioniNonTrovateException;
 import Exceptions.UtentenonpresenteException;
@@ -96,7 +97,7 @@ public class Prenotazionecontroller {
     }
 
     // ritorna le prenotazioni in base alle mail
-    public List<Prenotazionebean> getPrenotazioniByEmail(String emailUtente) throws Exception {
+    public List<Prenotazionebean> getPrenotazioniByEmail(String emailUtente) throws UtentenonpresenteException,SQLException {
         // 1. Chiedi i dati al DAO (ricevi Model)
         List<PrenotazioneModel> models = prenotazioneDao.getPrenotazioniByEmail(emailUtente);
         List<Prenotazionebean> beans = new ArrayList<>();

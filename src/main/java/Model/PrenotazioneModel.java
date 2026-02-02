@@ -15,20 +15,10 @@ public class PrenotazioneModel {
     private float ora;
     private StatoPrenotazione status;
 
-    public PrenotazioneModel() {};
-    public PrenotazioneModel(Utenteloggatobean utente,Integer idPrenotazione,String emailUtente,float prezzo,String giorno, String info, float ora,StatoPrenotazione status) {
-        this.idPrenotazione = idPrenotazione;
-        this.nome=utente.getNome();
-        this.cognome=utente.getCognome();
-        this.emailIstruttore=utente.getCredenziali().getEmail();
-        this.emailUtente=emailUtente;
-        this.prezzo=prezzo;
-        this.giorno=giorno;
-        this.info=info;
-        this.ora=ora;
-        this.status=status;
+    public PrenotazioneModel() {
+        //costruttore vuoto
+    };
 
-    }
     public int getIdPrenotazione() {
         return idPrenotazione;
     }
