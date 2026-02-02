@@ -72,7 +72,6 @@ public class HomeUtenteGui {
             stage.setScene(new Scene(root));
             stage.show();
 
-            Stampa.println("Gestisci prenotazioni cliccato!");
 
         } catch (Exception e) {
             e.printStackTrace();

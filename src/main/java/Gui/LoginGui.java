@@ -1,6 +1,6 @@
 package Gui;
 
-import Other.Stampa;
+
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;

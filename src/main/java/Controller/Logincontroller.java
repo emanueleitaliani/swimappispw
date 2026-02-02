@@ -12,49 +12,37 @@ import Other.Stampa;
 
 public class Logincontroller {
 
-    String nome;
-    String cognome;
-    Boolean ruolo;
+
     public Utenteloggatobean login(CredenzialiBean credenzialiBean)throws CredenzialisbagliateException,UtentenonpresenteException{
+        // 1. Converti Bean in Model per il DAO
         CredenzialiModel credenzialiModel = new CredenzialiModel(
                 credenzialiBean.getEmail(),
                 credenzialiBean.getPassword()
         );
 
-        Utenteloggatobean utenteloggatobean = new Utenteloggatobean(credenzialiBean,nome,cognome,ruolo);
-
-
-        try{
-
-            // collegarsi al Dao per ottenere gli utenti
-
+        try {
+            // 2. Ottieni i dati dal DB tramite il DAO
             UserDao userDAO = FactoryDao.getUserDAO();
-
             UtenteloggatoModel utenteloggatoModel = userDAO.loginMethod(credenzialiModel);
-            CredenzialiModel credenzialimodel = utenteloggatoModel.getCredenziali();
-            CredenzialiBean credenzialibean = new CredenzialiBean(
-                    credenzialimodel.getEmail(),
-                    credenzialimodel.getPassword()
-            );
 
-            if (utenteloggatoModel != null && utenteloggatoModel.getCredenziali() != null) {
+            if (utenteloggatoModel != null) {
+                // 3. ORA che hai i dati, crea il Bean correttamente
+                // Recuperiamo i dati dal Model restituito dal DB
+                String nome = utenteloggatoModel.getNome();
+                String cognome = utenteloggatoModel.getCognome();
+                boolean ruolo = utenteloggatoModel.isIstructor();
 
-                utenteloggatobean.setNome(utenteloggatoModel.getNome());
-                utenteloggatobean.setCognome(utenteloggatoModel.getCognome());
+                // 4. Crea il bean con i dati REALI
+                Utenteloggatobean utenteloggatobean = new Utenteloggatobean(credenzialiBean, nome, cognome, ruolo);
 
-                utenteloggatobean.setCredenziali(credenzialibean);
-                utenteloggatobean.setRuolo(utenteloggatoModel.isIstructor());
                 return utenteloggatobean;
-            }else {
+            } else {
                 Stampa.errorPrint("❌ Credenziali mancanti o errate");
                 return null;
             }
-            // prende dalla Dao le credenziali dell'utente
 
 
-        } catch (UtentenonpresenteException un) {
-            return null;
-        } catch (CredenzialisbagliateException cl){
+        } catch (UtentenonpresenteException |CredenzialisbagliateException cl) {
             return null;
         }
 

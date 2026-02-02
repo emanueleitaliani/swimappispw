@@ -78,7 +78,6 @@ public class Main extends Application {
                 scanner.nextLine();  // Consuma newline
                 switch (choice) {
                     case 1:
-                        Stampa.println("ciao");
                         interfacciaGrafica(stage);
                         validInput = true;
                         break;

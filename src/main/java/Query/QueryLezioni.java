@@ -106,9 +106,6 @@ public class QueryLezioni {
                 sql += String.format(" AND LOWER(giorni_disponibili) LIKE '%%%s%%'", filtri.getGiorniDisponibili().toLowerCase());
             }
 
-            // Debug (opzionale)
-            Stampa.println("Query generata: " + sql);
-
             rs = smt.executeQuery(sql);
         } catch (SQLException e) {
             handleException(e); // o stampa errore/logging

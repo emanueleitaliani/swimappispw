@@ -61,7 +61,7 @@ public class HomeIstruttoreGui {
             Parent root = loader.load();
 
             cambiaScena(event, root);
-            Stampa.println("Logout effettuato con successo.");
+
 
         } catch (IOException e) {
             logger.log(Level.SEVERE, "Errore durante il logout", e);
