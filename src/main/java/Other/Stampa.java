@@ -19,6 +19,13 @@ public class Stampa{
         System.out.println(ANSI_BLUE + message + ANSI_RESET1);
 
     }
+    public static void printBlu(String message) {
+
+        System.out.println(ANSI_BLUE + message + ANSI_RESET1);
+
+    }
+
+
     public static void errorPrint(String message) {
 
         System.out.println(ANSI_RED + message + ANSI_RESET);

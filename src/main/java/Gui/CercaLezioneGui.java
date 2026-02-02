@@ -169,8 +169,8 @@ public class CercaLezioneGui extends HomeUtenteGui {
             stage.setScene(new Scene(root));
             stage.show();
         }catch (LezioniNonTrovateException ex) {
-                // Gestione specifica: l'utente vede l'alert informativo
-                showAlert(Alert.AlertType.INFORMATION, "Nessun Risultato", ex.getMessage());
+            // Gestione specifica: l'utente vede l'alert informativo
+            showAlert(Alert.AlertType.INFORMATION, "Nessun Risultato", ex.getMessage());
 
         } catch (IOException e) {
             showAlert(Alert.AlertType.ERROR, "Errore", "Errore nel caricamento della schermata.");

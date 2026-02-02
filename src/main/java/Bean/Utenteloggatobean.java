@@ -13,7 +13,7 @@ public class Utenteloggatobean{
         this.isIstructor = ruolo;
     }
 
-    public Utenteloggatobean(CredenzialiBean credenzialiBean, String Nome, String Cognome){
+    public Utenteloggatobean(CredenzialiBean credenzialiBean, String nome, String cognome){
         this.credenzialiBean=credenzialiBean;
         this.nome = nome;
         this.cognome = cognome;
@@ -29,7 +29,7 @@ public class Utenteloggatobean{
         return nome;
     }
 
-    public void setNome(String Nome) {
+    public void setNome(String nome) {
         this.nome = nome;
     }
 
@@ -37,8 +37,8 @@ public class Utenteloggatobean{
         return cognome;
     }
 
-    public void setCognome(String Cognome) {
-        this.cognome = Cognome;
+    public void setCognome(String cognome) {
+        this.cognome = cognome;
     }
 
 

@@ -15,12 +15,12 @@ public class CredenzialiBean {
     }
 
 
-    public void setEmail(String Email) {
+    public void setEmail(String email) {
 
-        this.email = Email;
+        this.email = email;
     }
-    public void setPassword(String Password){
-        this.password = Password;
+    public void setPassword(String password){
+        this.password = password;
     }
 
     public String getEmail(){

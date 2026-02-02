@@ -1,5 +1,4 @@
 package Query;
-import Exceptions.EmailnonvalidaException;
 import Exceptions.UtentenonpresenteException;
 import Model.LezioneModel;
 import Model.PrenotazioneModel;
