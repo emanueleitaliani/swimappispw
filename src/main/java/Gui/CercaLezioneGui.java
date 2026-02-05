@@ -174,7 +174,7 @@ public class CercaLezioneGui extends HomeUtenteGui {
 
         } catch (IOException e) {
             showAlert(Alert.AlertType.ERROR, "Errore", "Errore nel caricamento della schermata.");
-            e.printStackTrace();
+
         }
     }
 
@@ -191,7 +191,7 @@ public class CercaLezioneGui extends HomeUtenteGui {
 
         } catch (IOException e) {
             showAlert(Alert.AlertType.ERROR, "Errore", "Errore nel ritorno alla Home.");
-            e.printStackTrace();
+
         }
     }
 

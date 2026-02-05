@@ -1,7 +1,7 @@
 package Bean;
 
 public class Utenteloggatobean{
-    private CredenzialiBean credenzialiBean;
+    private final CredenzialiBean credenzialiBean;
     private String nome;
     private String cognome;
     protected boolean isIstructor;
@@ -20,9 +20,6 @@ public class Utenteloggatobean{
     }
     public CredenzialiBean getCredenziali(){
         return credenzialiBean;
-    }
-    public void setCredenziali(CredenzialiBean credenzialiBean){
-        this.credenzialiBean = credenzialiBean;
     }
 
     public String getNome() {

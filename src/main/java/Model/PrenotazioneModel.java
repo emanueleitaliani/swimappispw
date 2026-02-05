@@ -1,6 +1,6 @@
 package Model;
 
-import Bean.Utenteloggatobean;
+
 import Other.StatoPrenotazione;
 
 public class PrenotazioneModel {

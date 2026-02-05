@@ -102,7 +102,7 @@ public class CancellaPrenotazioneGui extends HomeUtenteGui{
 
         } catch (IOException e) {
             Stampa.errorPrint("Errore ritorno a gestione: " + e.getMessage());
-            e.printStackTrace();
+
         }
     }
 }

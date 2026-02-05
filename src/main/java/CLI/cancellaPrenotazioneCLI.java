@@ -35,14 +35,14 @@ public class cancellaPrenotazioneCLI extends AbstractState {
             boolean cancellata = controller.cancellaPrenotazioneById(idPrenotazione,utente.getCredenziali().getEmail());
 
             if (cancellata) {
-                Stampa.println("✅ Prenotazione cancellata con successo.");
+                Stampa.println(" Prenotazione cancellata con successo.");
             } else {
-                Stampa.println("❌ Nessuna prenotazione trovata con quell'ID per il tuo account.");
+                Stampa.println(" Nessuna prenotazione trovata con quell'ID per il tuo account.");
             }
         } catch (NumberFormatException e) {
-            Stampa.println("❌ ID non valido. Inserisci un numero intero.");
+            Stampa.println("ID non valido. Inserisci un numero intero.");
         } catch (Exception e) {
-            Stampa.println("❌ Errore durante la cancellazione: " + e.getMessage());
+            Stampa.println("Errore durante la cancellazione: " + e.getMessage());
         }
 
         goBack(context);
@@ -55,7 +55,7 @@ public class cancellaPrenotazioneCLI extends AbstractState {
 
     @Override
     public void stampaBenvenuto() {
-        Stampa.println("🗑️ --- Cancellazione Prenotazione ---");
+        Stampa.println(" --- Cancellazione Prenotazione ---");
         Stampa.println("Ciao " + utente.getNome() + ", inserisci l'ID della prenotazione da rimuovere.");
     }
 
