@@ -23,13 +23,13 @@ public class UtenteloggatoModel {
     public String getNome(){
         return nome;
     }
-    public void setNome(String Nome) {
+    public void setNome(String nome) {
         this.nome = nome;
     }
     public String getCognome(){
         return cognome;
     }
-    public void setCognome(String Cognome) {
+    public void setCognome(String cognome) {
         this.cognome = cognome;
     }
     public boolean isIstructor(){

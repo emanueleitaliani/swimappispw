@@ -7,10 +7,10 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
-public class TestDBConnection {
+ class TestDBConnection {
 
     @Test
-    public void testDatabaseConnection() {
+     void testDatabaseConnection() {
         try {
             // Otteniamo la connessione dal Singleton
             Connection conn = Connect.getInstance().getDBConnection();
