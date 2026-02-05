@@ -9,7 +9,7 @@
 <?import javafx.scene.text.Text?>
 
 
-<Pane fx:id="Homeutente" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="576.0" prefWidth="878.0" style="-fx-background-color: #00BFFF;" xmlns="http://javafx.com/javafx/23.0.1"
+<Pane fx:id="homeUtente" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="576.0" prefWidth="878.0" style="-fx-background-color: #00BFFF;" xmlns="http://javafx.com/javafx/23.0.1"
       xmlns:fx="http://javafx.com/fxml/1" fx:controller="Gui.HomeUtenteGui" >
     <children>
         <Label layoutX="284.0" layoutY="38.0" text="HOME UTENTE" textFill="WHITE">

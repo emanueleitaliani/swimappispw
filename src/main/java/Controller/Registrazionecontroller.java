@@ -18,7 +18,7 @@ public class Registrazionecontroller {
         user.setCredenziali(credenziali);
         user.setNome(utente.getNome());
         user.setCognome(utente.getCognome());
-        user.setIstructor(utente.getRuolo());
+        user.setIstructor(utente.isIstructor());
 
         try{
             UserDao registrazioneDao = FactoryDao.getUserDAO();

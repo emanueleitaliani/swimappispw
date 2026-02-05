@@ -64,12 +64,6 @@ public class Main extends Application {
         }
 
 
-
-        if ("mysql".equalsIgnoreCase(Config.getPersistenceType())) {
-            testDatabaseConnection();
-        }
-
-
         boolean validInput = false;
         while (!validInput) {
             try {
@@ -132,23 +126,7 @@ public class Main extends Application {
         Stampa.println("2. Interfaccia a riga di comando");
 
     }
-    private void testDatabaseConnection() {
-        try {
-            Connection conn = Connect.getInstance().getDBConnection();
-            if (conn != null && !conn.isClosed()) {
-                try (Statement stmt = conn.createStatement();
-                     ResultSet rs = stmt.executeQuery("SELECT 1")) {
-                    if (rs.next()) {
-                        Stampa.println("✅ Connessione al database verificata con successo.");
-                    }
-                }
-            } else {
-                Stampa.errorPrint("❌ Connessione al database non disponibile.");
-            }
-        } catch (Exception e) {
-            Stampa.errorPrint("❌ Errore durante il test di connessione: " + e.getMessage());
-        }
-    }
+
 
 
 }

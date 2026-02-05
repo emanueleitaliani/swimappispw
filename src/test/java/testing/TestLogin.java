@@ -3,7 +3,9 @@ package testing;
 import Bean.CredenzialiBean;
 import Bean.Utenteloggatobean;
 import Controller.Logincontroller;
+import Controller.Registrazionecontroller;
 import Exceptions.CredenzialisbagliateException;
+import Exceptions.EmailgiainusoException;
 import Exceptions.UtentenonpresenteException;
 import Other.Config;
 import Other.Stampa;
@@ -24,18 +26,32 @@ public class TestLogin {
     }
 
     @Test
-    void testLoginSuccesso() throws CredenzialisbagliateException, UtentenonpresenteException {
-        // Arrange
+    void testLoginSuccesso() {
+        // 1. Arrange: Prepariamo i dati
+        // Assicurati che nel DB esista: Email: Leoboria11@gmail.com | Pass: Leoboriaa | Nome: Leo
         CredenzialiBean credenziali = new CredenzialiBean("Leoboria11@gmail.com", "Leoboriaa");
 
-        // Act
-        Utenteloggatobean risultato = loginController.login(credenziali);
+        try {
+            // 2. Act: Eseguiamo l'azione
+            Utenteloggatobean risultato = loginController.login(credenziali);
 
-        // Assert
-        assertNotNull(risultato, "Il login deve restituire un bean");
-        // Nota: Se Actual è null, controlla che nel DB la colonna 'Nome' contenga 'Leo'
-        assertEquals("Leo", risultato.getNome(), "Il nome deve corrispondere a quello nel DB");
-        Stampa.println("Test Successo completato per: " + risultato.getNome());
+            // 3. Assert: Verifichiamo i risultati con messaggi di errore chiari
+
+            // Se risultato è null, il test fallisce qui e ti dice perché
+            assertNotNull(risultato, "Il login è fallito (restituito null). " +
+                    "Verifica che l'utente esista nel DB e che la password sia corretta.");
+
+            // Verifichiamo che il nome sia esattamente quello atteso
+            assertEquals("Leo", risultato.getNome(),
+                    "Il nome nel Bean (" + risultato.getNome() + ") non corrisponde a 'Leo'. " +
+                            "Controlla maiuscole/minuscole nel database.");
+
+            Stampa.println("✅ Test Successo completato per l'utente: " + risultato.getNome());
+
+        } catch (Exception e) {
+            // Se il controller o il DAO lanciano un'eccezione non gestita, la catturiamo qui
+            fail("Il test ha lanciato un'eccezione imprevista: " + e.getMessage());
+        }
     }
 
     @Test
@@ -50,5 +66,38 @@ public class TestLogin {
         CredenzialiBean credenziali = new CredenzialiBean("non_esisto_mai@test.it", "1234");
         Utenteloggatobean risultato = loginController.login(credenziali);
         assertNull(risultato, "Utente non presente deve restituire null");
+    }
+    @Test
+    void testRegistrazioneEmailGiaInUso() {
+        // Arrange: Usiamo l'email di Leo che esiste già nel DB
+        Registrazionecontroller regController = new Registrazionecontroller();
+
+        // Prepariamo un Bean con email duplicata
+        CredenzialiBean credenziali = new CredenzialiBean("Leoboria11@gmail.com", "nuovapassword");
+        Utenteloggatobean nuovoUtente = new Utenteloggatobean(credenziali, "Marco", "Rossi", false);
+
+        // Act & Assert: Verifichiamo che lanci EmailgiainusoException
+        assertThrows(EmailgiainusoException.class, () -> {
+            regController.registrazione(nuovoUtente);
+        }, "Il controller dovrebbe impedire la registrazione di una email già presente");
+
+        Stampa.println("✅ Test Registrazione Duplicata: OK (Lanciata EmailgiainusoException)");
+    }
+
+    @Test
+    void testRegistrazioneFlussoIstruttore() {
+        Registrazionecontroller regController = new Registrazionecontroller();
+
+        // Creiamo un utente casuale per non andare in conflitto con test precedenti
+        String emailCasuale = "istruttore_" + System.currentTimeMillis() + "@test.it";
+        CredenzialiBean credenziali = new CredenzialiBean(emailCasuale, "password123");
+        Utenteloggatobean istruttore = new Utenteloggatobean(credenziali, "Test", "Istruttore", true);
+
+        // Verifichiamo che la registrazione non lanci eccezioni
+        assertDoesNotThrow(() -> {
+            regController.registrazione(istruttore);
+        }, "La registrazione di un nuovo istruttore dovrebbe avere successo");
+
+        Stampa.println("✅ Test Registrazione Istruttore: OK per " + emailCasuale);
     }
 }
