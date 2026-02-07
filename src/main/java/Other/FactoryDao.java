@@ -5,7 +5,7 @@ import InMemory.*;
 
 public class FactoryDao {
 
-    // 1. Definisci le costanti qui per evitare duplicazioni
+
     private static final String MYSQL = "mysql";
     private static final String MEMORY = "memory";
     private static final String JSON = "json";

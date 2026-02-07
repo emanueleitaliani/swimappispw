@@ -75,25 +75,46 @@ public class UserDAOJSON implements UserDao {
             Stampa.errorPrint("Impossibile caricare gli utenti dal file utenti.");
         }
     }
-
-
-
     private void saveToFile() {
+        // 1. Verifica che la mappa non sia vuota prima di scrivere (opzionale, per debug)
+        if (users.isEmpty()) {
+            Stampa.errorPrint("Attenzione: la mappa utenti è vuota. Il file verrà svuotato.");
+        }
+
+        // 2. Il Try-with-resources chiude automaticamente il writer
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_PATH))) {
             for (UtenteloggatoModel user : users.values()) {
+
+                // 3. Controllo di sicurezza: se l'utente o le credenziali sono null, salta la riga
+                if (user == null || user.getCredenziali() == null) continue;
+
                 CredenzialiModel c = user.getCredenziali();
 
-                String line = c.getEmail() + "," +
-                        c.getPassword() + "," +
-                        user.getNome() + "," +
-                        user.getCognome() + "," +
-                        user.isIstructor();
+                // 4. Costruiamo la stringa in modo pulito
+                String line = String.format("%s,%s,%s,%s,%b",
+                        c.getEmail().trim(),
+                        c.getPassword().trim(),
+                        user.getNome().trim(),
+                        user.getCognome().trim(),
+                        user.isIstructor() // Il %b trasforma il boolean in "true" o "false"
+                );
 
                 writer.write(line);
                 writer.newLine();
             }
+
+            // 5. IMPORTANTISSIMO: Forza la scrittura dei dati rimasti nel buffer
+            writer.flush();
+
+            Stampa.println("Dati salvati correttamente in: " + FILE_PATH);
+
         } catch (IOException e) {
-            Stampa.errorPrint("Impossibile salvare l'utente sul file utenti.");
+            // 6. Stampa l'errore REALE in console per poter fare debug
+            e.printStackTrace();
+            Stampa.errorPrint("Errore critico nel salvataggio: " + e.getMessage());
         }
     }
+
+
+
 }

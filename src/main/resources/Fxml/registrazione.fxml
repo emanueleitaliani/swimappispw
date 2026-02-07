@@ -50,7 +50,7 @@
                 </ImageView>
             </children>
         </Pane>
-        <Button layoutX="14.0" layoutY="355.0" mnemonicParsing="false" onMouseClicked="#goToLogin" text="Indietro" />
+        <Button fx:id="indietro" layoutX="14.0" layoutY="355.0" mnemonicParsing="false" onMouseClicked="#goToLogin" text="Indietro" />
         <Label layoutX="218.0" layoutY="42.0" text="REGISTRAZIONE" textFill="WHITE">
             <font>
                 <Font name="Segoe UI Bold" size="20.0" />
@@ -69,7 +69,7 @@
         </ImageView>
         <Pane layoutY="-5.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="604.0" prefWidth="936.0" style="-fx-background-color: #00bfff;">
             <children>
-                <Button fx:id="confermaRegistrazione" layoutX="779.0" layoutY="558.0" mnemonicParsing="false" text="Conferma Registrazione" onMouseClicked="#loadConferma" />
+                <Button fx:id="confermaRegistrazione" layoutX="779.0" layoutY="558.0" mnemonicParsing="false" text="Conferma Registrazione" onMouseClicked="#handleRegistrazione" />
                 <Pane layoutX="381.0" layoutY="212.0" prefHeight="359.0" prefWidth="216.0" style="-fx-background-color: #f2f2f2;">
                     <children>
                         <TextField fx:id="nome" layoutX="23.0" layoutY="69.0" prefHeight="35.0" prefWidth="154.0" />

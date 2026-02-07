@@ -82,7 +82,7 @@ public class PrenotazioneDaoMYSQL implements PrenotazioneDao {
 
 
 
-    public boolean deletePrenotazioneById(int idPrenotazione,String mailUtente) throws UtentenonpresenteException {
+    public boolean deletePrenotazioneById(int idPrenotazione,String mailUtente)  {
         Connection connection;
         Statement stmt;
         boolean cancellata=false;

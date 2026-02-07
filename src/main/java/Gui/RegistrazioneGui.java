@@ -50,46 +50,74 @@ public class RegistrazioneGui {
         this.utente = utente;
     }
 
-
-
     @FXML
     void handleRegistrazione() {
-        String userNome = nome.getText();
-        String userCognome = cognome.getText();
-        String userEmail = email.getText();
-        String userPassword = password.getText();
-        boolean isIstruttore = isIstructor.isSelected();
 
+        String userNome = nome.getText().trim();
+        String userCognome = cognome.getText().trim();
+        String userEmail = email.getText().trim();
+        String userPassword = password.getText().trim();
+        boolean isIstruttore = isIstructor.isSelected(); // Recupero il valore della checkbox
 
-        // Controllo campi
         if (userNome.isBlank() || userCognome.isBlank() || userEmail.isBlank() || userPassword.isBlank()) {
             campiError.setText("⚠️ Tutti i campi sono obbligatori.");
             return;
         }
 
-        // Validazione email
         try {
             validateEmail(userEmail);
+
+            // Creazione Bean
+            CredenzialiBean credenziali = new CredenzialiBean(userEmail, userPassword);
+            this.utente = new Utenteloggatobean(credenziali, userNome, userCognome, isIstruttore);
+
+            // Chiamata al controller logico
+            Registrazionecontroller controller = new Registrazionecontroller();
+            controller.registrazione(utente);
+
+            campiError.setText("");
+
+            // CHIAMATA AL METODO DI CAMBIO INTERFACCIA DINAMICO
+            caricaInterfacciaDopoRegistrazione(isIstruttore);
+
         } catch (EmailnonvalidaException e) {
             campiError.setText("❌ Email non valida.");
-            return;
-        }
-
-        // Bean e controller logico
-        CredenzialiBean credenziali = new CredenzialiBean(userEmail,userPassword);
-        credenziali.setEmail(userEmail);
-        credenziali.setPassword(userPassword);
-        this.utente = new Utenteloggatobean(credenziali, userNome, userCognome, isIstruttore);
-
-        Registrazionecontroller controller = new Registrazionecontroller();
-        try {
-            controller.registrazione(utente);
-            campiError.setText(""); // pulizia errori
-            loadConferma(); // pagina successiva
         } catch (EmailgiainusoException e) {
             campiError.setText("❌ Email già in uso.");
         }
     }
+
+    /**
+     * Metodo dinamico per cambiare interfaccia in base al ruolo
+     */
+    private void caricaInterfacciaDopoRegistrazione(boolean istruttore) {
+        try {
+            // 1. Scegliamo il file FXML in base al ruolo
+            String fxmlPath = istruttore ? "/Fxml/homeistruttore.fxml" : "/Fxml/homeutente.fxml";
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
+
+            // 2. Iniettiamo l'utente nel controller della nuova interfaccia
+            loader.setControllerFactory(c -> {
+                if (istruttore) {
+                    return new HomeIstruttoreGui(this.utente);
+                } else {
+                    return new HomeUtenteGui(this.utente);
+                }
+            });
+
+            Parent root = loader.load();
+            Stage stage = (Stage) nome.getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.show();
+
+        } catch (IOException e) {
+            Stampa.println("Errore nel caricamento dell'interfaccia post-registrazione: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+
+
 
     private void validateEmail(String email) throws Exceptions.EmailnonvalidaException {
         if (email == null || !EMAIL_PATTERN.matcher(email).matches()) {
@@ -97,22 +125,7 @@ public class RegistrazioneGui {
         }
     }
 
-    @FXML
-    public void loadConferma() {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Fxml/homeutente.fxml"));
-            loader.setControllerFactory(c -> new HomeUtenteGui(this.utente));
 
-            Parent root = loader.load();
-            Scene scene = new Scene(root);
-
-            Stage stage = (Stage) nome.getScene().getWindow(); // prende lo stage corrente
-            stage.setScene(scene);
-            stage.show();
-        } catch (IOException e) {
-            Stampa.println("Errore nel caricamento della conferma: " + e.getMessage());
-        }
-    }
     @FXML
     public void goToLogin() {
         try {

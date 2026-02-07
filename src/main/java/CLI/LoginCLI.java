@@ -12,7 +12,7 @@ import java.util.Scanner;
 
 public class LoginCLI extends AbstractState {
 
-    private Scanner scanner = new Scanner(System.in);
+    private final Scanner scanner = new Scanner(System.in);
 
     @Override
     public void entry(StateMachineImpl context){

@@ -49,7 +49,7 @@ public class LezioneDaoMYSQL implements LezioneDao {
         return risultati;
     }
 
-    public boolean controllaEmail(String nome, String cognome, String email) throws UtentenonpresenteException {
+    public boolean controllaEmail(String nome, String cognome, String email) {
         Connection connection;
         Statement stmt = null;
 

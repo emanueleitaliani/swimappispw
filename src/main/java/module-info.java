@@ -13,4 +13,5 @@ module org.example {
     exports org.example;
     exports Gui;
     exports Bean;
+    exports Other;
 }

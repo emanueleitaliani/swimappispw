@@ -93,12 +93,9 @@ public class ConfermaPrenotazioneGui extends HomeUtenteGui {
             controller.richiediprenotazione(pren);
 
             mostraAlert(Alert.AlertType.INFORMATION, "Prenotazione inviata!", "Registrata con successo.");
-        } catch (LezioneGiaPrenotataException e) {
+        } catch (LezioneGiaPrenotataException |UtentenonpresenteException | SQLException e) {
             mostraAlert(Alert.AlertType.ERROR, TITOLO_ERRORE, e.getMessage());
 
-
-        } catch (UtentenonpresenteException | SQLException ex) {
-            mostraAlert(Alert.AlertType.ERROR, TITOLO_ERRORE, ex.getMessage());
         }
     }
     @FXML

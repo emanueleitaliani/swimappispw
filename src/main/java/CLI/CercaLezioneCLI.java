@@ -76,7 +76,7 @@ public class CercaLezioneCLI extends AbstractState {
         Stampa.print("Inserisci note aggiuntive o premi Invio: ");
         String noteAggiuntive = scanner.nextLine();
 
-        Float prezzoMassimo;
+        float prezzoMassimo;
         Stampa.print("Prezzo massimo: ");
         try {
             String inputPrezzo = scanner.nextLine();
