@@ -31,7 +31,7 @@ public class GestionePrenotazioniGui {
     @FXML private Pane gestionePrenotazioniPane;
 
 
-    // Verrà chiamato dal loader
+
 
 
     public void setUtente(Utenteloggatobean utente) {
