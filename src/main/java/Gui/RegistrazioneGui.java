@@ -112,7 +112,7 @@ public class RegistrazioneGui {
 
         } catch (IOException e) {
             Stampa.println("Errore nel caricamento dell'interfaccia post-registrazione: " + e.getMessage());
-            e.printStackTrace();
+
         }
     }
 

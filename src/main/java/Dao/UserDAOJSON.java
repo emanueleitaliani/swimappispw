@@ -110,7 +110,7 @@ public class UserDAOJSON implements UserDao {
 
         } catch (IOException e) {
             // 6. Stampa l'errore REALE in console per poter fare debug
-            e.printStackTrace();
+
             Stampa.errorPrint("Errore critico nel salvataggio: " + e.getMessage());
         }
     }
