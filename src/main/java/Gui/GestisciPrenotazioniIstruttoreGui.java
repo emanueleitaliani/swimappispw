@@ -23,7 +23,7 @@ public class GestisciPrenotazioniIstruttoreGui {
     private Utenteloggatobean utente;
     private final Prenotazionecontroller controller;
 
-    // Elementi collegati a SceneBuilder
+
     @FXML private TableView<Prenotazionebean> tblPrenotazioni;
     @FXML private TableColumn<Prenotazionebean, String> colUtente;
     @FXML private TableColumn<Prenotazionebean, String> colGiorno;
@@ -32,7 +32,7 @@ public class GestisciPrenotazioniIstruttoreGui {
     @FXML private Button tornaindietro;
     @FXML private Button accetta;
     @FXML private Button rifiuta;
-    @FXML private Label lblEsito; // Label per stampare l'esito delle azioni
+    @FXML private Label lblEsito;
 
     public GestisciPrenotazioniIstruttoreGui() {
         this.controller = new Prenotazionecontroller();
