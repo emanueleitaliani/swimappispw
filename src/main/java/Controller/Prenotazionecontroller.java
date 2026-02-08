@@ -22,7 +22,7 @@ public class Prenotazionecontroller {
     private final List<LezioneBean> risultatiRicercaBean = new ArrayList<>();
     private final PrenotazioneDao prenotazioneDao;
     private final LezioneDao lezioneDao;
-    // ✅ Controlla che l'email esista nel database
+
 
 
     public Prenotazionecontroller() {

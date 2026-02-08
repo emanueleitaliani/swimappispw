@@ -4,7 +4,7 @@ import Bean.Prenotazionebean;
 import Bean.Utenteloggatobean;
 import Controller.Prenotazionecontroller;
 import Other.Stampa;
-import Other.StatoPrenotazione; // Importiamo l'Enum globale
+import Other.StatoPrenotazione;
 import Pattern.AbstractState;
 import Pattern.StateMachineImpl;
 import java.util.List;

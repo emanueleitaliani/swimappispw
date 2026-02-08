@@ -29,9 +29,9 @@ public class GestisciPrenotazioniIstruttoreGui {
     @FXML private TableColumn<Prenotazionebean, String> colGiorno;
     @FXML private TableColumn<Prenotazionebean, Float> colOra;
     @FXML private TableColumn<Prenotazionebean, String> colInfo;
-    //@FXML private Button tornaindietro;
-    //@FXML private Button accetta;
-    //@FXML private Button rifiuta;
+    @FXML private Button tornaindietro;
+    @FXML private Button accetta;
+    @FXML private Button rifiuta;
     @FXML private Label lblEsito; // Label per stampare l'esito delle azioni
 
     public GestisciPrenotazioniIstruttoreGui() {
