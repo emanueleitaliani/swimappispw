@@ -82,21 +82,27 @@ public class PrenotazioneDaoMYSQL implements PrenotazioneDao {
 
 
 
-    public boolean deletePrenotazioneById(int idPrenotazione,String mailUtente)  {
+    public boolean deletePrenotazioneById(int idPrenotazione, String mailUtente) {
         Connection connection;
         Statement stmt;
-        boolean cancellata=false;
-
+        boolean cancellata = false;
 
         try {
             connection = Connect.getInstance().getDBConnection();
             stmt = connection.createStatement();
-            QueryLezioni.Cancellaprenotazione(stmt, idPrenotazione, mailUtente);
-            cancellata = true;
+
+            // Riceviamo il numero di righe cancellate
+            int rowsAffected = QueryLezioni.Cancellaprenotazione(stmt, idPrenotazione, mailUtente);
+
+            // Se rowsAffected è > 0, la prenotazione esisteva ed è stata rimossa
+            if (rowsAffected > 0) {
+                cancellata = true;
+            }
+
         } catch(UtentenonpresenteException f){
-            Stampa.println("❌ Utente non presente: ");
+            Stampa.println("❌ Utente non presente");
         } catch (SQLException e) {
-            handleDAOException(e);  // Gestione centralizzata dell'eccezione
+            handleDAOException(e);
         }
 
         return cancellata;

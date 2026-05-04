@@ -1,6 +1,6 @@
 package org.example;
 import Other.Config;
-import Other.Connect;
+
 import Other.Stampa;
 import Pattern.StateMachineImpl;
 import javafx.application.Application;
@@ -10,9 +10,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.Statement;
+
 import java.util.Scanner;
 
 

@@ -63,9 +63,10 @@ public class QueryLezioni {
         return rs;
 
     }
-    public static void Cancellaprenotazione(Statement stmt,int IdPrenotazione,String mailUtente) throws SQLException,UtentenonpresenteException {
-        String richiesta = String.format(Query.CANCELLA_PRENOTAZIONE,IdPrenotazione,mailUtente);
-        stmt.executeUpdate(richiesta);
+    public static int Cancellaprenotazione(Statement stmt, int IdPrenotazione, String mailUtente) throws SQLException, UtentenonpresenteException {
+        String richiesta = String.format(Query.CANCELLA_PRENOTAZIONE, IdPrenotazione, mailUtente);
+        // executeUpdate ritorna il numero di righe colpite (1 se cancellata, 0 se non trovata)
+        return stmt.executeUpdate(richiesta);
     }
     public static ResultSet cercaLezione(Statement smt, LezioneModel filtri){
         String sql;
