@@ -28,11 +28,21 @@ public class cancellaPrenotazioneCLI extends AbstractState {
         Prenotazionecontroller controller = new Prenotazionecontroller();
 
         try {
-            Stampa.print("🔢 Inserisci l'ID della prenotazione da cancellare: ");
-            int id = Integer.parseInt(scanner.nextLine());
+            // 1. Specifichiamo all'utente che può digitare 0 per annullare
+            Stampa.print("🔢 Inserisci l'ID della prenotazione da cancellare (oppure 0 per annullare): ");
+            String input = scanner.nextLine().trim();
 
+            // 2. Controllo immediato sulla scelta di uscita
+            if ("0".equals(input)) {
+                Stampa.println("Annullamento in corso... Nessuna operazione effettuata.");
+                goBack(context);
+                return; // Interrompe il metodo ed evita il resto della logica
+            }
 
+            // 3. Se non ha digitato 0, procediamo con il parsing dell'ID reale
+            int id = Integer.parseInt(input);
 
+            // Creiamo il Bean da passare al controller
             Prenotazionebean bean = new Prenotazionebean();
             bean.setIdPrenotazione(id);
             bean.setEmailUser(utente.getCredenziali().getEmail());
@@ -41,17 +51,23 @@ public class cancellaPrenotazioneCLI extends AbstractState {
             boolean cancellata = controller.cancellaPrenotazione(bean);
 
             if (cancellata) {
-                Stampa.println(" Prenotazione cancellata con successo.");
+                Stampa.println("✅ Prenotazione cancellata con successo.");
             } else {
-                Stampa.println(" Nessuna prenotazione trovata con quell'ID per il tuo account.");
+                Stampa.println("❌ Nessuna prenotazione trovata con quell'ID per il tuo account.");
             }
+
+            // Se l'operazione si è conclusa (con successo o meno), torniamo indietro
+            goBack(context);
+
         } catch (NumberFormatException e) {
             Stampa.println("ID non valido. Inserisci un numero intero.");
+            // Opzionale: se c'è un errore di formato, forse conviene fargli ripetere l'azione
+            // invece di cacciarlo fuori subito. Se vuoi farlo riprovare, chiama: action(context);
+            goBack(context);
         } catch (Exception e) {
             Stampa.println("Errore durante la cancellazione: " + e.getMessage());
+            goBack(context);
         }
-
-        goBack(context);
     }
 
     @Override
