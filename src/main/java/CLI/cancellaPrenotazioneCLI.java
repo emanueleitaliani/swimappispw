@@ -1,5 +1,6 @@
 package CLI;
 
+import Bean.Prenotazionebean;
 import Bean.Utenteloggatobean;
 import Controller.Prenotazionecontroller;
 import Other.Stampa;
@@ -28,11 +29,16 @@ public class cancellaPrenotazioneCLI extends AbstractState {
 
         try {
             Stampa.print("🔢 Inserisci l'ID della prenotazione da cancellare: ");
-            int idPrenotazione = Integer.parseInt(scanner.nextLine());
+            int id = Integer.parseInt(scanner.nextLine());
 
 
 
-            boolean cancellata = controller.cancellaPrenotazioneById(idPrenotazione,utente.getCredenziali().getEmail());
+            Prenotazionebean bean = new Prenotazionebean();
+            bean.setIdPrenotazione(id);
+            bean.setEmailUser(utente.getCredenziali().getEmail());
+
+            // Invocazione del controller tramite Bean
+            boolean cancellata = controller.cancellaPrenotazione(bean);
 
             if (cancellata) {
                 Stampa.println(" Prenotazione cancellata con successo.");

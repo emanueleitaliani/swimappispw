@@ -83,11 +83,11 @@ public class GestisciPrenotazioniIstruttoreCLI extends AbstractState {
         // Ora usiamo StatoPrenotazione invece di Prenotazionebean.Status
         if (azione == 1) {
             p.setStatus(StatoPrenotazione.ACCETTATA);
-            controller.aggiornaStatoPrenotazione(p.getIdPrenotazione(), StatoPrenotazione.ACCETTATA);
+            controller.aggiornaStatoPrenotazione(p, StatoPrenotazione.ACCETTATA);
             Stampa.println(" Prenotazione accettata con successo!");
         } else if (azione == 2) {
             p.setStatus(StatoPrenotazione.RIFIUTATA);
-            controller.aggiornaStatoPrenotazione(p.getIdPrenotazione(), StatoPrenotazione.RIFIUTATA);
+            controller.aggiornaStatoPrenotazione(p, StatoPrenotazione.RIFIUTATA);
             Stampa.println(" Prenotazione rifiutata.");
         } else {
             Stampa.println("Operazione annullata.");

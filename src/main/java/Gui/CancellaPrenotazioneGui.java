@@ -1,5 +1,6 @@
 package Gui;
 
+import Bean.Prenotazionebean;
 import Bean.Utenteloggatobean;
 import Controller.Prenotazionecontroller;
 import Other.Stampa;
@@ -61,11 +62,13 @@ public class CancellaPrenotazioneGui extends HomeUtenteGui{
         try {
             Prenotazionecontroller controller = new Prenotazionecontroller();
 
-            boolean cancellata = controller.cancellaPrenotazioneById(
-                    id,
-                    utente.getCredenziali().getEmail()
-            );
+            // Creiamo e popoliamo il Bean per il Controller
+            Prenotazionebean bean = new Prenotazionebean();
+            bean.setIdPrenotazione(id);
+            bean.setEmailUser(utente.getCredenziali().getEmail());
 
+            // Passaggio dell'intero oggetto Bean
+            boolean cancellata = controller.cancellaPrenotazione(bean);
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
 
             if (cancellata) {

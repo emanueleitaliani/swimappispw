@@ -123,10 +123,16 @@ public class Prenotazionecontroller {
         return beans;
     }
 
-    public boolean cancellaPrenotazioneById(int idPrenotazione, String mailUtente) throws SQLException, UtentenonpresenteException {
-        // Conversione da Bean a Model
+    public boolean cancellaPrenotazione(Prenotazionebean prenotazioneBean) throws SQLException, UtentenonpresenteException {
+        // 1. Mapping da Bean a Model (Entity)
+        PrenotazioneModel prenotazioneModel = new PrenotazioneModel();
+        prenotazioneModel.setIdPrenotazione(prenotazioneBean.getIdPrenotazione());
+        prenotazioneModel.setEmailUtente(prenotazioneBean.getEmailUser());
 
-        return prenotazioneDao.deletePrenotazioneById(idPrenotazione, mailUtente);
+        // In futuro, se servissero altri dati del bean per validare la cancellazione, li mapperesti qui
+
+        // 2. Passaggio del Model al DAO
+        return prenotazioneDao.deletePrenotazione(prenotazioneModel);
     }
 
     public List<Prenotazionebean> getPrenotazioniIstruttore(String emailIstruttore) {
@@ -151,13 +157,31 @@ public class Prenotazionecontroller {
         }
         return listaBean;
     }
-
-    public void aggiornaStatoPrenotazione(int idPrenotazione, StatoPrenotazione nuovoStato) {
+    public void aggiornaStatoPrenotazione(Prenotazionebean prenotazioneBean, StatoPrenotazione nuovoStato) {
         try {
-            prenotazioneDao.updateStato(idPrenotazione, nuovoStato);
+            // 1. Creazione e Mapping da Bean a Model (Entity)
+            PrenotazioneModel prenotazioneModel = new PrenotazioneModel();
+            prenotazioneModel.setIdPrenotazione(prenotazioneBean.getIdPrenotazione());
+            prenotazioneModel.setEmailUtente(prenotazioneBean.getEmailUser());
+            prenotazioneModel.setEmailIstruttore(prenotazioneBean.getEmailIstruttore());
+            prenotazioneModel.setNome(prenotazioneBean.getNome());
+            prenotazioneModel.setCognome(prenotazioneBean.getCognome());
+            prenotazioneModel.setGiorno(prenotazioneBean.getGiorno());
+            prenotazioneModel.setOra(prenotazioneBean.getHour());
+            prenotazioneModel.setInfo(prenotazioneBean.getInfo());
+            prenotazioneModel.setPrezzo(prenotazioneBean.getPrezzo());
+
+            // 2. Cambiamento dello stato direttamente sul Model
+            prenotazioneModel.setStatus(nuovoStato);
+
+            // 3. Interrogazione del DAO passando il Model aggiornato
+            prenotazioneDao.updateStato(prenotazioneModel);
+
         } catch (SQLException e) {
+            System.err.println("[Errore Controller] Impossibile aggiornare lo stato della prenotazione.");
             e.printStackTrace();
         }
     }
+
 
 }

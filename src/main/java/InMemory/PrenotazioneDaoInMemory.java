@@ -38,11 +38,12 @@ public class PrenotazioneDaoInMemory implements PrenotazioneDao {
         }
         return risultati;
     }
-
     @Override
-    public boolean deletePrenotazioneById(int idPrenotazione, String mailUtente) {
-        return prenotazioni.removeIf(p -> p.getIdPrenotazione() == idPrenotazione
-                && p.getEmailUtente().equalsIgnoreCase(mailUtente));
+    public boolean deletePrenotazione(PrenotazioneModel prenotazioneModel) {
+        return prenotazioni.removeIf(p ->
+                p.getIdPrenotazione() == prenotazioneModel.getIdPrenotazione() &&
+                        p.getEmailUtente().equalsIgnoreCase(prenotazioneModel.getEmailUtente())
+        );
     }
 
     @Override
@@ -58,11 +59,13 @@ public class PrenotazioneDaoInMemory implements PrenotazioneDao {
     }
 
     @Override
-    public void updateStato(int idPrenotazione, StatoPrenotazione nuovoStato) {
+    public void updateStato(PrenotazioneModel prenotazioneModel) {
         for (PrenotazioneModel p : prenotazioni) {
-            if (p.getIdPrenotazione() == idPrenotazione) {
-                p.setStatus(nuovoStato);
-                return;
+            // Cerchiamo la prenotazione in memoria tramite l'ID del model passato
+            if (p.getIdPrenotazione() == prenotazioneModel.getIdPrenotazione()) {
+                // Aggiorniamo lo stato in memoria prendendolo dal model aggiornato
+                p.setStatus(prenotazioneModel.getStatus());
+                return; // Usciamo dal ciclo appena effettuato l'aggiornamento
             }
         }
     }

@@ -82,7 +82,8 @@ public class PrenotazioneDaoMYSQL implements PrenotazioneDao {
 
 
 
-    public boolean deletePrenotazioneById(int idPrenotazione, String mailUtente) {
+    @Override
+    public boolean deletePrenotazione(PrenotazioneModel prenotazioneModel) throws SQLException, UtentenonpresenteException {
         Connection connection;
         Statement stmt;
         boolean cancellata = false;
@@ -91,18 +92,23 @@ public class PrenotazioneDaoMYSQL implements PrenotazioneDao {
             connection = Connect.getInstance().getDBConnection();
             stmt = connection.createStatement();
 
-            // Riceviamo il numero di righe cancellate
-            int rowsAffected = QueryLezioni.Cancellaprenotazione(stmt, idPrenotazione, mailUtente);
+            // Estraiamo i dati dal Model
+            int id = prenotazioneModel.getIdPrenotazione();
+            String mailUtente = prenotazioneModel.getEmailUtente();
 
-            // Se rowsAffected è > 0, la prenotazione esisteva ed è stata rimossa
+            // Eseguiamo la query passando i dati estratti
+            int rowsAffected = QueryLezioni.Cancellaprenotazione(stmt, id, mailUtente);
+
             if (rowsAffected > 0) {
                 cancellata = true;
             }
 
         } catch(UtentenonpresenteException f){
             Stampa.println("❌ Utente non presente");
+            throw f;
         } catch (SQLException e) {
             handleDAOException(e);
+            throw e;
         }
 
         return cancellata;
@@ -148,7 +154,8 @@ public class PrenotazioneDaoMYSQL implements PrenotazioneDao {
     }
 
 
-    public void updateStato(int idPrenotazione, StatoPrenotazione nuovoStato) throws SQLException {
+
+    public void updateStato(PrenotazioneModel prenotazioneModel) throws SQLException {
         Connection connection;
         Statement stmt = null;
 
@@ -156,8 +163,12 @@ public class PrenotazioneDaoMYSQL implements PrenotazioneDao {
             connection = Connect.getInstance().getDBConnection();
             stmt = connection.createStatement();
 
-            // Chiamata alla classe Query per l'update effettivo
-            QueryLezioni.aggiornaStatoPrenotazione(stmt, idPrenotazione, nuovoStato);
+            // Estraiamo l'ID e lo Stato dall'oggetto Model ricevuto
+            int id = prenotazioneModel.getIdPrenotazione();
+            StatoPrenotazione nuovoStato = prenotazioneModel.getStatus();
+
+            // Chiamata alla classe Query per l'update effettivo sul DB
+            QueryLezioni.aggiornaStatoPrenotazione(stmt, id, nuovoStato);
 
         } finally {
             closeResources(stmt, null);

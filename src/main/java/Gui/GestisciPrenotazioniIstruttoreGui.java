@@ -70,7 +70,10 @@ public class GestisciPrenotazioniIstruttoreGui {
 
         if (selezionata != null) {
             // 2. Eseguo l'aggiornamento tramite controller
-            controller.aggiornaStatoPrenotazione(selezionata.getIdPrenotazione(), StatoPrenotazione.ACCETTATA);
+            selezionata.setStatus(StatoPrenotazione.ACCETTATA);
+
+            // LOGICA MODIFICATA: Passa l'intera istanza del Bean modificato al Controller
+            controller.aggiornaStatoPrenotazione(selezionata, StatoPrenotazione.ACCETTATA);
 
             // 3. Stampo l'esito nella label
             lblEsito.setText("✅ Prenotazione di " + selezionata.getEmailUser() + " ACCETTATA");
@@ -94,7 +97,10 @@ public class GestisciPrenotazioniIstruttoreGui {
         Prenotazionebean selezionata = tblPrenotazioni.getSelectionModel().getSelectedItem();
 
         if (selezionata != null) {
-            controller.aggiornaStatoPrenotazione(selezionata.getIdPrenotazione(), StatoPrenotazione.RIFIUTATA);
+            selezionata.setStatus(StatoPrenotazione.RIFIUTATA);
+
+            // LOGICA MODIFICATA: Passa l'intera istanza del Bean modificato al Controller
+            controller.aggiornaStatoPrenotazione(selezionata, StatoPrenotazione.RIFIUTATA);
 
             // Stampo l'esito nella label
             lblEsito.setText("❌ Prenotazione di " + selezionata.getEmailUser() + " RIFIUTATA");
