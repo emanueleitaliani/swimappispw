@@ -91,8 +91,6 @@ public class PrenotazioneDaoMYSQL implements PrenotazioneDao {
         try {
             connection = Connect.getInstance().getDBConnection();
             stmt = connection.createStatement();
-
-
             // Eseguiamo la query passando i dati estratti
             int rowsAffected = QueryLezioni.cancellaPrenotazione(stmt,prenotazioneModel);
 

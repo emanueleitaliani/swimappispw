@@ -55,13 +55,10 @@ public class cancellaPrenotazioneCLI extends AbstractState {
             } else {
                 Stampa.println("❌ Nessuna prenotazione trovata con quell'ID per il tuo account.");
             }
-
-            // Se l'operazione si è conclusa (con successo o meno), torniamo indietro
             goBack(context);
 
         } catch (NumberFormatException e) {
             Stampa.println("ID non valido. Inserisci un numero intero.");
-
             goBack(context);
         } catch (Exception e) {
             Stampa.println("Errore durante la cancellazione: " + e.getMessage());
