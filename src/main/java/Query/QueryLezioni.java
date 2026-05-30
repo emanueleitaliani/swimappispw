@@ -64,17 +64,17 @@ public class QueryLezioni {
         return rs;
 
     }
-    // NOTA: Cambiato il primo parametro da Statement a Connection
+
     public static int cancellaPrenotazione(Statement stmt, PrenotazioneModel prenotazione) throws SQLException {
         // Estraiamo i dati direttamente dal Model ricevuto come parametro
         int id = prenotazione.getIdPrenotazione();
         String mailUtente = prenotazione.getEmailUtente();
 
         // Componiamo la query usando la tua costante e String.format
-        String richiesta = String.format(Query.CANCELLA_PRENOTAZIONE, id, mailUtente);
+        String richiestax = String.format(Query.CANCELLA_PRENOTAZIONE, id, mailUtente);
 
         // executeUpdate ritorna il numero di righe colpite (1 se cancellata, 0 se non trovata)
-        return stmt.executeUpdate(richiesta);
+        return stmt.executeUpdate(richiestax);
     }
     public static ResultSet cercaLezione(Statement smt, LezioneModel filtri){
         String sql;
