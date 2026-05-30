@@ -32,7 +32,7 @@ public class Query {
     public static final String AGGIORNA_STATO_PRENOTAZIONE =
             "UPDATE prenotazione SET status = '%s' WHERE idprenotazione = %d";
     public static final String CANCELLA_PRENOTAZIONE =
-            "DELETE FROM prenotazione WHERE idprenotazione = '%d' AND mailutente = '%s'";
+            "DELETE FROM prenotazione WHERE idprenotazione = ? AND mailutente = ?";
     public static final String RICERCA_LEZIONI_BASE = "SELECT * FROM lezioni WHERE tariffa <= %.2f";
 
     public static final String VERIFICA_GIA_PRENOTATA =

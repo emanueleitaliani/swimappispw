@@ -4,9 +4,7 @@ import Model.LezioneModel;
 import Model.PrenotazioneModel;
 import Other.Stampa;
 
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.sql.ResultSet;
+import java.sql.*;
 
 import java.util.Locale;
 
@@ -65,16 +63,19 @@ public class QueryLezioni {
 
     }
 
-    public static int cancellaPrenotazione(Statement stmt, PrenotazioneModel prenotazione) throws SQLException {
-        // Estraiamo i dati direttamente dal Model ricevuto come parametro
+    public static int cancellaPrenotazione(Connection conn, PrenotazioneModel prenotazione) throws SQLException {
         int id = prenotazione.getIdPrenotazione();
         String mailUtente = prenotazione.getEmailUtente();
 
-        // Componiamo la query usando la tua costante e String.format
-        String richiestax = String.format(Query.CANCELLA_PRENOTAZIONE, id, mailUtente);
+        // Prepariamo la query in modo sicuro tramite il PreparedStatement
+        try (PreparedStatement pstmt = conn.prepareStatement(Query.CANCELLA_PRENOTAZIONE)) {
+            // Associazioni dei parametri in base all'ordine dei '?' nella query
+            pstmt.setInt(1, id);          // Sostituisce il primo '?' con l'id (intero)
+            pstmt.setString(2, mailUtente); // Sostituisce il secondo '?' con la mail (stringa)
 
-        // executeUpdate ritorna il numero di righe colpite (1 se cancellata, 0 se non trovata)
-        return stmt.executeUpdate(richiestax);
+            // Esegue l'aggiornamento in sicurezza e ritorna il numero di righe eliminate
+            return pstmt.executeUpdate();
+        }
     }
     public static ResultSet cercaLezione(Statement smt, LezioneModel filtri){
         String sql;
