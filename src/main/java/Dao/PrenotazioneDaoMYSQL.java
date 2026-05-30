@@ -85,25 +85,32 @@ public class PrenotazioneDaoMYSQL implements PrenotazioneDao {
     @Override
     public boolean deletePrenotazione(PrenotazioneModel prenotazioneModel) throws SQLException, UtentenonpresenteException {
         Connection connection;
-        Statement stmt;
+        Statement stmt = null;
         boolean cancellata = false;
 
         try {
             connection = Connect.getInstance().getDBConnection();
             stmt = connection.createStatement();
-            // Eseguiamo la query passando i dati estratti
-            int rowsAffected = QueryLezioni.cancellaPrenotazione(stmt,prenotazioneModel);
+
+            // Eseguiamo la query passando lo stmt e il model
+            int rowsAffected = QueryLezioni.cancellaPrenotazione(stmt, prenotazioneModel);
 
             if (rowsAffected > 0) {
                 cancellata = true;
+            } else {
+                // 💡 SOLUZIONE: Se rowsAffected è 0, la prenotazione (o l'utente) non esiste nel DB
+                throw new UtentenonpresenteException();
             }
 
         } catch(UtentenonpresenteException f){
-            Stampa.println("❌ Utente non presente");
-            throw f;
+            Stampa.println("❌ Prenotazione o Utente non presente nel sistema.");
+            throw f; // Rilancia l'eccezione verso il Controller
         } catch (SQLException e) {
             handleDAOException(e);
             throw e;
+        } finally {
+            // Buona norma per chiudere sempre lo statement
+            if (stmt != null) stmt.close();
         }
 
         return cancellata;

@@ -178,7 +178,6 @@ public class Prenotazionecontroller {
             prenotazioneDao.updateStato(prenotazioneModel);
 
         } catch (SQLException e) {
-            System.err.println("[Errore Controller] Impossibile aggiornare lo stato della prenotazione.");
             e.printStackTrace();
         }
     }
