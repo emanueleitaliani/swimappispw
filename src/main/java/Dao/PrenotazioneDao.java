@@ -3,7 +3,7 @@ package Dao;
 
 import Exceptions.UtentenonpresenteException;
 import Model.PrenotazioneModel;
-import Other.StatoPrenotazione;
+
 
 import java.sql.SQLException;
 import java.util.List;

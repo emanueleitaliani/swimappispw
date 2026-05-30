@@ -3,6 +3,8 @@ import Exceptions.UtentenonpresenteException;
 import Model.LezioneModel;
 import Model.PrenotazioneModel;
 import Other.Stampa;
+
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.ResultSet;
@@ -63,8 +65,15 @@ public class QueryLezioni {
         return rs;
 
     }
-    public static int Cancellaprenotazione(Statement stmt, int IdPrenotazione, String mailUtente) throws SQLException, UtentenonpresenteException {
-        String richiesta = String.format(Query.CANCELLA_PRENOTAZIONE, IdPrenotazione, mailUtente);
+    // NOTA: Cambiato il primo parametro da Statement a Connection
+    public static int Cancellaprenotazione(Statement stmt, PrenotazioneModel prenotazione) throws SQLException, UtentenonpresenteException {
+        // Estraiamo i dati direttamente dal Model ricevuto come parametro
+        int id = prenotazione.getIdPrenotazione();
+        String mailUtente = prenotazione.getEmailUtente();
+
+        // Componiamo la query usando la tua costante e String.format
+        String richiesta = String.format(Query.CANCELLA_PRENOTAZIONE, id, mailUtente);
+
         // executeUpdate ritorna il numero di righe colpite (1 se cancellata, 0 se non trovata)
         return stmt.executeUpdate(richiesta);
     }

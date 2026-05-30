@@ -97,7 +97,7 @@ public class PrenotazioneDaoMYSQL implements PrenotazioneDao {
             String mailUtente = prenotazioneModel.getEmailUtente();
 
             // Eseguiamo la query passando i dati estratti
-            int rowsAffected = QueryLezioni.Cancellaprenotazione(stmt, id, mailUtente);
+            int rowsAffected = QueryLezioni.Cancellaprenotazione(stmt,prenotazioneModel);
 
             if (rowsAffected > 0) {
                 cancellata = true;
