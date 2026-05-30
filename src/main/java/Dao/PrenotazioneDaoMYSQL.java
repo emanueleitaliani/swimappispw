@@ -92,12 +92,9 @@ public class PrenotazioneDaoMYSQL implements PrenotazioneDao {
             connection = Connect.getInstance().getDBConnection();
             stmt = connection.createStatement();
 
-            // Estraiamo i dati dal Model
-            int id = prenotazioneModel.getIdPrenotazione();
-            String mailUtente = prenotazioneModel.getEmailUtente();
 
             // Eseguiamo la query passando i dati estratti
-            int rowsAffected = QueryLezioni.Cancellaprenotazione(stmt,prenotazioneModel);
+            int rowsAffected = QueryLezioni.cancellaPrenotazione(stmt,prenotazioneModel);
 
             if (rowsAffected > 0) {
                 cancellata = true;

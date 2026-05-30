@@ -66,7 +66,7 @@ public class QueryLezioni {
 
     }
     // NOTA: Cambiato il primo parametro da Statement a Connection
-    public static int Cancellaprenotazione(Statement stmt, PrenotazioneModel prenotazione) throws SQLException, UtentenonpresenteException {
+    public static int cancellaPrenotazione(Statement stmt, PrenotazioneModel prenotazione) throws SQLException,UtentenonpresenteException {
         // Estraiamo i dati direttamente dal Model ricevuto come parametro
         int id = prenotazione.getIdPrenotazione();
         String mailUtente = prenotazione.getEmailUtente();

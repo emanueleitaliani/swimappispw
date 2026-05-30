@@ -61,8 +61,7 @@ public class cancellaPrenotazioneCLI extends AbstractState {
 
         } catch (NumberFormatException e) {
             Stampa.println("ID non valido. Inserisci un numero intero.");
-            // Opzionale: se c'è un errore di formato, forse conviene fargli ripetere l'azione
-            // invece di cacciarlo fuori subito. Se vuoi farlo riprovare, chiama: action(context);
+
             goBack(context);
         } catch (Exception e) {
             Stampa.println("Errore durante la cancellazione: " + e.getMessage());
