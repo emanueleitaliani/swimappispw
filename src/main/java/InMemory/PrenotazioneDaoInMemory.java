@@ -24,13 +24,13 @@ public class PrenotazioneDaoInMemory implements PrenotazioneDao {
             model.setStatus(StatoPrenotazione.INCORSO);
         }
 
-        LocalDatabase.PRENOTAZIONI.add(model);
+        LocalDatabase.Prenotazioni.add(model);
     }
 
     @Override
     public List<PrenotazioneModel> getPrenotazioniByEmail(String emailUtente) {
         List<PrenotazioneModel> risultati = new ArrayList<>();
-        for (PrenotazioneModel p : LocalDatabase.PRENOTAZIONI) {
+        for (PrenotazioneModel p : LocalDatabase.Prenotazioni) {
             if (p.getEmailUtente().equalsIgnoreCase(emailUtente)) {
                 risultati.add(p);
             }
@@ -39,7 +39,7 @@ public class PrenotazioneDaoInMemory implements PrenotazioneDao {
     }
     @Override
     public boolean deletePrenotazione(PrenotazioneModel prenotazioneModel) {
-        return LocalDatabase.PRENOTAZIONI.removeIf(p ->
+        return LocalDatabase.Prenotazioni.removeIf(p ->
                 p.getIdPrenotazione() == prenotazioneModel.getIdPrenotazione() &&
                         p.getEmailUtente().equalsIgnoreCase(prenotazioneModel.getEmailUtente())
         );
@@ -48,7 +48,7 @@ public class PrenotazioneDaoInMemory implements PrenotazioneDao {
     @Override
     public List<PrenotazioneModel> getPrenotazioniPerIstruttore(String emailIstruttore) {
         List<PrenotazioneModel> risultati = new ArrayList<>();
-        for (PrenotazioneModel p : LocalDatabase.PRENOTAZIONI) {
+        for (PrenotazioneModel p : LocalDatabase.Prenotazioni) {
             if (p.getEmailIstruttore().equalsIgnoreCase(emailIstruttore)) {
                 risultati.add(p);
             }
@@ -58,7 +58,7 @@ public class PrenotazioneDaoInMemory implements PrenotazioneDao {
 
     @Override
     public void updateStato(PrenotazioneModel prenotazioneModel) {
-        for (PrenotazioneModel p : LocalDatabase.PRENOTAZIONI) {
+        for (PrenotazioneModel p : LocalDatabase.Prenotazioni) {
             if (p.getIdPrenotazione() == prenotazioneModel.getIdPrenotazione()) {
                 p.setStatus(prenotazioneModel.getStatus());
                 return;
@@ -68,7 +68,7 @@ public class PrenotazioneDaoInMemory implements PrenotazioneDao {
 
     @Override
     public boolean isGiaPrenotata(String emailUtente, String giorno, String ora) {
-        for (PrenotazioneModel p : LocalDatabase.PRENOTAZIONI) {
+        for (PrenotazioneModel p : LocalDatabase.Prenotazioni) {
             boolean stessaEmailUtente = p.getEmailUtente().equalsIgnoreCase(emailUtente);
             boolean stessoGiorno = p.getGiorno().equalsIgnoreCase(giorno);
             boolean stessaOra = p.getOra().equalsIgnoreCase(ora);
@@ -81,7 +81,7 @@ public class PrenotazioneDaoInMemory implements PrenotazioneDao {
     }
     @Override
     public boolean isIstruttoreOccupato(String emailIstruttore, String giorno, String ora) {
-        for (PrenotazioneModel p : LocalDatabase.PRENOTAZIONI) {
+        for (PrenotazioneModel p : LocalDatabase.Prenotazioni) {
 
             // Verifichiamo se l'istruttore specifico ha già un impegno non rifiutato in quel momento
             boolean stessoIstruttore = p.getEmailIstruttore().equalsIgnoreCase(emailIstruttore);
@@ -92,7 +92,7 @@ public class PrenotazioneDaoInMemory implements PrenotazioneDao {
             if (stessoIstruttore && stessoGiorno && stessaOra && nonRifiutata) {
 
                 // 🧩 SIMULAZIONE JOIN: Trovata una prenotazione, andiamo a vedere se la lezione sorgente è "Privata"
-                for (LezioneModel l : LocalDatabase.LEZIONI) {
+                for (LezioneModel l : LocalDatabase.Lezioni) {
                     if (l.getEmailIstruttore().equalsIgnoreCase(emailIstruttore) &&
                             l.getFasciaOraria().equalsIgnoreCase(ora) &&
                             l.getTipoLezione().equalsIgnoreCase("privata")) {

@@ -21,13 +21,13 @@ public class UserDaoInMemory implements UserDao {
             String password = credenzialiModel.getPassword();
 
             Stampa.print("EMAIL CERCATA: [" + email + "]");
-            Stampa.print("UTENTI DISPONIBILI: " + LocalDatabase.UTENTI.keySet());
+            Stampa.print("UTENTI DISPONIBILI: " + LocalDatabase.Utenti.keySet());
 
-            if (!LocalDatabase.UTENTI.containsKey(email)) {
+            if (!LocalDatabase.Utenti.containsKey(email)) {
                 throw new UtentenonpresenteException();
             }
 
-            UtenteloggatoModel utente = LocalDatabase.UTENTI.get(email);
+            UtenteloggatoModel utente = LocalDatabase.Utenti.get(email);
 
             if (!utente.getCredenziali().getPassword().equals(password)) {
                 throw new CredenzialisbagliateException();
@@ -39,25 +39,25 @@ public class UserDaoInMemory implements UserDao {
         @Override
         public void registrazioneMethod(UtenteloggatoModel registrazioneModel) {
             String email = registrazioneModel.getCredenziali().getEmail();
-            LocalDatabase.UTENTI.put(email, registrazioneModel);
+            LocalDatabase.Utenti.put(email, registrazioneModel);
             logger.log(Level.INFO, "Utente registrato correttamente in LocalDatabase: {0}", email);
         }
 
         @Override
         public void controllaEmailMethod(UtenteloggatoModel registrazioneModel) throws EmailgiainusoException {
-            if (LocalDatabase.UTENTI.containsKey(registrazioneModel.getCredenziali().getEmail())) {
+            if (LocalDatabase.Utenti.containsKey(registrazioneModel.getCredenziali().getEmail())) {
                 throw new EmailgiainusoException();
             }
         }
 
         @Override
         public void registraIstruttoreMethod(String email, String nome, String cognome) {
-            if (!LocalDatabase.UTENTI.containsKey(email)) {
+            if (!LocalDatabase.Utenti.containsKey(email)) {
                 logger.log(Level.SEVERE, "Utente non trovato per diventare istruttore: {0}", email);
                 return;
             }
 
-            UtenteloggatoModel utente = LocalDatabase.UTENTI.get(email);
+            UtenteloggatoModel utente = LocalDatabase.Utenti.get(email);
             utente.setNome(nome);
             utente.setCognome(cognome);
             utente.setIstructor(true);

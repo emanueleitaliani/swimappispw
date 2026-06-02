@@ -9,13 +9,14 @@ public class LezioneDaoInMemory implements LezioneDao {
 
 
     public LezioneDaoInMemory()  {
+        //costruttore versione in memory
     }
 
     @Override
     public List<LezioneModel> cercaLezione(LezioneModel filtro) {
         List<LezioneModel> risultati = new ArrayList<>();
 
-        for (LezioneModel l : LocalDatabase.LEZIONI) {
+        for (LezioneModel l : LocalDatabase.Lezioni) {
             boolean match = true;
 
             // 1. Filtro Tipo Lezione
@@ -58,7 +59,7 @@ public class LezioneDaoInMemory implements LezioneDao {
     }
     @Override
     public boolean controllaEmail(String nome, String cognome, String email) throws UtentenonpresenteException {
-        boolean esiste = LocalDatabase.LEZIONI.stream().anyMatch(l ->
+        boolean esiste = LocalDatabase.Lezioni.stream().anyMatch(l ->
                 l.getEmailIstruttore().equalsIgnoreCase(email) &&
                         l.getNomeIstruttore().equalsIgnoreCase(nome) &&
                         l.getCognomeIstruttore().equalsIgnoreCase(cognome)
