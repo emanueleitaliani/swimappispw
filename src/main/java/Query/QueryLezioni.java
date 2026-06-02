@@ -153,10 +153,10 @@ public class QueryLezioni {
     public static boolean isGiaPrenotata(Statement stmt, String emailUtente, String giorno, String ora) throws SQLException {
         try {
             // Passiamo solo emailUtente, giorno e ora alla stringa SQL modificata
-            String richiesta = String.format(Locale.US, Query.VERIFICA_GIA_PRENOTATA,
+            String req = String.format(Locale.US, Query.VERIFICA_GIA_PRENOTATA,
                     emailUtente, giorno, ora);
 
-            try (ResultSet rs = stmt.executeQuery(richiesta)) {
+            try (ResultSet rs = stmt.executeQuery(req)) {
                 if (rs.next()) {
                     return rs.getInt(1) > 0;
                 }
@@ -169,10 +169,10 @@ public class QueryLezioni {
     }
     public static boolean isIstruttoreOccupato(Statement stmt, String emailIstruttore, String giorno, String ora) throws SQLException {
         try {
-            String richiesta = String.format(Locale.US, Query.VERIFICA_ISTRUTTORE_OCCUPATO,
+            String request = String.format(Locale.US, Query.VERIFICA_ISTRUTTORE_OCCUPATO,
                     emailIstruttore, giorno, ora);
 
-            try (ResultSet rs = stmt.executeQuery(richiesta)) {
+            try (ResultSet rs = stmt.executeQuery(request)) {
                 if (rs.next()) {
                     return rs.getInt(1) > 0;
                 }

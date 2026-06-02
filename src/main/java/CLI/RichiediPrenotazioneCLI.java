@@ -103,7 +103,7 @@ public class RichiediPrenotazioneCLI extends AbstractState {
             String conferma = scanner.nextLine().trim();
 
             if (conferma.equalsIgnoreCase("no")) {
-                Stampa.println("❌ Prenotazione annullata.");
+                Stampa.println("Prenotazione Annullata");
                 return;
             }
 
@@ -116,18 +116,18 @@ public class RichiediPrenotazioneCLI extends AbstractState {
             prenotazionecontroller.richiediprenotazione(prenotazionebean);
 
             // Se arriviamo qui, la prenotazione è andata a buon fine
-            Stampa.println("\n✨ Richiesta di prenotazione inviata con successo!");
-            Stampa.println("📅 Giorno: " + giorno + " nella fascia: " + fasciaOraria);
-            Stampa.println("🏊‍♂️ Istruttore: " + nomeIstruttore + " " + cognomeIstruttore);
+            Stampa.println("\n Richiesta di prenotazione inviata con successo!");
+            Stampa.println("Giorno: " + giorno + " nella fascia: " + fasciaOraria);
+            Stampa.println(" Istruttore: " + nomeIstruttore + " " + cognomeIstruttore);
 
         } catch (UtentenonpresenteException e) {
-            Stampa.errorPrint("❌ Errore: L'istruttore selezionato non è più disponibile.");
+            Stampa.errorPrint(" Errore: L'istruttore selezionato non è più disponibile.");
         } catch (LezioneGiaPrenotataException e) {
-            Stampa.errorPrint("\n⚠️ ATTENZIONE: " + e.getMessage());
+            Stampa.errorPrint("\n ATTENZIONE: " + e.getMessage());
         } catch (LezioneGiaOccupataException e) {
-            Stampa.errorPrint("\n❌ ERRORE (Slot occupato): " + e.getMessage());
+            Stampa.errorPrint("\n ERRORE (Slot occupato): " + e.getMessage());
         } catch (SQLException e) {
-            Stampa.errorPrint("❌ Errore Database: " + e.getMessage());
+            Stampa.errorPrint(" Errore Database: " + e.getMessage());
         }
     }
 

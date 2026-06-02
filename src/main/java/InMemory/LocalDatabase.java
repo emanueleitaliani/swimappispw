@@ -16,9 +16,9 @@ public class LocalDatabase {
     private static final Logger logger = Logger.getLogger(LocalDatabase.class.getName());
 
     // Le tabelle del nostro Database in memoria
-    public static final Map<String, UtenteloggatoModel> UTENTI = new HashMap<>();
-    public static final List<LezioneModel> LEZIONI = new ArrayList<>();
-    public static final List<PrenotazioneModel> PRENOTAZIONI = new ArrayList<>();
+    protected static Map<String, UtenteloggatoModel> UTENTI = new HashMap<>();
+    protected static final List<LezioneModel> LEZIONI = new ArrayList<>();
+    protected static  List<PrenotazioneModel> PRENOTAZIONI = new ArrayList<>();
 
     static {
         popolaDatabaseEsempi();
@@ -34,7 +34,7 @@ public class LocalDatabase {
         UTENTI.put(cred2.getEmail(), new UtenteloggatoModel(cred2, "Luigi", "Verdi", true));
 
         CredenzialiModel cred3 = new CredenzialiModel("coach1@test.com", "password3");
-        UTENTI.put(cred3.getEmail(), new UtenteloggatoModel(cred3, "Luigi", "Verdi", true));
+        UTENTI.put(cred3.getEmail(), new UtenteloggatoModel(cred3, "Luigi", "Masini", true));
 
         CredenzialiModel cred4 = new CredenzialiModel("coach2@test.com", "password4");
         UTENTI.put(cred4.getEmail(), new UtenteloggatoModel(cred4, "Sara", "Bianchi", true));
@@ -43,7 +43,7 @@ public class LocalDatabase {
         LezioneModel l1 = new LezioneModel();
         l1.setEmailIstruttore("coach1@test.com");
         l1.setNomeIstruttore("Luigi");
-        l1.setCognomeIstruttore("Verdi");
+        l1.setCognomeIstruttore("Masini");
         l1.setFasciaOraria("09-11");
         l1.setLivello("Principiante");
         l1.setTariffa(22.00f);
