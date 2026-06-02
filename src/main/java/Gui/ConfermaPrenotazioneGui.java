@@ -4,6 +4,7 @@ import Bean.LezioneBean;
 import Bean.Prenotazionebean;
 import Bean.Utenteloggatobean;
 import Controller.Prenotazionecontroller;
+import Exceptions.LezioneGiaOccupataException;
 import Exceptions.LezioneGiaPrenotataException;
 import Exceptions.UtentenonpresenteException;
 import javafx.fxml.FXML;
@@ -37,6 +38,10 @@ public class ConfermaPrenotazioneGui extends HomeUtenteGui {
 
     public void setLezione(LezioneBean l) {
         this.lezione = l;
+        if (txtOra != null && l != null) {
+            txtOra.setText(l.getFasciaOraria());
+            txtOra.setEditable(false); // Impedisce all'utente di modificarlo a mano!
+        }
     }
 
     private boolean validaEmail(String email) {
@@ -46,14 +51,6 @@ public class ConfermaPrenotazioneGui extends HomeUtenteGui {
     @FXML
     private void confermaPrenotazione() {
 
-        // ⚠️ CONTROLLO ORA
-        float ora;
-        try {
-            ora = Float.parseFloat(txtOra.getText().trim());
-        } catch (NumberFormatException e) {
-            mostraAlert(Alert.AlertType.ERROR, "Ora non valida!", "Inserisci un valore numerico (es: 14.30)");
-            return;
-        }
 
         // ⚠️ CONTROLLO EMAIL UTENTE
         String emailUtente = txtEmailUtente.getText().trim();
@@ -71,7 +68,7 @@ public class ConfermaPrenotazioneGui extends HomeUtenteGui {
 
             // ❗Tutti questi dati arrivano dalla LEZIONE
             pren.setGiorno(lezione.getGiorni());
-            pren.setHour(ora);
+            pren.setHour(lezione.getFasciaOraria());
             pren.setPrezzo(lezione.getTariffa());
             pren.setInfo(lezione.getNoteAggiuntive());
 
@@ -93,7 +90,7 @@ public class ConfermaPrenotazioneGui extends HomeUtenteGui {
             controller.richiediprenotazione(pren);
 
             mostraAlert(Alert.AlertType.INFORMATION, "Prenotazione inviata!", "Registrata con successo.");
-        } catch (LezioneGiaPrenotataException |UtentenonpresenteException | SQLException e) {
+        } catch (LezioneGiaPrenotataException | UtentenonpresenteException | LezioneGiaOccupataException | SQLException e) {
             mostraAlert(Alert.AlertType.ERROR, TITOLO_ERRORE, e.getMessage());
 
         }

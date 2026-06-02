@@ -6,54 +6,59 @@ import Model.LezioneModel;
 import java.util.ArrayList;
 import java.util.List;
 public class LezioneDaoInMemory implements LezioneDao {
-    private static final List<LezioneModel> lezioni = new ArrayList<>();
+
 
     public LezioneDaoInMemory()  {
-
-        LezioneModel l1 = new LezioneModel();
-        l1.setEmailIstruttore("coach1@test.com");
-        l1.setNomeIstruttore("Luigi");
-        l1.setCognomeIstruttore("Verdi");
-        l1.setFasciaOraria("09-11");
-        l1.setLivello("Principiante");
-        l1.setTariffa((float)22.00);
-        l1.setTipoLezione("Privata");
-        l1.setGiorniDisponibili("Lun,Mer,Ven");
-
-        lezioni.add(l1);
-
-        LezioneModel l2 = new LezioneModel();
-        l2.setEmailIstruttore("coach2@test.com");
-        l2.setNomeIstruttore("Sara");
-        l2.setCognomeIstruttore("Bianchi");
-        l2.setFasciaOraria("17-19");
-        l2.setLivello("Agonista");
-        l2.setTariffa((float)40.0);
-        l2.setTipoLezione("Gruppo");
-        l2.setGiorniDisponibili("Mar,Gio");
-
-        lezioni.add(l2);
     }
 
+    @Override
     public List<LezioneModel> cercaLezione(LezioneModel filtro) {
         List<LezioneModel> risultati = new ArrayList<>();
-        for (LezioneModel l : lezioni) {
+
+        for (LezioneModel l : LocalDatabase.LEZIONI) {
             boolean match = true;
+
+            // 1. Filtro Tipo Lezione
             if (filtro.getTipoLezione() != null && !filtro.getTipoLezione().isEmpty()) {
                 match &= l.getTipoLezione().equalsIgnoreCase(filtro.getTipoLezione());
             }
+
+            // 2. Filtro Livello
             if (filtro.getLivello() != null && !filtro.getLivello().isEmpty()) {
                 match &= l.getLivello().equalsIgnoreCase(filtro.getLivello());
             }
+
+            // 3. GESTIONE GENERICA DEI GIORNI MULTIPLI (Nuovo)
+            if (filtro.getGiorniDisponibili() != null && !filtro.getGiorniDisponibili().isEmpty()) {
+                // Separa la stringa del filtro (es: "Lunedì, Mercoledì" -> ["Lunedì", " Mercoledì"])
+                String[] giorniCercati = filtro.getGiorniDisponibili().split(",");
+                boolean giornoTrovato = false;
+
+                for (String g : giorniCercati) {
+                    String giornoPulito = g.trim().toLowerCase(); // Rimuove spazi e mette in minuscolo
+
+                    // Controlla se il giorno della lezione in memoria (es: "martedì" o "Lun,Mer,Ven")
+                    // contiene il giorno che l'utente sta cercando
+                    if (l.getGiorniDisponibili().toLowerCase().contains(giornoPulito)) {
+                        giornoTrovato = true;
+                        break; // Trovata corrispondenza per almeno uno dei giorni, usciamo dal ciclo interno
+                    }
+                }
+
+                // Applica il risultato al match complessivo
+                match &= giornoTrovato;
+            }
+
+            // Se passa tutti i filtri attivi, aggiungiamo la lezione ai risultati
             if (match) {
                 risultati.add(l);
             }
         }
         return risultati;
     }
+    @Override
     public boolean controllaEmail(String nome, String cognome, String email) throws UtentenonpresenteException {
-
-        boolean esiste = lezioni.stream().anyMatch(l ->
+        boolean esiste = LocalDatabase.LEZIONI.stream().anyMatch(l ->
                 l.getEmailIstruttore().equalsIgnoreCase(email) &&
                         l.getNomeIstruttore().equalsIgnoreCase(nome) &&
                         l.getCognomeIstruttore().equalsIgnoreCase(cognome)

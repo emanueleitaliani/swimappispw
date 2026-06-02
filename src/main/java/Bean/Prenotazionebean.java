@@ -9,7 +9,7 @@ public class Prenotazionebean {
     private String giorno;
     private String info;
     private float prezzo;
-    private float hour ;
+    private String hour ;
     private StatoPrenotazione status;
 
     public Prenotazionebean() {
@@ -80,11 +80,11 @@ public class Prenotazionebean {
     public void setInfo(String info) {
         this.info = info;
     }
-    public float getHour() {
+    public String getHour() {
         return hour;
     }
 
-    public void setHour(float hour) {
+    public void setHour(String hour) {
         this.hour = hour;
     }
 

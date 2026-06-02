@@ -13,38 +13,26 @@ import Other.FactoryDao;
 public class Logincontroller {
 
 
-    public Utenteloggatobean login(CredenzialiBean credenzialiBean)throws CredenzialisbagliateException,UtentenonpresenteException{
-        // 1. Converti Bean in Model per il DAO
+    // Il metodo deve semplicemente lanciare le eccezioni senza catturarle qui dentro
+    public Utenteloggatobean login(CredenzialiBean credenzialiBean) throws CredenzialisbagliateException, UtentenonpresenteException {
         CredenzialiModel credenzialiModel = new CredenzialiModel(
                 credenzialiBean.getEmail(),
                 credenzialiBean.getPassword()
         );
 
-        try {
-            // 2. Ottieni i dati dal DB tramite il DAO
-            UserDao userDAO = FactoryDao.getUserDAO();
-            UtenteloggatoModel utenteloggatoModel = userDAO.loginMethod(credenzialiModel);
+        // Rimosso il try-catch interno per le tue eccezioni personalizzate
+        UserDao userDAO = FactoryDao.getUserDAO();
+        UtenteloggatoModel utenteloggatoModel = userDAO.loginMethod(credenzialiModel);
 
-            if (utenteloggatoModel != null) {
-                // 3. ORA che hai i dati, crea il Bean correttamente
-                // Recuperiamo i dati dal Model restituito dal DB
-                String nome = utenteloggatoModel.getNome();
-                String cognome = utenteloggatoModel.getCognome();
-                boolean ruolo = utenteloggatoModel.isIstructor();
+        if (utenteloggatoModel != null) {
+            String nome = utenteloggatoModel.getNome();
+            String cognome = utenteloggatoModel.getCognome();
+            boolean ruolo = utenteloggatoModel.isIstructor();
 
-                // 4. Crea il bean con i dati REALI
-                Utenteloggatobean utenteloggatobean = new Utenteloggatobean(credenzialiBean, nome, cognome, ruolo);
-
-                return utenteloggatobean;
-            } else {
-                return null;
-            }
-
-
-        } catch (UtentenonpresenteException |CredenzialisbagliateException cl) {
-            return null;
+            return new Utenteloggatobean(credenzialiBean, nome, cognome, ruolo);
         }
 
+        return null;
     }
 }
 

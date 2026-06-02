@@ -140,14 +140,28 @@ public class CercaLezioneGui extends HomeUtenteGui {
         // Controllo prezzo
         String prezzoStr = prezzoMassimo.getText().trim();
 
-        if (!prezzoStr.isEmpty()) {
-            try {
-                float prezzo = Float.parseFloat(prezzoStr);
-                lezioneBean.setTariffa(prezzo);
-            } catch (NumberFormatException e) {
-                showAlert(Alert.AlertType.ERROR, "Errore formato prezzo", "Inserisci un prezzo valido (es: 25.5)");
+        // 1. Controlla se il campo è vuoto
+        if (prezzoStr.isEmpty()) {
+            showAlert(Alert.AlertType.WARNING, "Prezzo mancante", "Per favore, inserisci una cifra nel campo Prezzo Massimo.");
+            return; // Blocca l'esecuzione e impedisce la ricerca
+        }
+
+        // 2. Tenta il parsing della cifra inserita
+        try {
+            float prezzo = Float.parseFloat(prezzoStr);
+
+            // Controllo opzionale di buon senso: il prezzo non può essere negativo
+            if (prezzo < 0) {
+                showAlert(Alert.AlertType.WARNING, "Valore non valido", "Il prezzo massimo non può essere un valore negativo.");
                 return;
             }
+
+            lezioneBean.setTariffa(prezzo);
+
+        } catch (NumberFormatException e) {
+            // Scatta se l'utente scrive lettere o simboli strani (es: "venti", "25,50€")
+            showAlert(Alert.AlertType.ERROR, "Errore formato prezzo", "Inserisci una cifra numerica valida (es: 25.50). Usare il punto per i decimali.");
+            return; // Blocca l'esecuzione
         }
 
         // Ricerca dal controller

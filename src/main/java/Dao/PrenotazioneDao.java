@@ -19,5 +19,7 @@ public interface PrenotazioneDao {
 
     void updateStato(PrenotazioneModel prenotazioneModel) throws SQLException;
 
-    boolean isGiaPrenotata(String emailUtente, String emailIstruttore, String giorno, float ora) throws SQLException;
+    boolean isGiaPrenotata(String emailUtente, String giorno, String ora) throws SQLException;
+
+    boolean isIstruttoreOccupato(String emailIstruttore, String giorno, String ora) throws SQLException;
 }

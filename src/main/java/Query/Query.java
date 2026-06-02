@@ -19,7 +19,7 @@ public class Query {
             "INSERT INTO utente (nome, cognome,email, IsIstructor ,password) VALUES ('%s', '%s', '%s', %b,'%s')";
 
     public static final String INSERISCIPRENOTAZIONE =
-            "INSERT INTO prenotazione(idprenotazione,nomeIstruttore,cognomeIstruttore,mailutente,mailistruttore,prezzo,giorno,info,ora) VALUES ('%d','%s','%s','%s','%s','%f','%s','%s','%f')";
+            "INSERT INTO prenotazione(idprenotazione,nomeIstruttore,cognomeIstruttore,mailutente,mailistruttore,prezzo,giorno,info,ora) VALUES ('%d','%s','%s','%s','%s','%f','%s','%s','%s')";
 
     public static final String SEARCHISTRUCTOR =
             "SELECT * FROM utente WHERE nome = '%s' AND cognome = '%s' AND email = '%s' AND IsIstructor is True ";
@@ -36,7 +36,18 @@ public class Query {
     public static final String RICERCA_LEZIONI_BASE = "SELECT * FROM lezioni WHERE tariffa <= %.2f";
 
     public static final String VERIFICA_GIA_PRENOTATA =
-            "SELECT COUNT(*) FROM prenotazione WHERE mailutente = '%s' AND mailistruttore = '%s' AND giorno = '%s' AND ora = %f";
+            "SELECT COUNT(*) FROM prenotazione WHERE mailutente = '%s' AND giorno = '%s' AND ora = '%s'";
+
+    public static final String VERIFICA_ISTRUTTORE_OCCUPATO =
+            "SELECT COUNT(*) FROM prenotazione p " +
+                    "JOIN lezioni l ON p.mailistruttore = l.email " +
+                    "AND p.giorno = l.giorni_disponibili " +
+                    "AND p.ora = l.fascia_oraria " +
+                    "WHERE p.mailistruttore = '%s' " +
+                    "AND p.giorno = '%s' " +
+                    "AND p.ora = '%s' " +
+                    "AND l.tipo_lezione = 'privata' " +
+                    "AND p.status != 'rifiutata'";
 }
 
 

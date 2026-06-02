@@ -7,85 +7,61 @@ import Exceptions.UtentenonpresenteException;
 import Model.CredenzialiModel;
 import Model.UtenteloggatoModel;
 import Other.Stampa;
-
-import java.util.HashMap;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 public class UserDaoInMemory implements UserDao {
 
-    private static final Logger logger = Logger.getLogger(UserDaoInMemory.class.getName());
-    private static final Map<String, UtenteloggatoModel> databaseUtenti = new HashMap<>();
+        private static final Logger logger = Logger.getLogger(UserDaoInMemory.class.getName());
 
-    static {
-        popolaDatabaseEsempi();
-        logger.info("Database utenti prepopolato con utenti di test");
-    }
+        @Override
+        public UtenteloggatoModel loginMethod(CredenzialiModel credenzialiModel)
+                throws UtentenonpresenteException, CredenzialisbagliateException {
 
-    private static void popolaDatabaseEsempi() {
-        CredenzialiModel cred1 = new CredenzialiModel("user1@example.com", "password1");
-        databaseUtenti.put(cred1.getEmail(), new UtenteloggatoModel(cred1, "Mario", "Rossi", false));
+            String email = credenzialiModel.getEmail();
+            String password = credenzialiModel.getPassword();
 
-        CredenzialiModel cred2 = new CredenzialiModel("istruttore@example.com", "password2");
-        databaseUtenti.put(cred2.getEmail(), new UtenteloggatoModel(cred2, "Luigi", "Verdi", true));
+            Stampa.print("EMAIL CERCATA: [" + email + "]");
+            Stampa.print("UTENTI DISPONIBILI: " + LocalDatabase.UTENTI.keySet());
 
-        CredenzialiModel cred3 = new CredenzialiModel("coach1@test.com", "password3");
-        databaseUtenti.put(cred3.getEmail(), new UtenteloggatoModel(cred3, "Luigi", "Verdi", true));
-    }
+            if (!LocalDatabase.UTENTI.containsKey(email)) {
+                throw new UtentenonpresenteException();
+            }
 
-    @Override
-    public UtenteloggatoModel loginMethod(CredenzialiModel credenzialiModel)
-            throws UtentenonpresenteException, CredenzialisbagliateException {
+            UtenteloggatoModel utente = LocalDatabase.UTENTI.get(email);
 
-        String email = credenzialiModel.getEmail();
-        String password = credenzialiModel.getPassword();
+            if (!utente.getCredenziali().getPassword().equals(password)) {
+                throw new CredenzialisbagliateException();
+            }
 
-        Stampa.print("EMAIL CERCATA: [" + email + "]");
-        Stampa.print("UTENTI DISPONIBILI: " + databaseUtenti.keySet());
-
-        if (!databaseUtenti.containsKey(email)) {
-            throw new UtentenonpresenteException();
+            return utente;
         }
 
-        UtenteloggatoModel utente = databaseUtenti.get(email);
-
-        if (!utente.getCredenziali().getPassword().equals(password)) {
-            throw new CredenzialisbagliateException();
+        @Override
+        public void registrazioneMethod(UtenteloggatoModel registrazioneModel) {
+            String email = registrazioneModel.getCredenziali().getEmail();
+            LocalDatabase.UTENTI.put(email, registrazioneModel);
+            logger.log(Level.INFO, "Utente registrato correttamente in LocalDatabase: {0}", email);
         }
 
-        return utente;
-    }
-
-    @Override
-    public void registrazioneMethod(UtenteloggatoModel registrazioneModel) {
-        String email = registrazioneModel.getCredenziali().getEmail();
-        databaseUtenti.put(email, registrazioneModel);
-
-        // CORREZIONE: Logging con parametri (built-in formatting)
-        logger.log(Level.INFO, "Utente registrato correttamente in memoria: {0}", email);
-    }
-
-    @Override
-    public void controllaEmailMethod(UtenteloggatoModel registrazioneModel) throws EmailgiainusoException {
-        if (databaseUtenti.containsKey(registrazioneModel.getCredenziali().getEmail())) {
-            throw new EmailgiainusoException();
-        }
-    }
-
-    @Override
-    public void registraIstruttoreMethod(String email, String nome, String cognome) {
-        if (!databaseUtenti.containsKey(email)) {
-            // CORREZIONE: Uso della formattazione integrata per evitare concatenazione
-            logger.log(Level.SEVERE, "Utente non trovato per diventare istruttore: {0}", email);
-            return;
+        @Override
+        public void controllaEmailMethod(UtenteloggatoModel registrazioneModel) throws EmailgiainusoException {
+            if (LocalDatabase.UTENTI.containsKey(registrazioneModel.getCredenziali().getEmail())) {
+                throw new EmailgiainusoException();
+            }
         }
 
-        UtenteloggatoModel utente = databaseUtenti.get(email);
-        utente.setNome(nome);
-        utente.setCognome(cognome);
-        utente.setIstructor(true);
+        @Override
+        public void registraIstruttoreMethod(String email, String nome, String cognome) {
+            if (!LocalDatabase.UTENTI.containsKey(email)) {
+                logger.log(Level.SEVERE, "Utente non trovato per diventare istruttore: {0}", email);
+                return;
+            }
 
-        logger.log(Level.INFO, "Utente promosso a istruttore: {0}", email);
+            UtenteloggatoModel utente = LocalDatabase.UTENTI.get(email);
+            utente.setNome(nome);
+            utente.setCognome(cognome);
+            utente.setIstructor(true);
+
+            logger.log(Level.INFO, "Utente promosso a istruttore in LocalDatabase: {0}", email);
+        }
     }
-}

@@ -11,6 +11,9 @@ import java.util.ArrayList;
 import java.sql.*;
 
 
+
+
+
 public class PrenotazioneDaoMYSQL implements PrenotazioneDao {
     public void prenota(PrenotazioneModel prenotazioneModel) {
         /*
@@ -55,7 +58,7 @@ public class PrenotazioneDaoMYSQL implements PrenotazioneDao {
                 model.setPrezzo(rs.getFloat("prezzo"));
                 model.setGiorno(rs.getString("giorno"));
                 model.setInfo(rs.getString("info"));
-                model.setOra(rs.getFloat("ora"));
+                model.setOra(rs.getString("ora"));
 
                 String statoDalDB = rs.getString("status");
                 if (statoDalDB != null) {
@@ -138,7 +141,7 @@ public class PrenotazioneDaoMYSQL implements PrenotazioneDao {
                 model.setPrezzo(rs.getFloat("prezzo"));
                 model.setGiorno(rs.getString("giorno"));
                 model.setInfo(rs.getString("info"));
-                model.setOra(rs.getFloat("ora"));
+                model.setOra(rs.getString("ora"));
 
                 String statoDalDb = rs.getString("status");
 
@@ -176,7 +179,7 @@ public class PrenotazioneDaoMYSQL implements PrenotazioneDao {
             closeResources(stmt, null);
         }
     }
-    public boolean isGiaPrenotata(String emailUtente, String emailIstruttore, String giorno, float ora) throws SQLException {
+    public boolean isGiaPrenotata(String emailUtente, String giorno, String ora) throws SQLException {
         Connection connection;
         Statement stmt = null;
 
@@ -184,15 +187,25 @@ public class PrenotazioneDaoMYSQL implements PrenotazioneDao {
             connection = Connect.getInstance().getDBConnection();
             stmt = connection.createStatement();
 
-            // Chiamata alla classe QueryLezioni per la logica effettiva
-            return QueryLezioni.isGiaPrenotata(stmt, emailUtente, emailIstruttore, giorno, ora);
+            return QueryLezioni.isGiaPrenotata(stmt, emailUtente, giorno, ora);
 
         } finally {
-            // Chiude lo statement (il ResultSet si chiude automaticamente con esso)
             closeResources(stmt, null);
         }
     }
+    @Override
+    public boolean isIstruttoreOccupato(String emailIstruttore, String giorno, String ora) throws SQLException {
+        Connection connection;
+        Statement stmt = null;
 
+        try {
+            connection = Connect.getInstance().getDBConnection();
+            stmt = connection.createStatement();
+            return QueryLezioni.isIstruttoreOccupato(stmt, emailIstruttore, giorno, ora);
+        } finally {
+            closeResources(stmt, null);
+        }
+    }
 
     private void closeResources(Statement stmt, ResultSet rs) {
         try {

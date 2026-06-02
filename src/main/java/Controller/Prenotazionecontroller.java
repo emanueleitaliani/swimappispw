@@ -5,6 +5,7 @@ import Dao.LezioneDao;
 import Dao.PrenotazioneDao;
 
 
+import Exceptions.LezioneGiaOccupataException;
 import Exceptions.LezioneGiaPrenotataException;
 import Exceptions.LezioniNonTrovateException;
 import Exceptions.UtentenonpresenteException;
@@ -83,14 +84,23 @@ public class Prenotazionecontroller {
         prenotazioneModel.setOra(prenotazione.getHour());
         boolean esistente = prenotazioneDao.isGiaPrenotata(
                 prenotazione.getEmailUser(),
-                prenotazione.getEmailIstruttore(),
                 prenotazione.getGiorno(),
                 prenotazione.getHour()
         );
 
         if (esistente) {
-            throw new LezioneGiaPrenotataException("Hai già prenotato questa lezione per il giorno " +
+            throw new LezioneGiaPrenotataException("Sei già occupato in un'altra lezione il giorno " +
                     prenotazione.getGiorno() + " alle ore " + prenotazione.getHour());
+        }
+        boolean occupataDaAltri = prenotazioneDao.isIstruttoreOccupato(
+                prenotazione.getEmailIstruttore(),
+                prenotazione.getGiorno(),
+                prenotazione.getHour()
+        );
+
+        if (occupataDaAltri) {
+            throw new LezioneGiaOccupataException("Siamo spiacenti, questa lezione privata il giorno " +
+                    prenotazione.getGiorno() + " alle ore " + prenotazione.getHour() + " è già stata prenotata da un altro allievo.");
         }
 
         prenotazioneDao.prenota(prenotazioneModel);

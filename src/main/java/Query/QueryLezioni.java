@@ -25,7 +25,7 @@ public class QueryLezioni {
             float prezzo= prenotazione.getPrezzo();
             String giorno=prenotazione.getGiorno();
             String info =prenotazione.getInfo();
-            float ora=prenotazione.getOra();
+            String ora=prenotazione.getOra();
 
             String richiesta=String.format(Locale.US,Query.INSERISCIPRENOTAZIONE,idprenotazione,nomeIstruttore, cognomeIstruttore,emailutente,emailistruttore,prezzo,giorno,info,ora);
             smt.executeUpdate(richiesta);
@@ -77,50 +77,65 @@ public class QueryLezioni {
             return pstmt.executeUpdate();
         }
     }
-    public static ResultSet cercaLezione(Statement smt, LezioneModel filtri){
-        String sql;
-        ResultSet rs=null;
-        try {
-            sql = String.format(Query.RICERCA_LEZIONI_BASE, filtri.getTariffa());
+    public static ResultSet cercaLezione(Statement smt, LezioneModel filtri) {
+        StringBuilder queryBuilder = new StringBuilder();
 
-            // Base query: solo filtro su tariffa se presente
-            if (filtri.getTariffa() > 0) {
-                sql = String.format(Locale.US,"SELECT * FROM lezioni WHERE tariffa <= %.2f", filtri.getTariffa());
-            } else {
-                sql = "SELECT * FROM lezioni WHERE 1=1"; // fallback senza tariffa
-            }
-
-            // Fascia oraria
-            if (filtri.getFasciaOraria() != null && !filtri.getFasciaOraria().isEmpty()) {
-                sql += String.format(" AND fascia_oraria = '%s'", filtri.getFasciaOraria());
-            }
-
-            // Livello
-            if (filtri.getLivello() != null && !filtri.getLivello().isEmpty()) {
-                sql += String.format(" AND livello = '%s'", filtri.getLivello());
-            }
-
-            // Tipo lezione
-            if (filtri.getTipoLezione() != null && !filtri.getTipoLezione().isEmpty()) {
-                sql += String.format(" AND tipo_lezione = '%s'", filtri.getTipoLezione());
-            }
-
-            // Note (LIKE)
-            if (filtri.getNote() != null && !filtri.getNote().isEmpty()) {
-                sql += String.format(" AND LOWER(note) LIKE '%%%s%%'", filtri.getNote().toLowerCase());
-            }
-
-            // Giorni disponibili (LIKE)
-            if (filtri.getGiorniDisponibili() != null && !filtri.getGiorniDisponibili().isEmpty()) {
-                sql += String.format(" AND LOWER(giorni_disponibili) LIKE '%%%s%%'", filtri.getGiorniDisponibili().toLowerCase());
-            }
-
-            rs = smt.executeQuery(sql);
-        } catch (SQLException e) {
-            handleException(e); // o stampa errore/logging
+        // 1. Applichiamo la query base a seconda che ci sia o meno la tariffa massima
+        if (filtri.getTariffa() != null && filtri.getTariffa() > 0) {
+            queryBuilder.append(String.format(Locale.US, "SELECT * FROM lezioni WHERE tariffa <= %.2f", filtri.getTariffa()));
+        } else {
+            queryBuilder.append("SELECT * FROM lezioni WHERE 1=1");
         }
 
-        return rs;
+        // 2. Filtro dinamico e generico sulla Fascia Oraria
+        if (filtri.getFasciaOraria() != null && !filtri.getFasciaOraria().isEmpty()) {
+            queryBuilder.append(String.format(" AND fascia_oraria = '%s'", filtri.getFasciaOraria()));
+        }
+
+        // 3. Filtro dinamico e generico sul Livello
+        if (filtri.getLivello() != null && !filtri.getLivello().isEmpty()) {
+            queryBuilder.append(String.format(" AND livello = '%s'", filtri.getLivello()));
+        }
+
+        // 4. Filtro dinamico e generico sul Tipo Lezione (es. Privata / In Gruppo)
+        if (filtri.getTipoLezione() != null && !filtri.getTipoLezione().isEmpty()) {
+            queryBuilder.append(String.format(" AND tipo_lezione = '%s'", filtri.getTipoLezione()));
+        }
+
+        // 5. Filtro dinamico sulle Note (usando LIKE in minuscolo per evitare problemi di maiuscole)
+        if (filtri.getNote() != null && !filtri.getNote().isEmpty()) {
+            queryBuilder.append(String.format(" AND LOWER(note) LIKE '%%%s%%'", filtri.getNote().toLowerCase()));
+        }
+
+        // 6. GESTIONE GENERICA E AUTOMATICA DEI GIORNI MULTIPLI (Risolve il problema del Lunedì/Mercoledì)
+        if (filtri.getGiorniDisponibili() != null && !filtri.getGiorniDisponibili().isEmpty()) {
+            // "Lunedì, Mercoledì" viene diviso in un array di stringhe: ["Lunedì", " Mercoledì"]
+            String[] giorniSelezionati = filtri.getGiorniDisponibili().split(",");
+
+            queryBuilder.append(" AND (");
+
+            for (int i = 0; i < giorniSelezionati.length; i++) {
+                // Rimuove gli spazi prima/dopo e trasforma tutto in minuscolo (es: " Mercoledì" -> "mercoledì")
+                String giornoPulito = giorniSelezionati[i].trim().toLowerCase();
+
+                queryBuilder.append(String.format("LOWER(giorni_disponibili) = '%s'", giornoPulito));
+
+                // Se ci sono altri giorni selezionati dopo questo, aggiunge la clausola OR
+                if (i < giorniSelezionati.length - 1) {
+                    queryBuilder.append(" OR ");
+                }
+            }
+
+            queryBuilder.append(")");
+        }
+
+        // 7. Esecuzione finale della query generata al volo
+        try {
+            return smt.executeQuery(queryBuilder.toString());
+        } catch (SQLException e) {
+            handleException(e); // Mantieni il tuo metodo di gestione degli errori
+            return null;
+        }
     }
     public static ResultSet cercaPrenotazioniIstruttoreInCorso(Statement stmt, String emailIstruttore) throws SQLException {
 
@@ -135,16 +150,36 @@ public class QueryLezioni {
         String richiesta = String.format(Query.AGGIORNA_STATO_PRENOTAZIONE,nuovoStato.name(), id);
         stmt.executeUpdate(richiesta);
     }
-    public static boolean isGiaPrenotata(Statement stmt, String emailUtente, String emailIstruttore, String giorno, float ora) throws SQLException {
+    public static boolean isGiaPrenotata(Statement stmt, String emailUtente, String giorno, String ora) throws SQLException {
         try {
+            // Passiamo solo emailUtente, giorno e ora alla stringa SQL modificata
             String richiesta = String.format(Locale.US, Query.VERIFICA_GIA_PRENOTATA,
-                    emailUtente, emailIstruttore, giorno, ora);
-            ResultSet rs = stmt.executeQuery(richiesta);
-            if (rs.next()) {
-                return rs.getInt(1) > 0;
+                    emailUtente, giorno, ora);
+
+            try (ResultSet rs = stmt.executeQuery(richiesta)) {
+                if (rs.next()) {
+                    return rs.getInt(1) > 0;
+                }
             }
         } catch (SQLException e) {
             handleException(e);
+            throw e; // È buona pratica rilanciarla per far sapere al DAO che qualcosa è fallito
+        }
+        return false;
+    }
+    public static boolean isIstruttoreOccupato(Statement stmt, String emailIstruttore, String giorno, String ora) throws SQLException {
+        try {
+            String richiesta = String.format(Locale.US, Query.VERIFICA_ISTRUTTORE_OCCUPATO,
+                    emailIstruttore, giorno, ora);
+
+            try (ResultSet rs = stmt.executeQuery(richiesta)) {
+                if (rs.next()) {
+                    return rs.getInt(1) > 0;
+                }
+            }
+        } catch (SQLException e) {
+            handleException(e);
+            throw e;
         }
         return false;
     }

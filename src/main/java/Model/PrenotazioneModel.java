@@ -12,7 +12,7 @@ public class PrenotazioneModel {
     private float prezzo;
     private String giorno;
     private String info;
-    private float ora;
+    private String ora;
     private StatoPrenotazione status;
 
     public PrenotazioneModel() {
@@ -63,11 +63,11 @@ public class PrenotazioneModel {
     public void setGiorno(String giorno) {
         this.giorno = giorno;
     }
-    public float getOra(){
+    public String getOra(){
         return ora;
 
     }
-    public void setOra(float ora){
+    public void setOra(String ora){
         this.ora=ora;
     }
 

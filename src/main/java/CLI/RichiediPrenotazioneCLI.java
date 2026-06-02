@@ -2,6 +2,7 @@ package CLI;
 
 import Bean.LezioneBean;
 import Controller.Prenotazionecontroller;
+import Exceptions.LezioneGiaOccupataException;
 import Exceptions.LezioneGiaPrenotataException;
 import Exceptions.UtentenonpresenteException;
 import Other.Stampa;
@@ -68,7 +69,7 @@ public class RichiediPrenotazioneCLI extends AbstractState {
 
 
 
-    public void inseriscivalori( Scanner scanner) {
+    public void inseriscivalori(Scanner scanner) {
         Prenotazionebean prenotazionebean = new Prenotazionebean();
         int idRandom = ThreadLocalRandom.current().nextInt(0, 100);
         prenotazionebean.setIdPrenotazione(idRandom);
@@ -81,6 +82,9 @@ public class RichiediPrenotazioneCLI extends AbstractState {
         String cognomeIstruttore = lezioneSelezionata.getCognomeIstruttore();
         String emailIstruttore = lezioneSelezionata.getEmailIstruttore();
 
+        // 🎯 RECUPERIAMO LA FASCIA ORARIA DIRETTAMENTE DALLA LEZIONE COME STRINGA
+        String fasciaOraria = lezioneSelezionata.getFasciaOraria();
+
         prenotazionebean.setGiorno(giorno);
         prenotazionebean.setInfo(info);
         prenotazionebean.setPrezzo(prezzo);
@@ -89,32 +93,39 @@ public class RichiediPrenotazioneCLI extends AbstractState {
         prenotazionebean.setEmailIstruttore(emailIstruttore);
         prenotazionebean.setEmailUser(utente.getCredenziali().getEmail());
 
+        // 🎯 IMPOSTIAMO LA STRINGA DELLA FASCIA ORARIA NEL BEAN AGGIORNATO
+        prenotazionebean.setHour(fasciaOraria);
+
         try {
-            Stampa.print(" Inserisci l'orario (es: 14.30): ");
-            float oraInput = Float.parseFloat(scanner.nextLine());
-            prenotazionebean.setHour(oraInput);
+            // Non chiediamo più l'orario all'utente, lo mostriamo e basta per conferma!
+            Stampa.println("\nFascia oraria della lezione selezionata: " + fasciaOraria);
+            Stampa.print("Confermare la prenotazione? (Premi INVIO per continuare, scrivi 'no' per annullare): ");
+            String conferma = scanner.nextLine().trim();
+
+            if (conferma.equalsIgnoreCase("no")) {
+                Stampa.println("❌ Prenotazione annullata.");
+                return;
+            }
 
             Prenotazionecontroller prenotazionecontroller = new Prenotazionecontroller();
 
-            // 1. Controllo email (facoltativo se già fatto nel controller)
+            // 1. Controllo email
             prenotazionecontroller.controllaEmail(nomeIstruttore, cognomeIstruttore, emailIstruttore);
 
-            // 2. TENTATIVO DI PRENOTAZIONE (Qui gestiamo l'eccezione specifica)
+            // 2. TENTATIVO DI PRENOTAZIONE (Utilizza la logica a stringhe aggiornata)
             prenotazionecontroller.richiediprenotazione(prenotazionebean);
 
             // Se arriviamo qui, la prenotazione è andata a buon fine
-            Stampa.println("\n Richiesta di prenotazione inviata con successo!");
-            Stampa.println("Giorno: " + giorno + " alle ore " + oraInput);
-            Stampa.println(" Istruttore: " + nomeIstruttore + " " + cognomeIstruttore);
+            Stampa.println("\n✨ Richiesta di prenotazione inviata con successo!");
+            Stampa.println("📅 Giorno: " + giorno + " nella fascia: " + fasciaOraria);
+            Stampa.println("🏊‍♂️ Istruttore: " + nomeIstruttore + " " + cognomeIstruttore);
 
-        } catch (NumberFormatException e) {
-            Stampa.errorPrint("❌ Errore: Inserisci un orario valido (es. 15.00).");
         } catch (UtentenonpresenteException e) {
             Stampa.errorPrint("❌ Errore: L'istruttore selezionato non è più disponibile.");
         } catch (LezioneGiaPrenotataException e) {
-            // --- QUESTA È LA GESTIONE CHE TI MANCAVA ---
             Stampa.errorPrint("\n⚠️ ATTENZIONE: " + e.getMessage());
-            Stampa.println("Non puoi prenotare due volte la stessa lezione.");
+        } catch (LezioneGiaOccupataException e) {
+            Stampa.errorPrint("\n❌ ERRORE (Slot occupato): " + e.getMessage());
         } catch (SQLException e) {
             Stampa.errorPrint("❌ Errore Database: " + e.getMessage());
         }
