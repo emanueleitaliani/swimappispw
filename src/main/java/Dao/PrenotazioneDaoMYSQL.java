@@ -106,7 +106,6 @@ public class PrenotazioneDaoMYSQL implements PrenotazioneDao {
             }
 
         } catch(UtentenonpresenteException f){
-            Stampa.println("❌ Prenotazione o Utente non presente nel sistema.");
             throw f; // Rilancia l'eccezione verso il Controller
         } catch (SQLException e) {
             handleDAOException(e);

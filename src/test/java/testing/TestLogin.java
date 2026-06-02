@@ -53,20 +53,25 @@ import static org.junit.jupiter.api.Assertions.*;
             fail("Il test ha lanciato un'eccezione imprevista: " + e.getMessage());
         }
     }
-
     @Test
-    void testLoginCredenzialiErrate() throws CredenzialisbagliateException, UtentenonpresenteException {
-        CredenzialiBean credenziali = new CredenzialiBean("Leoboria11@gmail.com", "password_errata");
-        Utenteloggatobean risultato = loginController.login(credenziali);
-        assertNull(risultato, "L'accesso deve essere negato (null)");
+    void testLoginCredenzialiErrate() {
+          CredenzialiBean credenziali = new CredenzialiBean("Leoboria11@gmail.com", "password_errata");
+
+          // Verifica che l'esecuzione del login lanci l'eccezione corretta
+          assertThrows(CredenzialisbagliateException.class, () -> {
+              loginController.login(credenziali);
+          }, "Il login con password errata dovrebbe lanciare CredenzialisbagliateException");
     }
 
-    @Test
-    void testLoginUtenteInesistente() throws CredenzialisbagliateException, UtentenonpresenteException {
-        CredenzialiBean credenziali = new CredenzialiBean("non_esisto_mai@test.it", "1234");
-        Utenteloggatobean risultato = loginController.login(credenziali);
-        assertNull(risultato, "Utente non presente deve restituire null");
-    }
+      @Test
+      void testLoginUtenteInesistente() {
+          CredenzialiBean credenziali = new CredenzialiBean("non_esisto_mai@test.it", "1234");
+
+          // Verifica che il metodo lanci l'eccezione UtentenonpresenteException
+          assertThrows(UtentenonpresenteException.class, () -> {
+              loginController.login(credenziali);
+          }, "Il login con utente inesistente dovrebbe lanciare UtentenonpresenteException");
+      }
     @Test
     void testRegistrazioneEmailGiaInUso() {
         // Arrange: Usiamo l'email di Leo che esiste già nel DB
