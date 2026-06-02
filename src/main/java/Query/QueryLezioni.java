@@ -32,7 +32,7 @@ public class QueryLezioni {
         } catch(SQLException e){
             handleException(e);
         }
-    };
+    }
 
     public static boolean istruttoreEsiste(Statement smt,String nome,String cognome,String emailIstruttore) throws UtentenonpresenteException {
         try{
@@ -80,61 +80,60 @@ public class QueryLezioni {
     public static ResultSet cercaLezione(Statement smt, LezioneModel filtri) {
         StringBuilder queryBuilder = new StringBuilder();
 
-        // 1. Applichiamo la query base a seconda che ci sia o meno la tariffa massima
+        // 1. Query base (Tariffa)
         if (filtri.getTariffa() != null && filtri.getTariffa() > 0) {
-            queryBuilder.append(String.format(Locale.US, "SELECT * FROM lezioni WHERE tariffa <= %.2f", filtri.getTariffa()));
+            // Sostituito il testo a mano con la costante di Query.java
+            queryBuilder.append(String.format(Locale.US, Query.RICERCA_LEZIONI_BASE, filtri.getTariffa()));
         } else {
             queryBuilder.append("SELECT * FROM lezioni WHERE 1=1");
         }
 
-        // 2. Filtro dinamico e generico sulla Fascia Oraria
-        if (filtri.getFasciaOraria() != null && !filtri.getFasciaOraria().isEmpty()) {
-            queryBuilder.append(String.format(" AND fascia_oraria = '%s'", filtri.getFasciaOraria()));
-        }
+        // 2. Filtri stringa standard
+        appendFiltroEquals(queryBuilder, "fascia_oraria", filtri.getFasciaOraria());
+        appendFiltroEquals(queryBuilder, "livello", filtri.getLivello());
+        appendFiltroEquals(queryBuilder, "tipo_lezione", filtri.getTipoLezione());
 
-        // 3. Filtro dinamico e generico sul Livello
-        if (filtri.getLivello() != null && !filtri.getLivello().isEmpty()) {
-            queryBuilder.append(String.format(" AND livello = '%s'", filtri.getLivello()));
-        }
-
-        // 4. Filtro dinamico e generico sul Tipo Lezione (es. Privata / In Gruppo)
-        if (filtri.getTipoLezione() != null && !filtri.getTipoLezione().isEmpty()) {
-            queryBuilder.append(String.format(" AND tipo_lezione = '%s'", filtri.getTipoLezione()));
-        }
-
-        // 5. Filtro dinamico sulle Note (usando LIKE in minuscolo per evitare problemi di maiuscole)
+        // 3. Filtro Note (LIKE)
         if (filtri.getNote() != null && !filtri.getNote().isEmpty()) {
             queryBuilder.append(String.format(" AND LOWER(note) LIKE '%%%s%%'", filtri.getNote().toLowerCase()));
         }
 
-        // 6. GESTIONE GENERICA E AUTOMATICA DEI GIORNI MULTIPLI (Risolve il problema del Lunedì/Mercoledì)
-        if (filtri.getGiorniDisponibili() != null && !filtri.getGiorniDisponibili().isEmpty()) {
-            // "Lunedì, Mercoledì" viene diviso in un array di stringhe: ["Lunedì", " Mercoledì"]
-            String[] giorniSelezionati = filtri.getGiorniDisponibili().split(",");
+        // 4. Filtro Giorni (Logica complessa estratta)
+        appendFiltroGiorni(queryBuilder, filtri.getGiorniDisponibili());
 
-            queryBuilder.append(" AND (");
-
-            for (int i = 0; i < giorniSelezionati.length; i++) {
-                // Rimuove gli spazi prima/dopo e trasforma tutto in minuscolo (es: " Mercoledì" -> "mercoledì")
-                String giornoPulito = giorniSelezionati[i].trim().toLowerCase();
-
-                queryBuilder.append(String.format("LOWER(giorni_disponibili) = '%s'", giornoPulito));
-
-                // Se ci sono altri giorni selezionati dopo questo, aggiunge la clausola OR
-                if (i < giorniSelezionati.length - 1) {
-                    queryBuilder.append(" OR ");
-                }
-            }
-
-            queryBuilder.append(")");
-        }
-
-        // 7. Esecuzione finale della query generata al volo
+        // 5. Esecuzione finale
         try {
             return smt.executeQuery(queryBuilder.toString());
         } catch (SQLException e) {
-            handleException(e); // Mantieni il tuo metodo di gestione degli errori
+            handleException(e);
             return null;
+        }
+    }
+
+
+    private static void appendFiltroGiorni(StringBuilder queryBuilder, String giorniDisponibili) {
+        if (giorniDisponibili == null || giorniDisponibili.isEmpty()) {
+            return;
+        }
+
+        String[] giorniSelezionati = giorniDisponibili.split(",");
+        queryBuilder.append(" AND (");
+
+        for (int i = 0; i < giorniSelezionati.length; i++) {
+            String giornoPulito = giorniSelezionati[i].trim().toLowerCase();
+            queryBuilder.append(String.format("LOWER(giorni_disponibili) = '%s'", giornoPulito));
+
+            if (i < giorniSelezionati.length - 1) {
+                queryBuilder.append(" OR ");
+            }
+        }
+        queryBuilder.append(")");
+    }
+
+
+    private static void appendFiltroEquals(StringBuilder queryBuilder, String colonna, String valore) {
+        if (valore != null && !valore.isEmpty()) {
+            queryBuilder.append(String.format(" AND %s = '%s'", colonna, valore));
         }
     }
     public static ResultSet cercaPrenotazioniIstruttoreInCorso(Statement stmt, String emailIstruttore) throws SQLException {
@@ -143,36 +142,40 @@ public class QueryLezioni {
         return stmt.executeQuery(richiesta);
     }
 
-    // --- NUOVO METODO: Aggiorna lo stato della prenotazione ---
+
     public static void aggiornaStatoPrenotazione(Statement stmt, int id, StatoPrenotazione nuovoStato) throws SQLException {
-        // Utilizziamo una nuova costante che dovrai aggiungere in Query.java
-        // Esempio: "UPDATE prenotazione SET status = '%s' WHERE idprenotazione = %d"
+
         String richiesta = String.format(Query.AGGIORNA_STATO_PRENOTAZIONE,nuovoStato.name(), id);
         stmt.executeUpdate(richiesta);
     }
-    public static boolean isGiaPrenotata(Statement stmt, String emailUtente, String giorno, String ora) throws SQLException {
-        try {
-            // Passiamo solo emailUtente, giorno e ora alla stringa SQL modificata
-            String req = String.format(Locale.US, Query.VERIFICA_GIA_PRENOTATA,
-                    emailUtente, giorno, ora);
+    public static boolean isGiaPrenotata(Connection conn, String emailUtente, String giorno, String ora) throws SQLException {
+        try (PreparedStatement pstmt = conn.prepareStatement(Query.VERIFICA_GIA_PRENOTATA)) {
 
-            try (ResultSet rs = stmt.executeQuery(req)) {
+            // Assegnazione dei parametri in modo sicuro (sostituiscono i '?' nella query)
+            pstmt.setString(1, emailUtente.trim());
+            pstmt.setString(2, giorno.trim().toLowerCase());
+            pstmt.setString(3, ora.trim());
+
+            try (ResultSet rs = pstmt.executeQuery()) {
                 if (rs.next()) {
                     return rs.getInt(1) > 0;
                 }
             }
         } catch (SQLException e) {
             handleException(e);
-            throw e; // È buona pratica rilanciarla per far sapere al DAO che qualcosa è fallito
+            throw e;
         }
         return false;
     }
-    public static boolean isIstruttoreOccupato(Statement stmt, String emailIstruttore, String giorno, String ora) throws SQLException {
-        try {
-            String request = String.format(Locale.US, Query.VERIFICA_ISTRUTTORE_OCCUPATO,
-                    emailIstruttore, giorno, ora);
+    public static boolean isIstruttoreOccupato(Connection conn, String emailIstruttore, String giorno, String ora) throws SQLException {
+        try (PreparedStatement pstmt = conn.prepareStatement(Query.VERIFICA_ISTRUTTORE_OCCUPATO)) {
 
-            try (ResultSet rs = stmt.executeQuery(request)) {
+            // Assegnazione dei parametri in modo sicuro
+            pstmt.setString(1, emailIstruttore.trim());
+            pstmt.setString(2, giorno.trim().toLowerCase());
+            pstmt.setString(3, ora.trim());
+
+            try (ResultSet rs = pstmt.executeQuery()) {
                 if (rs.next()) {
                     return rs.getInt(1) > 0;
                 }

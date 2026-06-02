@@ -187,7 +187,7 @@ public class PrenotazioneDaoMYSQL implements PrenotazioneDao {
             connection = Connect.getInstance().getDBConnection();
             stmt = connection.createStatement();
 
-            return QueryLezioni.isGiaPrenotata(stmt, emailUtente, giorno, ora);
+            return QueryLezioni.isGiaPrenotata(connection, emailUtente, giorno, ora);
 
         } finally {
             closeResources(stmt, null);
@@ -201,7 +201,7 @@ public class PrenotazioneDaoMYSQL implements PrenotazioneDao {
         try {
             connection = Connect.getInstance().getDBConnection();
             stmt = connection.createStatement();
-            return QueryLezioni.isIstruttoreOccupato(stmt, emailIstruttore, giorno, ora);
+            return QueryLezioni.isIstruttoreOccupato(connection, emailIstruttore, giorno, ora);
         } finally {
             closeResources(stmt, null);
         }

@@ -29,25 +29,9 @@ public class LezioneDaoInMemory implements LezioneDao {
                 match &= l.getLivello().equalsIgnoreCase(filtro.getLivello());
             }
 
-            // 3. GESTIONE GENERICA DEI GIORNI MULTIPLI (Nuovo)
+            // 3. GESTIONE GENERICA DEI GIORNI MULTIPLI (Logica complessa estratta)
             if (filtro.getGiorniDisponibili() != null && !filtro.getGiorniDisponibili().isEmpty()) {
-                // Separa la stringa del filtro (es: "Lunedì, Mercoledì" -> ["Lunedì", " Mercoledì"])
-                String[] giorniCercati = filtro.getGiorniDisponibili().split(",");
-                boolean giornoTrovato = false;
-
-                for (String g : giorniCercati) {
-                    String giornoPulito = g.trim().toLowerCase(); // Rimuove spazi e mette in minuscolo
-
-                    // Controlla se il giorno della lezione in memoria (es: "martedì" o "Lun,Mer,Ven")
-                    // contiene il giorno che l'utente sta cercando
-                    if (l.getGiorniDisponibili().toLowerCase().contains(giornoPulito)) {
-                        giornoTrovato = true;
-                        break; // Trovata corrispondenza per almeno uno dei giorni, usciamo dal ciclo interno
-                    }
-                }
-
-                // Applica il risultato al match complessivo
-                match &= giornoTrovato;
+                match &= verificaGiorniDisponibili(l.getGiorniDisponibili(), filtro.getGiorniDisponibili());
             }
 
             // Se passa tutti i filtri attivi, aggiungiamo la lezione ai risultati
@@ -56,6 +40,23 @@ public class LezioneDaoInMemory implements LezioneDao {
             }
         }
         return risultati;
+    }
+
+    // METODO DI SUPPORTO: Estrae il ciclo innestato abbattendo la Complessità Cognitiva
+    private boolean verificaGiorniDisponibili(String giorniLezione, String giorniCercatiFiltro) {
+        // Separa la stringa del filtro (es: "Lunedì, Mercoledì" -> ["Lunedì", " Mercoledì"])
+        String[] giorniCercati = giorniCercatiFiltro.split(",");
+        String giorniLezioneLower = giorniLezione.toLowerCase();
+
+        for (String g : giorniCercati) {
+            String giornoPulito = g.trim().toLowerCase(); // Rimuove spazi e mette in minuscolo
+
+            // Controlla se i giorni della lezione contengono il giorno cercato
+            if (giorniLezioneLower.contains(giornoPulito)) {
+                return true; // Trovata corrispondenza, usciamo subito restituendo true
+            }
+        }
+        return false; // Nessun giorno del filtro corrisponde a quelli della lezione
     }
     @Override
     public boolean controllaEmail(String nome, String cognome, String email) throws UtentenonpresenteException {
@@ -72,7 +73,6 @@ public class LezioneDaoInMemory implements LezioneDao {
         return true;
     }
 
-    // Metodo per aggiungere nuove lezioni
 
 }
 

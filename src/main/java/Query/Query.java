@@ -36,19 +36,18 @@ public class Query {
     public static final String RICERCA_LEZIONI_BASE = "SELECT * FROM lezioni WHERE tariffa <= %.2f";
 
     public static final String VERIFICA_GIA_PRENOTATA =
-            "SELECT COUNT(*) FROM prenotazione WHERE mailutente = '%s' AND giorno = '%s' AND ora = '%s'";
+            "SELECT COUNT(*) FROM prenotazione WHERE mailutente = ? AND giorno = ? AND ora = ?";
 
     public static final String VERIFICA_ISTRUTTORE_OCCUPATO =
             "SELECT COUNT(*) FROM prenotazione p " +
                     "JOIN lezioni l ON p.mailistruttore = l.email " +
                     "AND p.giorno = l.giorni_disponibili " +
                     "AND p.ora = l.fascia_oraria " +
-                    "WHERE p.mailistruttore = '%s' " +
-                    "AND p.giorno = '%s' " +
-                    "AND p.ora = '%s' " +
+                    "WHERE p.mailistruttore = ? " +
+                    "AND p.giorno = ? " +
+                    "AND p.ora = ? " +
                     "AND l.tipo_lezione = 'privata' " +
                     "AND p.status != 'rifiutata'";
 }
-
 
 
