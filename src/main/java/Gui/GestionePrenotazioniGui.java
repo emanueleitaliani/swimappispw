@@ -1,7 +1,7 @@
 package Gui;
 
 import Bean.Utenteloggatobean;
-import Other.Stampa;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -13,9 +13,10 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.logging.Logger;
 
 public class GestionePrenotazioniGui {
-
+    private static final Logger logger = Logger.getLogger(GestionePrenotazioniGui.class.getName());
     private Utenteloggatobean utente;
     public GestionePrenotazioniGui() {
     }
@@ -38,9 +39,7 @@ public class GestionePrenotazioniGui {
         this.utente = utente;
     }
 
-    /* =============================
-       VISUALIZZA PRENOTAZIONI
-       ============================= */
+
     @FXML
     private void visualizzaPrenotazioni(ActionEvent event) {
         try {
@@ -56,6 +55,7 @@ public class GestionePrenotazioniGui {
             stage.show();
 
         } catch (IOException e) {
+            logger.severe("Errore nell'I/O durante il caricamento di visualizzaprenotazione.fxml: " + e.getMessage());
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setHeaderText("Errore apertura schermata");
             alert.setContentText("Impossibile aprire Visualizza Prenotazioni");
@@ -63,9 +63,7 @@ public class GestionePrenotazioniGui {
         }
     }
 
-    /* =============================
-       CANCELLA PRENOTAZIONE
-       ============================= */
+
     @FXML
     private void cancellaPrenotazione(ActionEvent event) {
         try {
@@ -80,6 +78,7 @@ public class GestionePrenotazioniGui {
             stage.show();
 
         } catch (IOException e) {
+            logger.severe("Errore nell'I/O durante il caricamento di cancellaprenotazione.fxml: " + e.getMessage());
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setHeaderText("Errore apertura schermata");
             alert.setContentText("Impossibile aprire Cancella Prenotazione");
@@ -98,9 +97,8 @@ public class GestionePrenotazioniGui {
             stage.show();
 
 
-
         } catch (IOException e) {
-            Stampa.println("Errore nel ritorno alla Home: " + e.getMessage());
+            logger.severe("Errore critico nell'I/O durante il ritorno alla homeutente.fxml: " + e.getMessage());
         }
     }
 

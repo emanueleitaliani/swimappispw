@@ -17,6 +17,8 @@ public class Query {
     // Query per registrare un nuovo utente
     public static final String REGISTRAZIONE =
             "INSERT INTO utente (nome, cognome,email, IsIstructor ,password) VALUES ('%s', '%s', '%s', %b,'%s')";
+    public static final String REGISTRAZIONE_ISTRUTTORE =
+            "INSERT INTO istruttore (email, nome, cognome) VALUES ('%s', '%s', '%s')";
 
     public static final String INSERISCIPRENOTAZIONE =
             "INSERT INTO prenotazione(idprenotazione,nomeIstruttore,cognomeIstruttore,mailutente,mailistruttore,prezzo,giorno,info,ora) VALUES ('%d','%s','%s','%s','%s','%f','%s','%s','%s')";

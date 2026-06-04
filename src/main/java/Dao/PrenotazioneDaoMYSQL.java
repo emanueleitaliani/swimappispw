@@ -3,18 +3,16 @@ package Dao;
 import Exceptions.UtentenonpresenteException;
 import Model.PrenotazioneModel;
 import Other.Connect;
-import Other.Stampa;
 import Other.StatoPrenotazione;
 import Query.QueryLezioni;
 import java.util.List;
 import java.util.ArrayList;
 import java.sql.*;
-
-
-
+import java.util.logging.Logger;
 
 
 public class PrenotazioneDaoMYSQL implements PrenotazioneDao {
+    private static final Logger logger = Logger.getLogger(PrenotazioneDaoMYSQL.class.getName());
     public void prenota(PrenotazioneModel prenotazioneModel) {
         /*
         fa la query per inserire la richiesta di ripetizione nel database
@@ -29,7 +27,7 @@ public class PrenotazioneDaoMYSQL implements PrenotazioneDao {
             QueryLezioni.PrenotaLezione(stmt, prenotazioneModel);
 
         } catch (SQLException e) {
-            handleDAOException(e);
+            handleDAOException("Errore durante l'inserimento della prenotazione",e);
         } finally {
             // Chiusura delle risorse
             closeResources(stmt, null);
@@ -108,7 +106,7 @@ public class PrenotazioneDaoMYSQL implements PrenotazioneDao {
         } catch(UtentenonpresenteException f){
             throw f; // Rilancia l'eccezione verso il Controller
         } catch (SQLException e) {
-            handleDAOException(e);
+            handleDAOException("Errore nel recupero delle prenotazioni utente",e);
             throw e;
         } finally {
             // Buona norma per chiudere sempre lo statement
@@ -215,13 +213,13 @@ public class PrenotazioneDaoMYSQL implements PrenotazioneDao {
                 stmt.close();
             }
         } catch (SQLException e) {
-            handleDAOException(e);
+            handleDAOException("Errore nella chiusura delle risorse",e);
         }
     }
 
 
-    private void handleDAOException(Exception e) {
-        Stampa.errorPrint(String.format("PrenotazioneDAO: %s", e.getMessage()));
+    private void handleDAOException(String contesto, Exception e) {
+        logger.severe(String.format("PrenotazioneDaoMYSQL - %s: %s", contesto, e.getMessage()));
     }
 
 }

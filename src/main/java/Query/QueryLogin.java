@@ -77,25 +77,13 @@ public class QueryLogin {
         }
 
     }
-    public static void registraIstruttore(Statement stmt, String email, String nome, String cognome) {
-        String query = String.format(
-                "INSERT INTO istruttore (email, nome, cognome) VALUES ('%s', '%s', '%s')",
-                email, nome, cognome
-        );
-
-        try {
-            int rowsAffected = stmt.executeUpdate(query);
-            if (rowsAffected > 0) {
-                Stampa.println("Istruttore registrato con successo.");
-            } else {
-                Stampa.println("Nessun istruttore inserito.");
-            }
-        } catch (SQLException e) {
-            Stampa.println("Errore durante la registrazione del tutor: " + e.getMessage());
-        }
+    public static void registraIstruttore(Statement stmt, String email, String nome, String cognome) throws SQLException {
+        String query = String.format(Query.REGISTRAZIONE_ISTRUTTORE, email, nome, cognome);
+        stmt.executeUpdate(query);
     }
-
 }
+
+
 
 
 

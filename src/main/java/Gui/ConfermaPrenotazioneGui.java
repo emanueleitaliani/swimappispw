@@ -19,10 +19,12 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.logging.Logger;
 
 public class ConfermaPrenotazioneGui extends HomeUtenteGui {
 
 
+    private static final Logger logger = Logger.getLogger(ConfermaPrenotazioneGui.class.getName());
     private LezioneBean lezione;
 
     // UNICI CAMPI PRESENTI NELL’FXML
@@ -110,6 +112,7 @@ public class ConfermaPrenotazioneGui extends HomeUtenteGui {
             stage.show();
 
         } catch (IOException e) {
+            logger.severe("Errore nell'I/O durante il caricamento di cercalezionereal.fxml: " + e.getMessage());
             mostraAlert(Alert.AlertType.ERROR, TITOLO_ERRORE, "Impossibile tornare alla ricerca lezioni");
         }
     }

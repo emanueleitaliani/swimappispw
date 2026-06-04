@@ -2,15 +2,16 @@ package Dao;
 import Exceptions.UtentenonpresenteException;
 import Model.LezioneModel;
 import Other.Connect;
-import Other.Stampa;
 import Query.QueryLezioni;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 public class LezioneDaoMYSQL implements LezioneDao {
 
+    private static final Logger logger = Logger.getLogger(LezioneDaoMYSQL.class.getName());
     public List<LezioneModel> cercaLezione(LezioneModel lezioneModel) {
         List<LezioneModel> risultati = new ArrayList<>();
         Connection connection = null;
@@ -36,7 +37,7 @@ public class LezioneDaoMYSQL implements LezioneDao {
                 risultati.add(lezione);
             }
         } catch (SQLException e) {
-            e.printStackTrace(); // gestione migliorabile
+            handleDAOException("Errore", e);// gestione migliorabile
         } finally {
             try {
                 if (rs != null) rs.close();
@@ -59,11 +60,11 @@ public class LezioneDaoMYSQL implements LezioneDao {
 
             QueryLezioni.istruttoreEsiste(stmt, nome, cognome, email);
         } catch (UtentenonpresenteException e) {
-            handleDAOException(e);
+            handleDAOException("L'istruttore cercato non e' nel sistema", e);
             return false;
         } catch (SQLException e) {
-
-            handleDAOException(e);
+            handleDAOException("Errore SQL durante il controllo dell'email dell'istruttore", e);
+            return false;
         } finally {
             // Chiusura delle risorse
             closeResources(stmt, null);
@@ -79,13 +80,12 @@ public class LezioneDaoMYSQL implements LezioneDao {
                 stmt.close();
             }
         } catch (SQLException e) {
-            handleDAOException(e);
+            handleDAOException("Errore durante la chiusura delle risorse del db",e);
         }
     }
 
-
-    private void handleDAOException(Exception e) {
-        Stampa.errorPrint(String.format("PrenotazioneDAO: %s", e.getMessage()));
+    private void handleDAOException(String contesto, Exception e) {
+        logger.severe(String.format("LezioneDaoMYSQL - %s: %s", contesto, e.getMessage()));
     }
 }
 

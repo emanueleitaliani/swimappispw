@@ -12,6 +12,7 @@ import javafx.stage.Stage;
 import javafx.scene.layout.Pane;
 
 import java.io.IOException;
+import java.util.logging.Logger;
 
 public class HomeUtenteGui {
 
@@ -19,7 +20,7 @@ public class HomeUtenteGui {
     @FXML
     private Pane homeUtente;
     protected static final String TITOLO_ERRORE = "Errore";
-    protected static final String SELEZIONE_MANCANTE = "Selezione mancante";
+
 
     @FXML
     private Button logoutButton;
@@ -31,6 +32,7 @@ public class HomeUtenteGui {
     public HomeUtenteGui(Utenteloggatobean utente) {
         this.utente = utente;
     }
+    private static final Logger logger = Logger.getLogger(HomeUtenteGui.class.getName());
 
     @FXML
     private void gotoCercaLezione() {
@@ -52,8 +54,7 @@ public class HomeUtenteGui {
             stage.show();
 
         } catch (IOException e) {
-            Stampa.println("Errore nel caricamento di CercaLezione.fxml: " + e.getMessage());
-            e.printStackTrace();
+            logger.severe("Errore critico nel caricamento di cercalezionereal.fxml: " + e.getMessage());
         }
     }
     @FXML
@@ -74,8 +75,7 @@ public class HomeUtenteGui {
 
 
         } catch (Exception e) {
-            e.printStackTrace();
-            Stampa.println("Errore nella gestione delle prenotazioni: " + e.getMessage());
+            logger.severe("Errore critico nella gestione delle prenotazioni (gestisciprenotazioni.fxml): " + e.getMessage());
         }
     }
 
@@ -89,7 +89,7 @@ public class HomeUtenteGui {
             stage.setScene(new Scene(root));
             stage.show();
         } catch (IOException e) {
-            Stampa.println("Errore nel logout: " + e.getMessage());
+            logger.severe("Errore critico durante l'esecuzione del logout: " + e.getMessage());
         }
     }
     protected void mostraAlert(Alert.AlertType tipo, String titolo, String messaggio) {

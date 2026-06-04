@@ -2,7 +2,7 @@ package Gui;
 
 import Bean.LezioneBean;
 import Bean.Utenteloggatobean;
-import javafx.beans.property.SimpleStringProperty;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -18,12 +18,14 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.logging.Logger;
 
 public class PrenotaLezioneGui extends HomeUtenteGui{
 
     public PrenotaLezioneGui() {
         // costruttore vuoto necessario per JavaFX
     }
+    private static final Logger logger = Logger.getLogger(PrenotaLezioneGui.class.getName());
     private List<LezioneBean> risultatiBean;
 
 
@@ -124,7 +126,7 @@ public class PrenotaLezioneGui extends HomeUtenteGui{
             stage.show();
 
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.severe("Errore critico durante il caricamento di confermaprenotazione.fxml: " + e.getMessage());
         }
     }
 
@@ -138,7 +140,7 @@ public class PrenotaLezioneGui extends HomeUtenteGui{
             stage.setScene(new Scene(root));
             stage.show();
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.severe("Errore critico durante il ritorno a cercalezionereal.fxml: " + e.getMessage());
         }
     }
 }

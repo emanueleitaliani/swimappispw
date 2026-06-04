@@ -15,9 +15,11 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.logging.Logger;
 
 public class CancellaPrenotazioneGui extends HomeUtenteGui{
 
+    private static final Logger logger = Logger.getLogger(CancellaPrenotazioneGui.class.getName());
 
     @FXML
     private Pane cancellaPane;
@@ -82,6 +84,7 @@ public class CancellaPrenotazioneGui extends HomeUtenteGui{
             alert.showAndWait();
 
         } catch (Exception e) {
+            logger.severe("Errore imprevisto durante l'elaborazione della cancellazione: " + e.getMessage());
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setHeaderText("Errore");
             alert.setContentText("❌ Errore durante la cancellazione: " + e.getMessage());
@@ -104,7 +107,7 @@ public class CancellaPrenotazioneGui extends HomeUtenteGui{
             stage.show();
 
         } catch (IOException e) {
-            Stampa.errorPrint("Errore ritorno a gestione: " + e.getMessage());
+            logger.severe("Errore critico nell'I/O durante il ritorno a gestisciprenotazioni.fxml: " + e.getMessage());
 
         }
     }

@@ -14,6 +14,7 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.logging.Logger;
 import java.util.regex.Pattern;
 
 public class RegistrazioneGui {
@@ -45,7 +46,7 @@ public class RegistrazioneGui {
     private static final String EMAIL_REGEX = "^[\\w.-]+@[\\w.-]+\\.[a-zA-Z]{2,}$";
     private static final Pattern EMAIL_PATTERN = Pattern.compile(EMAIL_REGEX);
     protected Utenteloggatobean utente;
-
+    private static final Logger logger = Logger.getLogger(RegistrazioneGui.class.getName());
     public RegistrazioneGui(Utenteloggatobean utente) {
         this.utente = utente;
     }
@@ -111,8 +112,7 @@ public class RegistrazioneGui {
             stage.show();
 
         } catch (IOException e) {
-            Stampa.println("Errore nel caricamento dell'interfaccia post-registrazione: " + e.getMessage());
-
+            logger.severe("Errore critico nel caricamento dell'interfaccia post-registrazione: " + e.getMessage());
         }
     }
 
@@ -136,7 +136,7 @@ public class RegistrazioneGui {
             stage.setScene(scene);
             stage.show();
         } catch (IOException e) {
-            Stampa.println("Errore nel caricamento del login: " + e.getMessage());
+            logger.severe("Errore critico nel caricamento della schermata di login: " + e.getMessage());
         }
     }
 }

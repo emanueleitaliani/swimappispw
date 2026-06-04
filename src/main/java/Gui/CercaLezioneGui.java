@@ -14,11 +14,13 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 
 public class CercaLezioneGui extends HomeUtenteGui {
 
     private static final String SELEZIONE_MANCANTE = "Selezione mancante";
+    private static final Logger logger = Logger.getLogger(CercaLezioneGui.class.getName());
     // Tipo lezione
     @FXML
     private CheckBox lezionePrivata;
@@ -187,7 +189,7 @@ public class CercaLezioneGui extends HomeUtenteGui {
             showAlert(Alert.AlertType.INFORMATION, "Nessun Risultato", ex.getMessage());
 
         } catch (IOException e) {
-            showAlert(Alert.AlertType.ERROR, "Errore", "Errore nel caricamento della schermata.");
+            logger.severe("Errore nell'I/O durante il caricamento di prenotalezione.fxml: " + e.getMessage());
 
         }
     }
