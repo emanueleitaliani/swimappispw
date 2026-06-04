@@ -32,8 +32,12 @@ public class FactoryDao {
         } else if (MEMORY.equalsIgnoreCase(daoType)) {
             return new LezioneDaoInMemory();
         }
+        else if (JSON.equalsIgnoreCase(daoType)) {
+        throw new UnsupportedOperationException("La persistenza JSON non supporta la gestione delle lezioni.");
+        }
         return null;
-    }
+
+        }
 
     public static PrenotazioneDao getPrenotazioneDao() {
         String daoType = Config.getPersistenceType();
@@ -41,7 +45,10 @@ public class FactoryDao {
             return new PrenotazioneDaoMYSQL();
         } else if (MEMORY.equalsIgnoreCase(daoType)) {
             return new PrenotazioneDaoInMemory();
-        }
+        } else if (JSON.equalsIgnoreCase(daoType)) {
+        // GESTIONE CASO MANCANTE: Blocca esplicitamente se si tenta di usare le prenotazioni in JSON
+        throw new UnsupportedOperationException("La persistenza JSON non supporta la gestione delle prenotazioni.");
+    }
         return null;
     }
 }

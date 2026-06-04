@@ -6,7 +6,7 @@ import Exceptions.UtentenonpresenteException;
 import Model.CredenzialiModel;
 import Model.UtenteloggatoModel;
 import Other.Connect;
-import Other.Stampa;
+
 import Query.QueryLogin;
 
 import java.util.logging.Logger;

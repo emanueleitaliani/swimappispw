@@ -31,7 +31,7 @@ public class LocalDatabase {
         Utenti.put(cred1.getEmail(), new UtenteloggatoModel(cred1, "Mario", "Rossi", false));
 
         CredenzialiModel cred2 = new CredenzialiModel("istruttore@example.com", "password2");
-        Utenti.put(cred2.getEmail(), new UtenteloggatoModel(cred2, "Luigi", "Verdi", true));
+        Utenti.put(cred2.getEmail(), new UtenteloggatoModel(cred2, "Luigi", "Verdi", false));
 
         CredenzialiModel cred3 = new CredenzialiModel("coach1@test.com", "password3");
         Utenti.put(cred3.getEmail(), new UtenteloggatoModel(cred3, "Luigi", "Masini", true));

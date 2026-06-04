@@ -184,6 +184,11 @@ public class CercaLezioneGui extends HomeUtenteGui {
             Stage stage = (Stage) btnConferma.getScene().getWindow();
             stage.setScene(new Scene(root));
             stage.show();
+        } catch (UnsupportedOperationException ex) {
+            // 💡 CATTURA IL BLOCCO DELLA CONFIGURAZIONE JSON
+            // Mostra a schermo il messaggio personalizzato inserito nella FactoryDao
+            showAlert(Alert.AlertType.WARNING, "Configurazione Limitata", ex.getMessage());
+
         }catch (LezioniNonTrovateException ex) {
             // Gestione specifica: l'utente vede l'alert informativo
             showAlert(Alert.AlertType.INFORMATION, "Nessun Risultato", ex.getMessage());
