@@ -6,10 +6,8 @@ import Other.Stampa;
 import Exceptions.CredenzialisbagliateException;
 import Exceptions.UtentenonpresenteException;
 import Exceptions.EmailgiainusoException;
-import java.sql.Statement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 
+import java.sql.*;
 
 
 public class QueryLogin {
@@ -77,9 +75,15 @@ public class QueryLogin {
         }
 
     }
-    public static void registraIstruttore(Statement stmt, String email, String nome, String cognome) throws SQLException {
-        String query = String.format(Query.REGISTRAZIONE_ISTRUTTORE, email, nome, cognome);
-        stmt.executeUpdate(query);
+    public static void registraIstruttore(Connection conn, String email, String nome, String cognome) throws SQLException {
+        try (PreparedStatement pstmt = conn.prepareStatement(Query.REGISTRAZIONE_ISTRUTTORE)) {
+
+            pstmt.setString(1, email);
+            pstmt.setString(2, nome);
+            pstmt.setString(3, cognome);
+
+            pstmt.executeUpdate();
+        }
     }
 }
 

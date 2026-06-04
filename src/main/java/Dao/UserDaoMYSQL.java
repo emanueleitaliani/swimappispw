@@ -95,21 +95,18 @@ public class UserDaoMYSQL implements UserDao {
     }
 
     public void registraIstruttoreMethod(String email, String nome, String cognome) {
-        Statement stmt = null;
-
+        // Try-with-resources purificato: elimina la necessità del blocco finally e di closeResources
         try (Connection connection = Connect.getInstance().getDBConnection()) {
-            stmt = connection.createStatement();
-            QueryLogin.registraIstruttore(stmt, email, nome, cognome);
+
+            QueryLogin.registraIstruttore(connection, email, nome, cognome);
 
         } catch (SQLException e) {
-            handleDAOException(e);
-        } finally {
-            closeResources(stmt, null);
+            handleDAOException("Impossibile completare la registrazione del profilo istruttore", e);
         }
     }
 
-    private void handleDAOException(Exception e) {
-        Stampa.errorPrint(String.format("UserDAOMySQL: %s", e.getMessage()));
+    private void handleDAOException(String contesto, Exception e) {
+        logger.severe(String.format("LezioneDaoMYSQL - %s: %s", contesto, e.getMessage()));
     }
 
     private void closeResources(Statement stmt, ResultSet rs) {
@@ -117,7 +114,7 @@ public class UserDaoMYSQL implements UserDao {
             if (rs != null) rs.close();
             if (stmt != null) stmt.close();
         } catch (SQLException e) {
-            handleDAOException(e);
+            handleDAOException("errore nella chiusura delle risorse",e);
         }
     }
 }
