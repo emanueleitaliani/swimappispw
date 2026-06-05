@@ -51,13 +51,9 @@ public class QueryLezioni {
         }
         return true;
     }
-    public static ResultSet cercaPrenotazioniUser(Statement stmt, String emailUtente) throws SQLException,UtentenonpresenteException {
+    public static ResultSet cercaPrenotazioniUser(Statement stmt, String emailUtente) throws SQLException {
         String richiesta = String.format(Query.CERCA_PRENOTAZIONI, emailUtente);
         ResultSet rs = stmt.executeQuery(richiesta);
-
-        if (!rs.isBeforeFirst()) { // Nessuna riga presente
-            throw new UtentenonpresenteException();
-        }
 
         return rs;
 

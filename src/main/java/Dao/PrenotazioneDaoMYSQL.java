@@ -33,7 +33,7 @@ public class PrenotazioneDaoMYSQL implements PrenotazioneDao {
             closeResources(stmt, null);
         }
     }
-    public List<PrenotazioneModel> getPrenotazioniByEmail(String emailUtente) throws SQLException, UtentenonpresenteException {
+    public List<PrenotazioneModel> getPrenotazioniByEmail(String emailUtente) throws SQLException {
         List<PrenotazioneModel> listaPrenotazioni = new ArrayList<>();
         Connection connection;
         Statement stmt = null;

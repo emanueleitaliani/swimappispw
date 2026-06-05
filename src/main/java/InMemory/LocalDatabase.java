@@ -71,7 +71,7 @@ public class LocalDatabase {
         l2.setFasciaOraria("17-19");
         l2.setLivello("Agonista");
         l2.setTariffa(40.0f);
-        l2.setTipoLezione("Gruppo");
+        l2.setTipoLezione("In Gruppo");
         l2.setGiorniDisponibili("martedì, giovedì"); // Formato minuscolo compatibile con i filtri
         Lezioni.add(l2);
     }

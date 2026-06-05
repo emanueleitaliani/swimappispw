@@ -5,7 +5,6 @@ import Bean.CredenzialiBean;
 import Bean.Utenteloggatobean;
 import Exceptions.EmailgiainusoException;
 import Exceptions.EmailnonvalidaException;
-import Other.Stampa;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;

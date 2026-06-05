@@ -6,9 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import Bean.CredenzialiBean;
 import Bean.Utenteloggatobean;
@@ -27,11 +25,7 @@ public class LoginGui {
     @FXML
     private TextField passwordField;
 
-    @FXML
-    private Label credenzialiError;
 
-    @FXML
-    private Label credenzialiSbagliate;
 
     protected Utenteloggatobean utenteloggatobean;
     private static final Logger logger = Logger.getLogger(LoginGui.class.getName());
@@ -73,7 +67,7 @@ public class LoginGui {
 
     // AGGIUNTO MouseEvent per risolvere l'errore nel FXML
     @FXML
-    public void caricaRegistrazione(MouseEvent event) {
+    public void caricaRegistrazione() {
         try {
             URL fxmlUrl = LoginGui.class.getResource("/Fxml/registrazione.fxml");
             if (fxmlUrl == null) {

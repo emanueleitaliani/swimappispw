@@ -11,7 +11,7 @@ import java.util.List;
 public interface PrenotazioneDao {
     void prenota(PrenotazioneModel prenotazioneModel) throws SQLException;
 
-    List<PrenotazioneModel> getPrenotazioniByEmail(String emailUtente) throws SQLException, UtentenonpresenteException;
+    List<PrenotazioneModel> getPrenotazioniByEmail(String emailUtente) throws SQLException;
 
     boolean deletePrenotazione(PrenotazioneModel prenotazioneModel) throws SQLException, UtentenonpresenteException;
 

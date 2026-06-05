@@ -18,9 +18,10 @@ public class GestisciPrenotazioneCLI extends AbstractState {
     @Override
     public void action(StateMachineImpl context) {
         Scanner scanner = new Scanner(System.in);
-        int choice = -1;
+        int choice;
+        boolean inMenu = true; // 🌟 Flag per controllare il ciclo rimanendo fedeli ai break
 
-        while (choice != 0) {
+        while (inMenu) {
             mostraSchermata();
 
             try {
@@ -30,30 +31,32 @@ public class GestisciPrenotazioneCLI extends AbstractState {
                 switch (choice) {
                     case 0:
                         Stampa.println(" Uscita dal menu gestione prenotazioni.");
+                        goBack(context);
+                        inMenu = false;
                         break;
 
                     case 1:
-                        // Vai alla schermata che mostra le prenotazioni dell'utente
                         goNext(context, new VisualizzaPrenotazioniCLI(user));
+                        inMenu = false;
                         break;
 
                     case 2:
-                        // Vai alla schermata che permette la cancellazione
                         goNext(context, new cancellaPrenotazioneCLI(user));
+                        inMenu = false;
                         break;
 
                     default:
                         Stampa.errorPrint(" Scelta non valida. Seleziona un'opzione tra quelle elencate.");
-                        break;
+                        break; // Questo break normale ti fa rimanere nel menu
                 }
 
             } catch (InputMismatchException e) {
                 Stampa.errorPrint(" Input non valido. Inserisci un numero.");
                 scanner.nextLine(); // Pulizia del buffer
+                context.transition(this); // Riavvia lo stato in modo pulito
+                inMenu = false;  // Spegne il ciclo corrente per far partire quello nuovo
             }
         }
-
-        goBack(context); // Torna indietro al termine
     }
 
 

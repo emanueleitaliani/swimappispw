@@ -107,7 +107,7 @@ public class Prenotazionecontroller {
     }
 
     // ritorna le prenotazioni in base alle mail
-    public List<Prenotazionebean> getPrenotazioniByEmail(String emailUtente) throws UtentenonpresenteException,SQLException {
+    public List<Prenotazionebean> getPrenotazioniByEmail(String emailUtente) throws SQLException {
         // 1. Chiedi i dati al DAO (ricevi Model)
         List<PrenotazioneModel> models = prenotazioneDao.getPrenotazioniByEmail(emailUtente);
         List<Prenotazionebean> beans = new ArrayList<>();
